@@ -1,0 +1,34 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import Home from './components/Home'
+import SignUp from './components/SignUp'
+import Login from './components/Login'
+import DesignLab from './components/DesignLab'
+import CategoryPage from './components/CategoryPage'
+import UserHome from './components/UserHome'
+import UserProfile from './components/UserProfile'
+import Settings from './components/Settings'
+import Marketplace from './components/Marketplace'
+import DesignerDashboard from './components/DesignerDashboard'
+import Membership from './components/Membership'
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/design-lab" element={<DesignLab />} />
+        <Route path="/design-lab/:category" element={<CategoryPage />} />
+        <Route path="/user-home" element={<UserHome />} />
+        <Route path="/profile" element={<UserProfile />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/marketplace" element={<Marketplace />} />
+        <Route path="/designer-dashboard" element={<DesignerDashboard />} />
+        <Route path="/membership" element={<Membership />} />
+      </Routes>
+    </BrowserRouter>
+  )
+}
+
+export default App
