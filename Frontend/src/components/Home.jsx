@@ -148,7 +148,7 @@ function Home() {
     fetch('http://localhost:5000/api/carousel').then(r => r.json()).then(data => setImages(data.map(d => d.url))).catch(() => {})
     fetch('http://localhost:5000/api/split').then(r => r.json()).then(data => setSplit(data)).catch(() => {})
     fetch('http://localhost:5000/api/split2').then(r => r.json()).then(data => setSplit2(data)).catch(() => {})
-    fetch('http://localhost:5000/api/reviews').then(r => r.json()).then(data => setReviews(data)).catch(() => {})
+    // fetch('http://localhost:5000/api/reviews').then(r => r.json()).then(data => setReviews(data)).catch(() => {})
     fetch('http://localhost:5000/api/brand-guide').then(r => r.json()).then(data => setBrandCards(data.length ? data : BRAND_DEFAULT)).catch(() => setBrandCards(BRAND_DEFAULT))
   }, [])
 
