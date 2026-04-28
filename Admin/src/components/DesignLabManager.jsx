@@ -257,9 +257,9 @@ export default function DesignLabManager() {
 
         {/* Filter by category */}
         <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '1rem' }}>
-          <button onClick={() => { setSelectedCatFilter(''); fetchCp('') }} style={{ padding: '0.35rem 0.85rem', borderRadius: 999, border: '1px solid rgba(255,255,255,0.15)', background: selectedCatFilter === '' ? '#f97316' : 'transparent', color: '#fff', cursor: 'pointer', fontSize: '0.72rem', fontWeight: 700 }}>All</button>
+          <button onClick={() => { setSelectedCatFilter(''); fetchCp('') }} style={{ padding: '0.35rem 0.85rem', borderRadius: 999, border: '1px solid rgba(255,255,255,0.15)', background: selectedCatFilter === '' ? '#f97316' : '#111', color: '#fff', cursor: 'pointer', fontSize: '0.72rem', fontWeight: 700 }}>All</button>
           {cats.map(c => (
-            <button key={c._id} onClick={() => { setSelectedCatFilter(c.label); fetchCp(c.label) }} style={{ padding: '0.35rem 0.85rem', borderRadius: 999, border: '1px solid rgba(255,255,255,0.15)', background: selectedCatFilter === c.label ? '#f97316' : 'transparent', color: '#fff', cursor: 'pointer', fontSize: '0.72rem', fontWeight: 700 }}>{c.label}</button>
+            <button key={c._id} onClick={() => { setSelectedCatFilter(c.label); fetchCp(c.label) }} style={{ padding: '0.35rem 0.85rem', borderRadius: 999, border: '1px solid rgba(255,255,255,0.15)', background: selectedCatFilter === c.label ? '#f97316' : '#111', color: '#fff', cursor: 'pointer', fontSize: '0.72rem', fontWeight: 700 }}>{c.label}</button>
           ))}
         </div>
 
