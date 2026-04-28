@@ -5,7 +5,7 @@ import { Canvas, useFrame } from '@react-three/fiber'
 import { motion } from 'framer-motion'
 import { useTheme } from '../context/ThemeContext'
 import UserNavbar from './UserNavbar'
-import UserFooter from './UserFooter'
+import Footer from './Footer'
 import {
   FiUser, FiLock, FiBell, FiShield, FiTrash2,
   FiEye, FiEyeOff, FiSave, FiChevronRight
@@ -274,7 +274,7 @@ export default function Settings() {
           </div>
         </div>
       </div>
-      <UserFooter />
+      <Footer />
     </div>
   )
 }

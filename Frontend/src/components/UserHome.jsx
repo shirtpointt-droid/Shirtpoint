@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 import { useAuth } from '../context/AuthContext'
 import { useTheme } from '../context/ThemeContext'
 import UserNavbar from './UserNavbar'
-import UserFooter from './UserFooter'
+import Footer from './Footer'
 import UserProductGrid from './UserProductGrid'
 import '../css/UserHome.css'
 
@@ -358,7 +358,7 @@ export default function UserHome() {
 
       </div>
 
-      <UserFooter />
+      <Footer />
     </div>
   )
 }

@@ -1,11 +1,14 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { FaInstagram, FaTiktok, FaTwitter, FaArrowUp, FaYoutube } from 'react-icons/fa'
+import { useAuth } from '../context/AuthContext'
+import { FaInstagram, FaTiktok, FaTwitter, FaYoutube } from 'react-icons/fa'
 import { FiShoppingBag, FiGrid, FiStar, FiTruck, FiRefreshCw, FiHelpCircle, FiMail, FiInfo, FiBriefcase, FiShield, FiFileText } from 'react-icons/fi'
+import { RiCopperCoinLine } from 'react-icons/ri'
 import '../css/Footer.css'
 
 export default function Footer() {
   const navigate = useNavigate()
+  const { user } = useAuth()
 
   return (
     <footer className="footer">
@@ -28,6 +31,12 @@ export default function Footer() {
             <a href="#" className="footer-social" title="Twitter"><FaTwitter /></a>
             <a href="#" className="footer-social" title="YouTube"><FaYoutube /></a>
           </div>
+          {user && (
+            <div className="footer-credits-pill">
+              <RiCopperCoinLine className="footer-coin" />
+              <span>{(user.credits || 0).toLocaleString()} Credits Available</span>
+            </div>
+          )}
           <div className="footer-badge">🇵🇰 Made in Pakistan</div>
         </div>
 

@@ -5,7 +5,7 @@ import { Canvas, useFrame } from '@react-three/fiber'
 import { motion } from 'framer-motion'
 import { useTheme } from '../context/ThemeContext'
 import UserNavbar from './UserNavbar'
-import UserFooter from './UserFooter'
+import Footer from './Footer'
 import {
   FiEdit2, FiCamera, FiSave, FiX,
   FiShoppingBag, FiStar, FiClock, FiSettings, FiLogOut
@@ -279,7 +279,7 @@ export default function UserProfile() {
           </main>
         </div>
       </div>
-      <UserFooter />
+      <Footer />
     </div>
   )
 }

@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 import { useAuth } from '../context/AuthContext'
 import { useTheme } from '../context/ThemeContext'
 import UserNavbar from './UserNavbar'
-import UserFooter from './UserFooter'
+import Footer from './Footer'
 import { FiCheck, FiZap, FiShield, FiStar, FiArrowRight } from 'react-icons/fi'
 import { RiVipCrownFill, RiCopperCoinLine, RiVerifiedBadgeFill } from 'react-icons/ri'
 import '../css/Membership.css'
@@ -273,7 +273,7 @@ export default function Membership() {
 
       </div>
 
-      <UserFooter />
+      <Footer />
     </div>
   )
 }

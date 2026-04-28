@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import { FiArrowLeft, FiSearch } from 'react-icons/fi'
 import { useTheme } from '../context/ThemeContext'
 import UserNavbar from './UserNavbar'
+import Footer from './Footer'
 import '../css/DesignLab.css'
 
 function WavyGrid({ color, bgColor }) {
@@ -151,6 +152,7 @@ export default function CategoryPage() {
         )}
 
       </div>
+      <Footer />
     </div>
   )
 }

@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useAuth } from '../context/AuthContext'
 import { useTheme } from '../context/ThemeContext'
 import UserNavbar from './UserNavbar'
-import UserFooter from './UserFooter'
+import Footer from './Footer'
 import { FiSearch, FiHeart, FiStar, FiShoppingCart, FiTrendingUp, FiFilter } from 'react-icons/fi'
 import { RiVipCrownFill, RiVerifiedBadgeFill } from 'react-icons/ri'
 import '../css/Marketplace.css'
@@ -245,7 +245,7 @@ export default function Marketplace() {
         </div>
       </div>
 
-      <UserFooter />
+      <Footer />
     </div>
   )
 }

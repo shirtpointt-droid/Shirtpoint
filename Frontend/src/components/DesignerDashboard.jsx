@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 import { useAuth } from '../context/AuthContext'
 import { useTheme } from '../context/ThemeContext'
 import UserNavbar from './UserNavbar'
-import UserFooter from './UserFooter'
+import Footer from './Footer'
 import { FiTrendingUp, FiDollarSign, FiUsers, FiShoppingBag, FiPlus, FiEye, FiEdit2, FiTrash2, FiArrowRight } from 'react-icons/fi'
 import { RiCopperCoinLine, RiVipCrownFill } from 'react-icons/ri'
 import '../css/DesignerDashboard.css'
@@ -268,7 +268,7 @@ export default function DesignerDashboard() {
         </div>
       )}
 
-      <UserFooter />
+      <Footer />
     </div>
   )
 }

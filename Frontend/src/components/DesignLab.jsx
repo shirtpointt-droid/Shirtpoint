@@ -5,6 +5,7 @@ import { FiSun, FiMoon } from 'react-icons/fi'
 import { motion } from 'framer-motion'
 import { useTheme } from '../context/ThemeContext'
 import UserNavbar from './UserNavbar'
+import Footer from './Footer'
 import '../css/DesignLab.css'
 
 function WavyGrid({ color, bgColor }) {
@@ -121,6 +122,7 @@ export default function DesignLab() {
         )}
 
       </div>
+      <Footer />
     </div>
   )
 }
