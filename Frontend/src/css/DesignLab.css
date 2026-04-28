@@ -1487,6 +1487,7 @@
 }
 
 .dl-wrapper.dl-light .dl-step1-heading { color: #111; }
+.dl-wrapper.dl-light .dl-step1-heading span { -webkit-text-stroke-color: #f97316; }
 
 .dl-step1-sub {
   font-size: 0.85rem;
@@ -1782,8 +1783,11 @@
   background: rgba(255,255,255,0.04);
   border: 1px solid rgba(255,255,255,0.08);
   border-radius: 999px;
-  padding: 0.4rem 0.4rem 0.4rem 0.6rem;
+  padding: 0.35rem 0.35rem 0.35rem 0.35rem;
   backdrop-filter: blur(12px);
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .cp-back-btn {
@@ -1808,10 +1812,13 @@
 
 .dl-wrapper.dl-light .cp-top-bar {
   background: rgba(0,0,0,0.04);
-  border-color: rgba(0,0,0,0.08);
+  border-color: rgba(0,0,0,0.1);
 }
 
-/* Steps inside top bar */
+.dl-wrapper.dl-light .cp-top-bar .dl-step1-pill { color: rgba(0,0,0,0.4); }
+.dl-wrapper.dl-light .cp-top-bar .dl-step1-pill::after { color: rgba(0,0,0,0.2); }
+.dl-wrapper.dl-light .cp-top-bar .dl-step1-pill.active { color: #f97316; background: rgba(249,115,22,0.1); }
+.dl-wrapper.dl-light .cp-top-bar .dl-step1-pill-num { color: inherit; }
 .cp-top-bar .dl-step1-steps {
   display: flex;
   align-items: center;
@@ -1825,7 +1832,7 @@
   display: flex;
   align-items: center;
   gap: 0.35rem;
-  padding: 0.4rem 0.85rem;
+  padding: 0.45rem 1.1rem;
   border-radius: 999px;
   border: none;
   background: transparent;
@@ -1964,3 +1971,92 @@
   transition: all 0.2s;
 }
 .dl-lightbox-close:hover { background: #ef4444; border-color: #ef4444; }
+
+/* ── CATEGORY PAGE TOP BAR ── */
+.cp-top-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+  justify-content: center;
+}
+
+.cp-back-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1.1rem;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 999px;
+  color: rgba(255,255,255,0.7);
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+  backdrop-filter: blur(12px);
+}
+
+.cp-back-btn:hover { background: #f97316; border-color: #f97316; color: #fff; }
+
+.dl-wrapper.dl-light .cp-back-btn {
+  background: rgba(0,0,0,0.05);
+  border-color: rgba(0,0,0,0.12);
+  color: #555;
+}
+.dl-wrapper.dl-light .cp-back-btn:hover { background: #f97316; border-color: #f97316; color: #fff; }
+
+/* Steps pill container */
+.cp-top-bar .dl-step1-steps {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 999px;
+  padding: 0.3rem 0.5rem;
+  backdrop-filter: blur(12px);
+}
+
+.dl-wrapper.dl-light .cp-top-bar .dl-step1-steps {
+  background: rgba(0,0,0,0.04);
+  border-color: rgba(0,0,0,0.08);
+}
+
+.cp-top-bar .dl-step1-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 1.25rem;
+  border-radius: 999px;
+  border: none;
+  background: transparent;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.35);
+  transition: all 0.2s;
+  white-space: nowrap;
+  cursor: default;
+}
+
+.cp-top-bar .dl-step1-pill::after { display: none; }
+
+.cp-top-bar .dl-step1-pill.active {
+  background: rgba(249,115,22,0.15);
+  color: #f97316;
+  font-weight: 800;
+}
+
+.cp-top-bar .dl-step1-pill-num {
+  font-size: 0.58rem;
+  font-weight: 900;
+  font-family: monospace;
+  opacity: 0.6;
+}
+
+.cp-top-bar .dl-step1-pill.active .dl-step1-pill-num { opacity: 1; }
+
+.dl-wrapper.dl-light .cp-top-bar .dl-step1-pill { color: rgba(0,0,0,0.35); }
+.dl-wrapper.dl-light .cp-top-bar .dl-step1-pill::after { color: rgba(0,0,0,0.15); }
+.dl-wrapper.dl-light .cp-top-bar .dl-step1-pill.active { color: #f97316; background: rgba(249,115,22,0.1); }

@@ -90,12 +90,10 @@ export default function CategoryPage() {
                   onClick={() => n === 1 && navigate('/design-lab')}
                   style={{ cursor: n === 1 ? 'pointer' : 'default' }}
                 >
-                  <span className="dl-step1-pill-num">{`0${n}`}</span>
                   <span className="dl-step1-pill-label">{label}</span>
                 </div>
               ))}
             </div>
-            <div style={{ width: 80 }} />
           </div>
           <h2 className="dl-step1-heading">Pick a <span>{catName}</span></h2>
           <p className="dl-step1-sub">{products.length} products available — select one to customize</p>

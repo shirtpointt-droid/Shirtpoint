@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { FiSun, FiMoon } from 'react-icons/fi'
+import { FiSun, FiMoon, FiArrowLeft } from 'react-icons/fi'
 import { motion } from 'framer-motion'
 import { useTheme } from '../context/ThemeContext'
 import UserNavbar from './UserNavbar'
@@ -70,20 +70,24 @@ export default function DesignLab() {
 
         {/* Header */}
         <div className="dl-step1-header">
-          <div className="dl-step1-steps">
-            {[
-              {n:1, label:'All Categories'},
-              {n:2, label:'Category'},
-              {n:3, label:'Color Design'},
-              {n:4, label:'Icons Design'},
-              {n:5, label:'Final Look'},
-              {n:6, label:'Order'},
-            ].map(({n, label}) => (
-              <div key={n} className={`dl-step1-pill ${n === 1 ? 'active' : ''}`}>
-                <span className="dl-step1-pill-num">{`0${n}`}</span>
-                <span className="dl-step1-pill-label">{label}</span>
-              </div>
-            ))}
+          <div className="cp-top-bar">
+            <button className="cp-back-btn" onClick={() => navigate('/user-home')}>
+              <FiArrowLeft /> Back
+            </button>
+            <div className="dl-step1-steps">
+              {[
+                {n:1, label:'All Categories'},
+                {n:2, label:'Category'},
+                {n:3, label:'Color Design'},
+                {n:4, label:'Icons Design'},
+                {n:5, label:'Final Look'},
+                {n:6, label:'Order'},
+              ].map(({n, label}) => (
+                <div key={n} className={`dl-step1-pill ${n === 1 ? 'active' : ''}`}>
+                  <span className="dl-step1-pill-label">{label}</span>
+                </div>
+              ))}
+            </div>
           </div>
           <h2 className="dl-step1-heading">What do you want to <span>design?</span></h2>
           <p className="dl-step1-sub">Choose a product category to get started</p>
