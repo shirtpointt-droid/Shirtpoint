@@ -47,6 +47,7 @@ export default function UserProfile() {
     email: user?.email || '',
     phone: user?.phone || '',
     city:  user?.city  || '',
+    activeTab: 'Overview'
   })
   const [photo, setPhoto] = useState(user?.photo || null)
   const [saved, setSaved] = useState(false)
@@ -195,86 +196,190 @@ export default function UserProfile() {
 
           {/* ── RIGHT: Dashboard ── */}
           <main className="up-right">
-
-            {/* Stats */}
-            <motion.div className="up-stats-row"
-              initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.15 }}>
-              {STATS.map((s, i) => (
-                <div key={i} className="up-stat">
-                  <div className="up-stat-icon">{s.icon}</div>
-                  <h4 className="up-stat-val">{s.value}</h4>
-                  <p className="up-stat-label">{s.label}</p>
-                </div>
+            
+            {/* TAB NAVIGATION */}
+            <div className="up-tabs">
+              {['Overview', 'Orders', 'Wishlist', 'Addresses', 'Security', 'Referrals'].map(tab => (
+                <button key={tab} 
+                  className={`up-tab-btn ${form.activeTab === tab ? 'active' : ''}`}
+                  onClick={() => setForm(p => ({ ...p, activeTab: tab }))}>
+                  {tab}
+                </button>
               ))}
-            </motion.div>
+            </div>
 
-            {/* Order Tracking */}
-            <motion.div className="up-card up-order-card"
-              initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }}>
-              <div className="up-section-header">
-                <h3 className="up-section-title">Current Order Tracking</h3>
-                <span className="up-section-link">View History →</span>
-              </div>
-
-              {/* Progress */}
-              <div className="up-track-steps">
-                {ORDER_STEPS.map((s, i) => (
-                  <span key={i} className={`up-track-step ${i === 0 ? 'active' : ''}`}>{s}</span>
-                ))}
-              </div>
-              <div className="up-track-bar">
-                <motion.div className="up-track-fill"
-                  initial={{ width: 0 }} animate={{ width: '30%' }} transition={{ duration: 1.2, delay: 0.5 }} />
-              </div>
-
-              {/* Order Item */}
-              <div className="up-order-item">
-                <div className="up-order-thumb">
-                  <img src="https://www.pngarts.com/files/5/Plain-Black-T-Shirt-PNG-Image-Background.png" alt="tshirt" />
-                </div>
-                <div>
-                  <p className="up-order-name">Oversized "Cyberpunk" Tee</p>
-                  <p className="up-order-meta">Order #TS-9921 • Expected Wed, 28th</p>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Design Gallery */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.25 }}>
-              <div className="up-section-header" style={{ marginBottom: '1rem' }}>
-                <h3 className="up-section-title">Your Design Gallery</h3>
-                <span className="up-section-link" onClick={() => navigate('/design-lab')}>+ New Design →</span>
-              </div>
-              <div className="up-designs-grid">
-                {[1, 2, 3].map(d => (
-                  <div key={d} className="up-design-card">
-                    <div className="up-design-img">
-                      <img src="https://www.pngarts.com/files/5/Plain-White-T-Shirt-PNG-Image-Background.png" alt="design" />
+            {form.activeTab === 'Overview' && (
+              <>
+                {/* Profile Completeness */}
+                <motion.div className="up-card up-completeness-card"
+                  initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}>
+                  <div className="up-comp-info">
+                    <div>
+                      <h4 className="up-comp-title">Profile Completeness</h4>
+                      <p className="up-comp-desc">Finish setting up your account for faster checkouts.</p>
                     </div>
-                    <div className="up-design-actions">
-                      <span className="up-design-btn edit">Edit</span>
-                      <span className="up-design-btn sell">Sell</span>
+                    <span className="up-comp-pct">85%</span>
+                  </div>
+                  <div className="up-comp-bar"><div className="up-comp-fill" style={{ width: '85%' }} /></div>
+                  <div className="up-comp-tasks">
+                    <span className="up-task-done">✓ Phone Verified</span>
+                    <span className="up-task-done">✓ Email Verified</span>
+                    <span className="up-task-pending" onClick={() => setForm(p => ({ ...p, activeTab: 'Addresses' }))}>+ Add Shipping Address</span>
+                  </div>
+                </motion.div>
+
+                {/* Stats */}
+                <motion.div className="up-stats-row"
+                  initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }}>
+                  {STATS.map((s, i) => (
+                    <div key={i} className="up-stat">
+                      <div className="up-stat-icon">{s.icon}</div>
+                      <h4 className="up-stat-val">{s.value}</h4>
+                      <p className="up-stat-label">{s.label}</p>
+                    </div>
+                  ))}
+                </motion.div>
+
+                {/* Active Support Ticket */}
+                <motion.div className="up-card up-support-card"
+                  initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}>
+                  <div className="up-sec-header">
+                    <span>Active Support Queries</span>
+                    <span className="up-sec-badge on">1 OPEN</span>
+                  </div>
+                  <div className="up-order-item">
+                    <div className="up-trans-icon"><FiClock /></div>
+                    <div>
+                      <p className="up-order-name">Case #SP-441: Refund Request</p>
+                      <p className="up-order-meta">Average response time: 2 hours</p>
                     </div>
                   </div>
-                ))}
-              </div>
-            </motion.div>
+                </motion.div>
 
-            {/* Membership */}
-            <motion.div className={`up-card up-membership ${user?.isPro ? 'pro' : ''}`}
-              initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.3 }}>
-              <div className="up-membership-inner">
-                <RiVipCrownFill className="up-crown" />
-                <div>
-                  <h3>{user?.isPro ? 'PRO Member' : 'Free Plan'}</h3>
-                  <p>{user?.isPro ? 'Full access to all premium features' : 'Upgrade to unlock all features'}</p>
+                {/* Membership */}
+                <motion.div className={`up-membership-banner ${user?.isPro ? 'pro' : ''}`}
+                  initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2 }}>
+                  <div className="up-mem-content">
+                    <div className="up-mem-icon"><RiVipCrownFill /></div>
+                    <div>
+                      <h3>{user?.isPro ? 'Platinum Membership Active' : 'Unlock Exclusive Perks'}</h3>
+                      <p>{user?.isPro ? 'You are saving 15% on every order with Pro access.' : 'Get free shipping, 2x credits, and limited edition drops.'}</p>
+                    </div>
+                  </div>
+                  {!user?.isPro && <button className="up-mem-btn" onClick={() => navigate('/membership')}>Upgrade Now</button>}
+                </motion.div>
+              </>
+            )}
+
+            {form.activeTab === 'Wishlist' && (
+              <motion.div className="up-tab-content" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                <div className="up-section-header">
+                  <h3 className="up-section-title">Your Saved Items</h3>
+                  <span className="up-section-link" onClick={() => navigate('/marketplace')}>Browse Shop →</span>
                 </div>
-              </div>
-              {!user?.isPro && (
-                <button className="up-upgrade-btn"><RiVipCrownFill /> Upgrade to PRO</button>
-              )}
-            </motion.div>
+                <div className="up-designs-grid">
+                  {[
+                    { name: 'Vintage Oversized Tee', price: 'Rs 1,600', img: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500' },
+                    { name: 'Cyberpunk Black Hoodie', price: 'Rs 3,800', img: 'https://images.unsplash.com/photo-1556821840-3a63f15732ce?w=500' }
+                  ].map((item, i) => (
+                    <div key={i} className="up-design-card">
+                      <div className="up-design-img"><img src={item.img} alt="item" style={{ opacity: 1, borderRadius: '1rem' }} /></div>
+                      <div className="up-design-actions" style={{ opacity: 1, transform: 'none' }}>
+                        <span className="up-design-btn edit">Buy Now</span>
+                        <span className="up-design-btn sell" style={{ background: '#ef4444' }}>Remove</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+
+            {form.activeTab === 'Orders' && (
+              <motion.div className="up-tab-content" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                <div className="up-section-header">
+                  <h3 className="up-section-title">Purchase History</h3>
+                  <select className="up-sort-select"><option>Last 3 months</option><option>2026</option><option>2025</option></select>
+                </div>
+                <div className="up-transaction-list">
+                  {[
+                    { id: 'ORD-9912', item: 'Custom Hoodie (White)', status: 'Delivered', price: 'Rs 3,200', date: '12 Apr' },
+                    { id: 'ORD-9884', item: 'Graphic T-Shirt (XXL)', status: 'Delivered', price: 'Rs 1,850', date: '05 Apr' },
+                    { id: 'ORD-9721', item: 'Plain Cotton Kurta', status: 'Refunded', price: 'Rs 2,500', date: '28 Mar' },
+                  ].map((ord, i) => (
+                    <div key={i} className="up-trans-row">
+                      <div className="up-trans-icon"><FiShoppingBag /></div>
+                      <div className="up-trans-info">
+                        <span className="up-trans-name">{ord.item}</span>
+                        <span className="up-trans-meta">{ord.id} • {ord.date}</span>
+                      </div>
+                      <div className="up-trans-status">
+                        <span className={`up-status-dot ${ord.status.toLowerCase()}`} />
+                        {ord.status}
+                      </div>
+                      <div className="up-trans-price">{ord.price}</div>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+
+            {form.activeTab === 'Addresses' && (
+              <motion.div className="up-tab-content" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                <div className="up-section-header">
+                  <h3 className="up-section-title">Shipping Addresses</h3>
+                  <button className="up-add-address-btn">+ Add New</button>
+                </div>
+                <div className="up-address-grid">
+                  <div className="up-address-card active">
+                    <div className="up-address-tag">DEFAULT</div>
+                    <h4 className="up-address-name">Home Office</h4>
+                    <p className="up-address-text">House #123, Block-C, Gulshan-e-Iqbal, Karachi. 75300</p>
+                    <p className="up-address-phone">0300-1234567</p>
+                    <div className="up-address-actions"><span>Edit</span><span>Remove</span></div>
+                  </div>
+                  <div className="up-address-card">
+                    <h4 className="up-address-name">Work Studio</h4>
+                    <p className="up-address-text">Plot #45, Industrial Area Phase 2, Lahore. 54000</p>
+                    <div className="up-address-actions"><span>Edit</span><span>Remove</span></div>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+
+            {form.activeTab === 'Security' && (
+              <motion.div className="up-tab-content" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                <h3 className="up-section-title">Account Security</h3>
+                <div className="up-security-grid">
+                  <div className="up-sec-box">
+                    <div className="up-sec-header">
+                      <span>Two-Factor Authentication</span>
+                      <span className={`up-sec-badge ${user?.isTwoFactorEnabled ? 'on' : 'off'}`}>{user?.isTwoFactorEnabled ? 'PROTECTED' : 'DISABLED'}</span>
+                    </div>
+                    <p className="up-sec-desc">Add an extra layer of security to your account by requiring a code from your phone.</p>
+                    <button className="up-sec-btn" onClick={() => navigate('/settings')}>Configure Security</button>
+                  </div>
+                  <div className="up-sec-box">
+                    <div className="up-sec-header"><span>Account Recovery</span></div>
+                    <p className="up-sec-desc">Ensure your backup email and phone are up to date for account recovery.</p>
+                    <button className="up-sec-btn">Update Recovery</button>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+
+            {form.activeTab === 'Referrals' && (
+              <motion.div className="up-tab-content" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                <div className="up-refer-hero">
+                  <div className="up-refer-icon">🎁</div>
+                  <h3>Give Rs 500, Get Rs 500</h3>
+                  <p>Invite your friends to Shirtpoint and both of you will receive Rs 500 in credits on their first purchase.</p>
+                  <div className="up-refer-link-box">
+                    <input readOnly value={`shirtpoint.com/join?ref=${user?._id?.slice(-6) || 'XYZ123'}`} />
+                    <button onClick={() => alert('Link Copied!')}>Copy Link</button>
+                  </div>
+                </div>
+              </motion.div>
+            )}
 
           </main>
         </div>
