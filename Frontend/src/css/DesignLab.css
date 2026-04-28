@@ -1777,44 +1777,95 @@
 .cp-top-bar {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 1rem;
   margin-bottom: 2rem;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 999px;
+  padding: 0.4rem 0.4rem 0.4rem 0.6rem;
+  backdrop-filter: blur(12px);
 }
 
 .cp-back-btn {
   display: flex;
   align-items: center;
-  gap: 0.45rem;
-  padding: 0.55rem 1.25rem;
-  background: rgba(255,255,255,0.06);
-  border: 1.5px solid rgba(255,255,255,0.15);
+  gap: 0.4rem;
+  padding: 0.45rem 1rem;
+  background: #f97316;
+  border: none;
   border-radius: 999px;
-  color: rgba(255,255,255,0.7);
-  font-size: 0.78rem;
+  color: #fff;
+  font-size: 0.72rem;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.2s;
   letter-spacing: 0.5px;
-  width: 80px;
+  flex-shrink: 0;
+  width: auto;
 }
 
-.cp-back-btn:hover {
-  background: rgba(249,115,22,0.1);
-  border-color: #f97316;
+.cp-back-btn:hover { background: #ea580c; }
+
+.dl-wrapper.dl-light .cp-top-bar {
+  background: rgba(0,0,0,0.04);
+  border-color: rgba(0,0,0,0.08);
+}
+
+/* Steps inside top bar */
+.cp-top-bar .dl-step1-steps {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin: 0;
+  flex: 1;
+  justify-content: center;
+}
+
+.cp-top-bar .dl-step1-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: 999px;
+  border: none;
+  background: transparent;
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.35);
+  position: relative;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.cp-top-bar .dl-step1-pill::after {
+  content: '›';
+  position: absolute;
+  right: -4px;
+  color: rgba(255,255,255,0.15);
+  font-size: 0.8rem;
+}
+
+.cp-top-bar .dl-step1-pill:last-child::after { display: none; }
+
+.cp-top-bar .dl-step1-pill.active {
+  background: rgba(249,115,22,0.15);
   color: #f97316;
+  font-weight: 800;
 }
 
-.dl-wrapper.dl-light .cp-back-btn {
-  background: rgba(0,0,0,0.05);
-  border-color: rgba(0,0,0,0.15);
-  color: #555;
+.cp-top-bar .dl-step1-pill-num {
+  font-size: 0.58rem;
+  font-weight: 900;
+  font-family: monospace;
+  opacity: 0.6;
 }
 
-.dl-wrapper.dl-light .cp-back-btn:hover {
-  background: rgba(249,115,22,0.08);
-  border-color: #f97316;
-  color: #f97316;
-}
+.cp-top-bar .dl-step1-pill.active .dl-step1-pill-num { opacity: 1; }
+
+/* light mode */
+.dl-wrapper.dl-light .cp-top-bar .dl-step1-pill { color: rgba(0,0,0,0.3); }
+.dl-wrapper.dl-light .cp-top-bar .dl-step1-pill::after { color: rgba(0,0,0,0.15); }
+.dl-wrapper.dl-light .cp-top-bar .dl-step1-pill.active { color: #f97316; background: rgba(249,115,22,0.08); }
 
 /* ── PRODUCT ZOOM BUTTON ── */
 .dl-product-card { position: relative; }
