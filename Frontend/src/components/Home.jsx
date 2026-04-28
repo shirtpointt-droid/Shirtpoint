@@ -128,15 +128,20 @@ function Home() {
   }, [])
   const [split, setSplit] = useState({
     eyebrow: 'Premium Collection', heading: '3D CUSTOM T-SHIRT',
-    description: 'Aapka design, hamari quality.', btn1: 'Customize Now', btn2: 'View Details', videoUrl: '',
+    description: 'Your unique vision meets our premium craftsmanship. Design without limits.', btn1: 'Customize Now', btn2: 'View Details', videoUrl: '',
     features: [{ title: 'Fabric', value: '100% Organic Cotton' }, { title: 'Fit', value: 'Oversized / Regular' }, { title: 'Delivery', value: '3–5 Business Days' }, { title: 'Returns', value: 'Easy 7-Day Return' }]
   })
   const [split2, setSplit2] = useState({
     eyebrow: 'Exclusive Designs', heading: 'STYLE YOUR OWN WAY',
-    description: 'Apni personality ko express karo.', btn1: 'Explore Now', btn2: 'Learn More', videoUrl: '',
+    description: 'Express your true self through custom apparel that defines your personality.', btn1: 'Explore Now', btn2: 'Learn More', videoUrl: '',
     features: [{ title: 'Material', value: 'Premium Blend' }, { title: 'Colors', value: '20+ Options' }, { title: 'Sizes', value: 'XS to 3XL' }, { title: 'Print', value: 'HD Quality' }]
   })
-  const [reviews, setReviews] = useState([])
+  const [reviews, setReviews] = useState([
+    { name: 'Alex R.', city: 'Karachi', text: 'The 3D design lab is a game changer. I could see exactly how my design would look on the shirt before ordering. 10/10 quality!', rating: 5 },
+    { name: 'Sarah M.', city: 'Lahore', text: 'Best custom apparel platform I\'ve used. The HD printing is crisp and the fabric feels premium. Highly recommend.', rating: 5 },
+    { name: 'Zain U.', city: 'Islamabad', text: 'Fastest delivery I\'ve experienced for custom products. Received my shirt in 3 days and the fit is perfect.', rating: 5 },
+    { name: 'Maya J.', city: 'Faisalabad', text: 'Love the sustainable focus and the vibrant prints. Finally a brand that delivers what it promises.', rating: 5 }
+  ])
   const [brandCards, setBrandCards] = useState([])
 
   useEffect(() => {
@@ -272,7 +277,7 @@ function Home() {
 
         <div className="mid-hero-bottom">
           <motion.p className="mid-hero-desc" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 0.4, duration: 0.6 }} viewport={{ once: true }}>
-            Aapka unique design ab 3D space mein. Premium fabrics par real-time visualize karo.
+            Experience your unique designs in a professional 3D space. Real-time visualization on premium quality fabrics.
           </motion.p>
           <motion.button className="mid-hero-btn" onClick={() => navigate('/design-lab')} whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.93 }}>
             Shop Now
