@@ -23,6 +23,7 @@ const howItWorksRoutes = require('./routes/howItWorksRoutes')
 const userProductRoutes = require('./routes/userProductRoutes')
 const collectionImageRoutes = require('./routes/collectionImageRoutes')
 const designLabCategoryRoutes = require('./routes/designLabCategoryRoutes')
+const tshirtTypeRoutes = require('./routes/tshirtTypeRoutes')
 
 dotenv.config()
 
@@ -92,6 +93,7 @@ app.use('/api/how-it-works', howItWorksRoutes)
 app.use('/api/user-products', userProductRoutes)
 app.use('/api/collection-images', collectionImageRoutes)
 app.use('/api/design-lab-categories', designLabCategoryRoutes)
+app.use('/api/tshirt-types', tshirtTypeRoutes)
 
 app.get('/', (req, res) => res.send('T-Shirt Point API Running'))
 
