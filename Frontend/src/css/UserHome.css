@@ -473,12 +473,13 @@
 /* ── 3 PICTURE SLIDER ── */
 .uh-slider {
   position: relative;
-  border-radius: 1.5rem;
+  border-radius: 0;
   overflow: hidden;
   margin-bottom: 2rem;
   height: 560px;
-  margin-left: -3rem;
-  margin-right: -3rem;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+  width: 100vw;
   box-shadow: 0 8px 40px rgba(0,0,0,0.5);
 }
 
