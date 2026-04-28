@@ -214,10 +214,6 @@ export default function UserHome() {
                 {/* Divider */}
                 <div className="divider-section">
                   <div className="crack-line crack-left" />
-                  <div className="bolt-nexus">
-                    <div className="glow-effect" />
-                    <div className="bolt-icon">{box.icon}</div>
-                  </div>
                   <div className="crack-line crack-right" />
                 </div>
 
@@ -228,25 +224,56 @@ export default function UserHome() {
                   <h2 className="product-title">{newDrops[box.bot].title}</h2>
                 </div>
 
-                {/* Glass Shatter SVG Overlay */}
+                {/* Glass Overlay */}
                 <div className="glass-shatter-overlay">
                   <svg width="100%" height="100%" viewBox="0 0 400 600" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-                    <g stroke="rgba(255,255,255,0.12)" strokeWidth="0.8" fill="none">
-                      <line x1="200" y1="300" x2="80" y2="180" />
-                      <line x1="200" y1="300" x2="320" y2="160" />
-                      <line x1="200" y1="300" x2="50" y2="320" />
-                      <line x1="200" y1="300" x2="360" y2="340" />
-                      <line x1="200" y1="300" x2="120" y2="480" />
-                      <line x1="200" y1="300" x2="300" y2="500" />
-                      <line x1="80" y1="180" x2="20" y2="100" />
-                      <line x1="80" y1="180" x2="150" y2="80" />
-                      <line x1="320" y1="160" x2="380" y2="60" />
-                      <line x1="320" y1="160" x2="260" y2="50" />
-                      <line x1="50" y1="320" x2="0" y2="280" />
-                      <line x1="360" y1="340" x2="400" y2="300" />
-                      <line x1="120" y1="480" x2="60" y2="580" />
-                      <line x1="300" y1="500" x2="370" y2="580" />
+                    <defs>
+                      <linearGradient id="glassShine" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="rgba(255,255,255,0.18)" />
+                        <stop offset="40%" stopColor="rgba(255,255,255,0.04)" />
+                        <stop offset="60%" stopColor="rgba(255,255,255,0.10)" />
+                        <stop offset="100%" stopColor="rgba(255,255,255,0.02)" />
+                      </linearGradient>
+                      <linearGradient id="crackGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="rgba(255,255,255,0.0)" />
+                        <stop offset="50%" stopColor="rgba(255,255,255,0.6)" />
+                        <stop offset="100%" stopColor="rgba(255,255,255,0.0)" />
+                      </linearGradient>
+                    </defs>
+                    {/* Full glass tint */}
+                    <rect width="400" height="600" fill="url(#glassShine)" />
+                    {/* Top-left shine streak */}
+                    <polygon points="0,0 160,0 60,180 0,120" fill="rgba(255,255,255,0.07)" />
+                    {/* Bottom-right shine streak */}
+                    <polygon points="400,600 240,600 340,420 400,480" fill="rgba(255,255,255,0.05)" />
+                    {/* Crack lines radiating from center */}
+                    <g stroke="url(#crackGlow)" strokeWidth="1" fill="none" opacity="0.7">
+                      <line x1="200" y1="300" x2="45" y2="155" />
+                      <line x1="200" y1="300" x2="355" y2="140" />
+                      <line x1="200" y1="300" x2="20" y2="310" />
+                      <line x1="200" y1="300" x2="385" y2="330" />
+                      <line x1="200" y1="300" x2="100" y2="490" />
+                      <line x1="200" y1="300" x2="310" y2="510" />
+                      <line x1="200" y1="300" x2="200" y2="10" />
+                      <line x1="200" y1="300" x2="200" y2="590" />
                     </g>
+                    {/* Secondary branch cracks */}
+                    <g stroke="rgba(255,255,255,0.3)" strokeWidth="0.6" fill="none">
+                      <line x1="45" y1="155" x2="10" y2="80" />
+                      <line x1="45" y1="155" x2="110" y2="60" />
+                      <line x1="355" y1="140" x2="390" y2="55" />
+                      <line x1="355" y1="140" x2="280" y2="30" />
+                      <line x1="20" y1="310" x2="0" y2="250" />
+                      <line x1="20" y1="310" x2="0" y2="380" />
+                      <line x1="385" y1="330" x2="400" y2="260" />
+                      <line x1="385" y1="330" x2="400" y2="410" />
+                      <line x1="100" y1="490" x2="40" y2="570" />
+                      <line x1="100" y1="490" x2="55" y2="430" />
+                      <line x1="310" y1="510" x2="375" y2="585" />
+                      <line x1="310" y1="510" x2="360" y2="450" />
+                    </g>
+                    {/* Edge border shimmer */}
+                    <rect width="400" height="600" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="1" />
                   </svg>
                 </div>
 
