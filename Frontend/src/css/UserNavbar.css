@@ -4,33 +4,52 @@
   z-index: 200;
   padding: 1rem 2rem;
   transition: all 0.35s ease;
+  background: rgba(10,10,10,0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 
 .unav-scrolled {
   padding: 0.5rem 2rem;
-  background: rgba(10,10,10,0.92);
+  background: rgba(255,255,255,0.95);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(249,115,22,0.2);
-  box-shadow: 0 4px 24px rgba(0,0,0,0.3);
-}
-
-.unav[data-theme='light'].unav-scrolled {
-  background: rgba(255,255,255,0.92);
-  border-bottom: 1px solid rgba(0,0,0,0.2);
+  border-bottom: 1px solid rgba(0,0,0,0.08);
   box-shadow: 0 4px 24px rgba(0,0,0,0.08);
 }
 
-.unav[data-theme='light'] .unav-logo { color: #111; text-shadow: none; }
-.unav[data-theme='light'] .unav-link { color: rgba(0,0,0,0.6); }
-.unav[data-theme='light'] .unav-link:hover { color: #111; background: rgba(0,0,0,0.06); }
-.unav[data-theme='light'] .unav-user-pill { background: rgba(0,0,0,0.05); border-color: rgba(0,0,0,0.15); }
-.unav[data-theme='light'] .unav-user-pill:hover { background: rgba(249,115,22,0.08); border-color: #f97316; }
-.unav[data-theme='light'] .unav-pill-name { color: #111; }
-.unav[data-theme='light'] .unav-theme-btn { background: rgba(0,0,0,0.06); border-color: rgba(0,0,0,0.15); color: #333; }
-.unav[data-theme='light'] .unav-cart { color: rgba(0,0,0,0.6); }
-.unav[data-theme='light'] .unav-cart:hover { color: #111; }
-.unav[data-theme='light'] .unav-hamburger { color: #111; }
+/* Dark mode scrolled — white */
+.unav[data-theme='dark'].unav-scrolled {
+  background: rgba(255,255,255,0.97) !important;
+  border-bottom: 1px solid rgba(0,0,0,0.08) !important;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08) !important;
+}
+
+.unav[data-theme='dark'].unav-scrolled .unav-logo { color: #111 !important; }
+.unav[data-theme='dark'].unav-scrolled .unav-link { color: rgba(0,0,0,0.6) !important; }
+.unav[data-theme='dark'].unav-scrolled .unav-link:hover { color: #111 !important; background: rgba(0,0,0,0.06) !important; }
+.unav[data-theme='dark'].unav-scrolled .unav-link.active { color: #f97316 !important; }
+.unav[data-theme='dark'].unav-scrolled .unav-pill-name { color: #111 !important; }
+.unav[data-theme='dark'].unav-scrolled .unav-theme-btn { background: rgba(0,0,0,0.06) !important; border-color: rgba(0,0,0,0.12) !important; color: #333 !important; }
+.unav[data-theme='dark'].unav-scrolled .unav-cart { color: rgba(0,0,0,0.6) !important; }
+.unav[data-theme='dark'].unav-scrolled .unav-hamburger { color: #111 !important; }
+
+/* Light mode scrolled — black */
+.unav[data-theme='light'].unav-scrolled {
+  background: rgba(10,10,10,0.97) !important;
+  border-bottom: 1px solid rgba(255,255,255,0.08) !important;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.3) !important;
+}
+
+.unav[data-theme='light'] .unav-logo { color: #fff !important; }
+.unav[data-theme='light'] .unav-link { color: rgba(255,255,255,0.6) !important; }
+.unav[data-theme='light'] .unav-link:hover { color: #fff !important; background: rgba(255,255,255,0.08) !important; }
+.unav[data-theme='light'] .unav-link.active { color: #f97316 !important; background: rgba(249,115,22,0.12) !important; }
+.unav[data-theme='light'] .unav-user-pill { background: rgba(255,255,255,0.06) !important; border-color: rgba(249,115,22,0.25) !important; }
+.unav[data-theme='light'] .unav-pill-name { color: #fff !important; }
+.unav[data-theme='light'] .unav-theme-btn { background: rgba(255,255,255,0.08) !important; border-color: rgba(255,255,255,0.12) !important; color: rgba(255,255,255,0.7) !important; }
+.unav[data-theme='light'] .unav-cart { color: rgba(255,255,255,0.7) !important; }
+.unav[data-theme='light'] .unav-hamburger { color: #fff !important; }
 
 .unav-inner {
   max-width: 1280px;
@@ -386,4 +405,24 @@
   .unav-credits { display: none; }
   .unav-hamburger { display: block; }
   .unav { padding: 0.75rem 1.25rem; }
+}
+
+/* ── NAVBAR ALWAYS COLORED ── */
+.unav[data-theme='dark'] {
+  background: rgba(255,255,255,0.92);
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+
+.unav[data-theme='dark'] .unav-logo { color: #111; }
+.unav[data-theme='dark'] .unav-link { color: rgba(0,0,0,0.6); }
+.unav[data-theme='dark'] .unav-link:hover { color: #111; background: rgba(0,0,0,0.06); }
+.unav[data-theme='dark'] .unav-link.active { color: #f97316; background: rgba(249,115,22,0.1); }
+.unav[data-theme='dark'] .unav-pill-name { color: #111; }
+.unav[data-theme='dark'] .unav-theme-btn { background: rgba(0,0,0,0.06); border-color: rgba(0,0,0,0.12); color: #333; }
+.unav[data-theme='dark'] .unav-cart { color: rgba(0,0,0,0.6); }
+.unav[data-theme='dark'] .unav-hamburger { color: #111; }
+
+.unav[data-theme='light'] {
+  background: rgba(10,10,10,0.92);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
 }

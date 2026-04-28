@@ -2110,3 +2110,29 @@
   border-color: rgba(30,41,59,0.4);
   box-shadow: 0 12px 32px rgba(30,41,59,0.1);
 }
+
+/* ── BACK BUTTON MODERN ── */
+.cp-back-btn {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6) !important;
+  border: none !important;
+  color: #fff !important;
+  box-shadow: 0 4px 16px rgba(99,102,241,0.4);
+}
+
+.cp-back-btn:hover {
+  background: linear-gradient(135deg, #4f46e5, #7c3aed) !important;
+  box-shadow: 0 6px 20px rgba(99,102,241,0.5);
+  color: #fff !important;
+}
+
+.dl-wrapper.dl-light .cp-back-btn {
+  background: linear-gradient(135deg, #1e293b, #334155) !important;
+  border: none !important;
+  color: #fff !important;
+  box-shadow: 0 4px 16px rgba(30,41,59,0.3);
+}
+
+.dl-wrapper.dl-light .cp-back-btn:hover {
+  background: linear-gradient(135deg, #0f172a, #1e293b) !important;
+  box-shadow: 0 6px 20px rgba(30,41,59,0.4);
+}
