@@ -23,6 +23,9 @@ function UserHomeManager() {
   const [collImages, setCollImages] = useState([])
   const [collUploading, setCollUploading] = useState(false)
 
+  const [newDrop, setNewDrop] = useState({ topImage: '', topTitle: 'Neon Cyber Tee', bottomImage: '', bottomTitle: 'Minimalist Cloud Hoodie' })
+  const [ndUploading, setNdUploading] = useState(false)
+
   const [userProducts, setUserProducts] = useState([])
   const [upForm, setUpForm] = useState({ name: '', baseImage: '', logos: ['', '', ''], logoSizes: [30, 30, 30], logoPos: [{top:45,left:50},{top:45,left:50},{top:45,left:50}] })
   const [editingUp, setEditingUp] = useState(null)
@@ -45,6 +48,8 @@ function UserHomeManager() {
     if (pt.image) setPreviewImg(pt.image)
     const ci = await fetch('http://localhost:5000/api/collection-images').then(r => r.json())
     setCollImages(ci)
+    const nd = await fetch('http://localhost:5000/api/new-drop').then(r => r.json())
+    if (nd.topImage) setNewDrop({ topImage: nd.topImage, topTitle: nd.topTitle || '', bottomImage: nd.bottomImage || '', bottomTitle: nd.bottomTitle || '' })
   }
 
   useEffect(() => { fetchAll() }, [])
@@ -173,6 +178,21 @@ function UserHomeManager() {
   const handleUpEdit = (p) => {
     setUpForm({ name: p.name, baseImage: p.baseImage, logos: p.logos?.map(l => l.image || '').concat(['', '', '']).slice(0, 3) || ['', '', ''], logoSizes: p.logos?.map(l => l.size || 30).concat([30, 30, 30]).slice(0, 3) || [30, 30, 30], logoPos: p.logos?.map(l => l.pos || {top:45,left:50}).concat([{top:45,left:50},{top:45,left:50},{top:45,left:50}]).slice(0, 3) || [{top:45,left:50},{top:45,left:50},{top:45,left:50}] })
     setEditingUp(p)
+  }
+
+  // ── New Drop ──
+  const handleNdUpload = async (e, field) => {
+    const file = e.target.files[0]; if (!file) return
+    setNdUploading(true)
+    const url = await upload(file)
+    setNewDrop(p => ({ ...p, [field]: url }))
+    setNdUploading(false)
+  }
+
+  const handleNdSave = async () => {
+    if (!newDrop.topImage || !newDrop.bottomImage) return
+    await fetch('http://localhost:5000/api/new-drop', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(newDrop) })
+    alert('✅ New Drop saved!')
   }
 
   const handleUpDelete = async (id) => {
@@ -378,6 +398,54 @@ function UserHomeManager() {
               </div>
             ))
           }
+        </div>
+      </div>
+
+      {/* NEW DROPS BOX */}
+      <div className="admin-carousel-section">
+        <h2 className="admin-carousel-title">⚡ New Drops — Split Box Images</h2>
+        <p className="admin-carousel-sub">User Home ke "New Drops" box ki Top aur Bottom image yahan upload karo</p>
+        <div className="admin-product-form">
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+
+            <div className="admin-split-field">
+              <label>Top Image (e.g. Neon Cyber Tee)</label>
+              <div className="admin-image-upload" onClick={() => !ndUploading && document.getElementById('ndTopImg').click()}>
+                {newDrop.topImage
+                  ? <img src={newDrop.topImage} alt="top" className="admin-image-preview" style={{ objectFit: 'cover' }} />
+                  : <div className="admin-image-placeholder"><span>👕</span><p>{ndUploading ? 'Uploading...' : 'Upload Top Image'}</p></div>}
+                <input id="ndTopImg" type="file" accept="image/*" style={{ display: 'none' }} onChange={e => handleNdUpload(e, 'topImage')} />
+              </div>
+              <input
+                value={newDrop.topTitle}
+                onChange={e => setNewDrop(p => ({ ...p, topTitle: e.target.value }))}
+                placeholder="Top title (e.g. Neon Cyber Tee)"
+                style={{ marginTop: 8, width: '100%', padding: '8px 12px', borderRadius: 8, border: '1px solid #333', background: '#1a1a1a', color: '#fff', fontSize: 13 }}
+              />
+            </div>
+
+            <div className="admin-split-field">
+              <label>Bottom Image (e.g. Minimalist Cloud Hoodie)</label>
+              <div className="admin-image-upload" onClick={() => !ndUploading && document.getElementById('ndBotImg').click()}>
+                {newDrop.bottomImage
+                  ? <img src={newDrop.bottomImage} alt="bottom" className="admin-image-preview" style={{ objectFit: 'cover' }} />
+                  : <div className="admin-image-placeholder"><span>👕</span><p>{ndUploading ? 'Uploading...' : 'Upload Bottom Image'}</p></div>}
+                <input id="ndBotImg" type="file" accept="image/*" style={{ display: 'none' }} onChange={e => handleNdUpload(e, 'bottomImage')} />
+              </div>
+              <input
+                value={newDrop.bottomTitle}
+                onChange={e => setNewDrop(p => ({ ...p, bottomTitle: e.target.value }))}
+                placeholder="Bottom title (e.g. Minimalist Cloud Hoodie)"
+                style={{ marginTop: 8, width: '100%', padding: '8px 12px', borderRadius: 8, border: '1px solid #333', background: '#1a1a1a', color: '#fff', fontSize: 13 }}
+              />
+            </div>
+          </div>
+
+          <div className="admin-product-actions" style={{ marginTop: '1rem' }}>
+            <button className="admin-carousel-btn" onClick={handleNdSave} disabled={ndUploading || !newDrop.topImage || !newDrop.bottomImage}>
+              💾 Save New Drop
+            </button>
+          </div>
         </div>
       </div>
 

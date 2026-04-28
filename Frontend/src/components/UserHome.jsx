@@ -43,6 +43,8 @@ export default function UserHome() {
   const [collImages, setCollImages] = useState([])
   const canvasRef = useRef(null)
 
+  const [newDrop, setNewDrop] = useState(null)
+
   const defaultCards = [
     { name: 'T-Shirts', imgDefault: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800&q=95&fit=crop', imgHover: 'https://images.unsplash.com/photo-1503341504253-dff4815485f1?w=800&q=95&fit=crop' },
     { name: 'Hoodies',  imgDefault: 'https://images.unsplash.com/photo-1556821840-3a63f15732ce?w=800&q=95&fit=crop', imgHover: 'https://images.unsplash.com/photo-1578768079052-aa76e52ff62e?w=800&q=95&fit=crop' },
@@ -59,8 +61,8 @@ export default function UserHome() {
   ])
 
   const newDrops = [
-    { title: 'Neon Cyber Tee',          img: 'https://images.unsplash.com/photo-1503341504253-dff4815485f1?w=800&q=95&fit=crop' },
-    { title: 'Minimalist Cloud Hoodie', img: 'https://images.unsplash.com/photo-1556821840-3a63f15732ce?w=800&q=95&fit=crop' },
+    { title: newDrop?.topTitle || 'Neon Cyber Tee',          img: newDrop?.topImage || 'https://images.unsplash.com/photo-1503341504253-dff4815485f1?w=800&q=95&fit=crop' },
+    { title: newDrop?.bottomTitle || 'Minimalist Cloud Hoodie', img: newDrop?.bottomImage || 'https://images.unsplash.com/photo-1556821840-3a63f15732ce?w=800&q=95&fit=crop' },
     { title: 'Urban Legend Oversized',  img: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=800&q=95&fit=crop' },
     { title: 'Midnight Street Tee',     img: 'https://images.unsplash.com/photo-1578768079052-aa76e52ff62e?w=800&q=95&fit=crop' },
     { title: 'Shadow Drop Hoodie',      img: 'https://images.unsplash.com/photo-1556821840-3a63f15732ce?w=800&q=95&fit=crop' },
@@ -90,6 +92,7 @@ export default function UserHome() {
     fetch('http://localhost:5000/api/preview-tshirt').then(r => r.json()).then(data => { if (data.image) setPreviewTshirt(data.image) }).catch(() => {})
     fetch('http://localhost:5000/api/how-it-works').then(r => r.json()).then(data => { if (data.length > 0) setHiwImages(data.map(d => d.image)) }).catch(() => {})
     fetch('http://localhost:5000/api/collection-images').then(r => r.json()).then(data => { if (data.length > 0) setCollImages(data) }).catch(() => {})
+    fetch('http://localhost:5000/api/new-drop').then(r => r.json()).then(data => { if (data.topImage) setNewDrop(data) }).catch(() => {})
   }, [])
 
   useEffect(() => {

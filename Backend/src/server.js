@@ -25,6 +25,7 @@ const collectionImageRoutes = require('./routes/collectionImageRoutes')
 const designLabCategoryRoutes = require('./routes/designLabCategoryRoutes')
 const tshirtTypeRoutes = require('./routes/tshirtTypeRoutes')
 const categoryProductRoutes = require('./routes/categoryProductRoutes')
+const newDropRoutes = require('./routes/newDropRoutes')
 
 dotenv.config()
 
@@ -95,6 +96,7 @@ app.use('/api/collection-images', collectionImageRoutes)
 app.use('/api/design-lab-categories', designLabCategoryRoutes)
 app.use('/api/tshirt-types', tshirtTypeRoutes)
 app.use('/api/category-products', categoryProductRoutes)
+app.use('/api/new-drop', newDropRoutes)
 
 app.get('/', (req, res) => res.send('T-Shirt Point API Running'))
 
