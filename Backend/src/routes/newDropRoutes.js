@@ -16,6 +16,13 @@ router.post('/', async (req, res) => {
   } catch (err) { res.status(400).json({ message: err.message }) }
 })
 
+router.put('/:id', async (req, res) => {
+  try {
+    const drop = await NewDrop.findByIdAndUpdate(req.params.id, req.body, { new: true })
+    res.json(drop)
+  } catch (err) { res.status(400).json({ message: err.message }) }
+})
+
 router.delete('/:id', async (req, res) => {
   try {
     await NewDrop.findByIdAndDelete(req.params.id)

@@ -3009,3 +3009,43 @@
   transform: translateY(16px) rotate(2.5deg) skewX(1.5deg) !important;
   box-shadow: 0 24px 60px rgba(0,0,0,0.75), 0 0 24px rgba(249,115,22,0.2) !important;
 }
+
+/* ── FRAMES JAGGED CRACK SHAPE ── */
+.nd-frame-top {
+  clip-path: polygon(
+    0% 0%, 100% 0%, 100% 100%,
+    97% 92%, 93% 100%, 89% 88%, 85% 98%, 81% 86%, 77% 96%, 73% 84%, 69% 95%, 65% 83%, 61% 94%, 57% 82%, 53% 97%, 49% 85%, 45% 96%, 41% 83%, 37% 95%, 33% 84%, 29% 97%, 25% 86%, 21% 98%, 17% 87%, 13% 99%, 9% 88%, 5% 97%, 2% 90%, 0% 100%
+  );
+}
+
+.nd-frame-bottom {
+  clip-path: polygon(
+    0% 0%,
+    2% 10%, 5% 3%, 9% 12%, 13% 1%, 17% 13%, 21% 2%, 25% 14%, 29% 3%, 33% 16%, 37% 5%, 41% 17%, 45% 4%, 49% 15%, 53% 3%, 57% 18%, 61% 6%, 65% 17%, 69% 5%, 73% 16%, 77% 4%, 81% 14%, 85% 2%, 89% 12%, 93% 0%, 97% 8%, 100% 0%,
+    100% 100%, 0% 100%
+  );
+}
+
+/* ── ND FRAME IMG CONTAIN ── */
+.nd-frame-img {
+  object-fit: contain !important;
+  background: #0d0d0d;
+}
+
+/* ── ND FRAME TRANSPARENT BG ── */
+.nd-frame,
+.nd-frame-top,
+.nd-frame-bottom,
+.nd-frame-img,
+.nd-card {
+  background: transparent !important;
+}
+
+/* ── ND FRAME FULLY TRANSPARENT ── */
+.nd-frame,
+.nd-frame-top,
+.nd-frame-bottom {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}

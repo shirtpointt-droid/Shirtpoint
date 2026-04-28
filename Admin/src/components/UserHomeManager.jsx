@@ -25,7 +25,10 @@ function UserHomeManager() {
 
   const [newDrops, setNewDrops] = useState([])
   const [ndForm, setNdForm] = useState({ topImage: '', topTitle: '', bottomImage: '', bottomTitle: '' })
+  const [ndOriginals, setNdOriginals] = useState({ topImage: '', bottomImage: '' })
   const [ndUploading, setNdUploading] = useState(false)
+  const [ndRmbgField, setNdRmbgField] = useState('')
+  const [editingNd, setEditingNd] = useState(null)
 
   const [userProducts, setUserProducts] = useState([])
   const [upForm, setUpForm] = useState({ name: '', baseImage: '', logos: ['', '', ''], logoSizes: [30, 30, 30], logoPos: [{top:45,left:50},{top:45,left:50},{top:45,left:50}] })
@@ -187,15 +190,36 @@ function UserHomeManager() {
     setNdUploading(true)
     const url = await upload(file)
     setNdForm(p => ({ ...p, [field]: url }))
+    setNdOriginals(p => ({ ...p, [field]: url }))
     setNdUploading(false)
+  }
+
+  const removeNdBg = async (field) => {
+    setNdRmbgField(field)
+    try {
+      const blob = await removeBg(ndForm[field])
+      const fd = new FormData(); fd.append('image', blob, `nd_${field}_clean.png`)
+      const res = await fetch('http://localhost:5000/api/upload', { method: 'POST', body: fd })
+      const data = await res.json()
+      setNdForm(p => ({ ...p, [field]: data.url }))
+    } catch { alert('Background remove nahi hua') }
+    setNdRmbgField('')
   }
 
   const handleNdSave = async () => {
     if (!ndForm.topImage || !ndForm.bottomImage) return
-    const res = await fetch('http://localhost:5000/api/new-drop', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(ndForm) })
-    const saved = await res.json()
-    setNewDrops(p => [...p, saved])
+    if (editingNd) {
+      const res = await fetch(`http://localhost:5000/api/new-drop/${editingNd._id}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(ndForm) })
+      const updated = await res.json()
+      setNewDrops(p => p.map(d => d._id === editingNd._id ? updated : d))
+      setEditingNd(null)
+    } else {
+      const res = await fetch('http://localhost:5000/api/new-drop', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(ndForm) })
+      const saved = await res.json()
+      setNewDrops(p => [...p, saved])
+    }
     setNdForm({ topImage: '', topTitle: '', bottomImage: '', bottomTitle: '' })
+    setNdOriginals({ topImage: '', bottomImage: '' })
   }
 
   const handleNdDelete = async (id) => {
@@ -414,30 +438,44 @@ function UserHomeManager() {
         <h2 className="admin-carousel-title">⚡ New Drops — Split Box Images</h2>
         <p className="admin-carousel-sub">Jitne chahein utne boxes add karo — har box mein Top + Bottom image</p>
         <div className="admin-product-form">
+          <h3>{editingNd ? 'Edit Box' : 'Add New Box'}</h3>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
             <div className="admin-split-field">
               <label>Top Image</label>
-              <div className="admin-image-upload" onClick={() => !ndUploading && document.getElementById('ndTopImg').click()}>
+              <div className="admin-image-upload" onClick={() => !ndUploading && !ndRmbgField && document.getElementById('ndTopImg').click()}>
                 {ndForm.topImage
-                  ? <img src={ndForm.topImage} alt="top" className="admin-image-preview" style={{ objectFit: 'cover' }} />
+                  ? <img src={ndForm.topImage} alt="top" className="admin-image-preview" style={{ objectFit: 'contain', background: 'repeating-conic-gradient(#2a2a2a 0% 25%, #1a1a1a 0% 50%) 0 0 / 16px 16px' }} />
                   : <div className="admin-image-placeholder"><span>👕</span><p>{ndUploading ? 'Uploading...' : 'Upload Top Image'}</p></div>}
                 <input id="ndTopImg" type="file" accept="image/*" style={{ display: 'none' }} onChange={e => handleNdUpload(e, 'topImage')} />
               </div>
+              {ndForm.topImage && (
+                <div className="admin-rmbg-actions">
+                  <button className="admin-rmbg-btn" onClick={() => removeNdBg('topImage')} disabled={!!ndRmbgField}>✂️ {ndRmbgField === 'topImage' ? 'Removing...' : 'Remove BG'}</button>
+                  {ndForm.topImage !== ndOriginals.topImage && ndOriginals.topImage && <button className="admin-rmbg-cancel" onClick={() => setNdForm(p => ({ ...p, topImage: ndOriginals.topImage }))}>↩️ Cancel</button>}
+                </div>
+              )}
               <input value={ndForm.topTitle} onChange={e => setNdForm(p => ({ ...p, topTitle: e.target.value }))} placeholder="Top title" style={{ marginTop: 8, width: '100%', padding: '8px 12px', borderRadius: 8, border: '1px solid #333', background: '#1a1a1a', color: '#fff', fontSize: 13 }} />
             </div>
             <div className="admin-split-field">
               <label>Bottom Image</label>
-              <div className="admin-image-upload" onClick={() => !ndUploading && document.getElementById('ndBotImg').click()}>
+              <div className="admin-image-upload" onClick={() => !ndUploading && !ndRmbgField && document.getElementById('ndBotImg').click()}>
                 {ndForm.bottomImage
-                  ? <img src={ndForm.bottomImage} alt="bottom" className="admin-image-preview" style={{ objectFit: 'cover' }} />
+                  ? <img src={ndForm.bottomImage} alt="bottom" className="admin-image-preview" style={{ objectFit: 'contain', background: 'repeating-conic-gradient(#2a2a2a 0% 25%, #1a1a1a 0% 50%) 0 0 / 16px 16px' }} />
                   : <div className="admin-image-placeholder"><span>👕</span><p>{ndUploading ? 'Uploading...' : 'Upload Bottom Image'}</p></div>}
                 <input id="ndBotImg" type="file" accept="image/*" style={{ display: 'none' }} onChange={e => handleNdUpload(e, 'bottomImage')} />
               </div>
+              {ndForm.bottomImage && (
+                <div className="admin-rmbg-actions">
+                  <button className="admin-rmbg-btn" onClick={() => removeNdBg('bottomImage')} disabled={!!ndRmbgField}>✂️ {ndRmbgField === 'bottomImage' ? 'Removing...' : 'Remove BG'}</button>
+                  {ndForm.bottomImage !== ndOriginals.bottomImage && ndOriginals.bottomImage && <button className="admin-rmbg-cancel" onClick={() => setNdForm(p => ({ ...p, bottomImage: ndOriginals.bottomImage }))}>↩️ Cancel</button>}
+                </div>
+              )}
               <input value={ndForm.bottomTitle} onChange={e => setNdForm(p => ({ ...p, bottomTitle: e.target.value }))} placeholder="Bottom title" style={{ marginTop: 8, width: '100%', padding: '8px 12px', borderRadius: 8, border: '1px solid #333', background: '#1a1a1a', color: '#fff', fontSize: 13 }} />
             </div>
           </div>
           <div className="admin-product-actions" style={{ marginTop: '1rem' }}>
-            <button className="admin-carousel-btn" onClick={handleNdSave} disabled={ndUploading || !ndForm.topImage || !ndForm.bottomImage}>💾 Add Box</button>
+            {editingNd && <button className="admin-crop-cancel" onClick={() => { setEditingNd(null); setNdForm({ topImage: '', topTitle: '', bottomImage: '', bottomTitle: '' }); setNdOriginals({ topImage: '', bottomImage: '' }) }}>Cancel</button>}
+            <button className="admin-carousel-btn" onClick={handleNdSave} disabled={ndUploading || !!ndRmbgField || !ndForm.topImage || !ndForm.bottomImage}>💾 {editingNd ? 'Update Box' : 'Add Box'}</button>
           </div>
         </div>
 
@@ -453,8 +491,11 @@ function UserHomeManager() {
                   <img src={d.bottomImage} alt="bottom" className="admin-carousel-img" style={{ height: 90, objectFit: 'cover' }} />
                 </div>
                 <div className="admin-carousel-footer">
-                  <span className="admin-carousel-url">{d.topTitle || 'Box'} / {d.bottomTitle || ''}</span>
-                  <button className="admin-carousel-delete" onClick={() => handleNdDelete(d._id)}>🗑 Delete</button>
+                  <span className="admin-carousel-url">{d.topTitle || 'top'} / {d.bottomTitle || 'bottom'}</span>
+                  <div style={{ display: 'flex', gap: 6 }}>
+                    <button className="admin-product-edit" onClick={() => { setEditingNd(d); setNdForm({ topImage: d.topImage, topTitle: d.topTitle || '', bottomImage: d.bottomImage, bottomTitle: d.bottomTitle || '' }); setNdOriginals({ topImage: d.topImage, bottomImage: d.bottomImage }) }}>✏️ Edit</button>
+                    <button className="admin-carousel-delete" onClick={() => handleNdDelete(d._id)}>🗑 Delete</button>
+                  </div>
                 </div>
               </div>
             ))
