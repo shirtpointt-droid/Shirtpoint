@@ -58,6 +58,14 @@ export default function UserHome() {
     { img: 'https://images.unsplash.com/photo-1562157873-818bc0726f68?w=800&q=80', title: 'New Arrivals' },
   ])
 
+  const newDrops = [
+    { title: 'Neon Cyber Tee', price: 'Rs 1,800', img: 'http://localhost:5000/uploads/new_drop_1.png' },
+    { title: 'Minimalist Cloud Hoodie', price: 'Rs 3,200', img: 'http://localhost:5000/uploads/new_drop_2.png' },
+    { title: 'Urban Legend Oversized', price: 'Rs 1,950', img: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=800&q=95&fit=crop' },
+    { title: 'Midnight Street Tee', price: 'Rs 1,750', img: 'https://images.unsplash.com/photo-1578768079052-aa76e52ff62e?w=800&q=95&fit=crop' },
+    { title: 'Cyber Dragon Limited', price: 'Rs 2,100', img: 'https://images.unsplash.com/photo-1562157873-818bc0726f68?w=800&q=95&fit=crop' },
+  ]
+
   const defaultHiwImgs = [
     'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&q=90&fit=crop',
     'https://images.unsplash.com/photo-1556821840-3a63f15732ce?w=400&q=90&fit=crop',
@@ -174,6 +182,44 @@ export default function UserHome() {
                 <div key={i} className="trust-logo-item">
                   <span className="trust-logo-text">{b.name}</span>
                 </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* NEW DROPS CAROUSEL */}
+        <div className="new-drops-section">
+          <div className="new-drops-header">
+            <div>
+              <span className="uh-eyebrow">Fresh Arrivals</span>
+              <h2 className="uh-heading">NEW DROPS <span className="uh-heading-outline">2026</span></h2>
+            </div>
+            <button className="uh-view-all" onClick={() => navigate('/marketplace')}>View Marketplace →</button>
+          </div>
+          
+          <div className="new-drops-slider">
+            <div className="new-drops-track">
+              {newDrops.map((drop, i) => (
+                <motion.div 
+                  key={i} 
+                  className="new-drop-card"
+                  initial={{ opacity: 0, x: 50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.1, duration: 0.5 }}
+                  viewport={{ once: true }}
+                  whileHover={{ y: -10 }}
+                  onClick={() => navigate('/design-lab')}
+                >
+                  <div className="new-drop-img-wrap">
+                    <img src={drop.img} alt={drop.title} className="new-drop-img" />
+                    <div className="new-drop-tag">LIMITED</div>
+                    <div className="new-drop-overlay" />
+                  </div>
+                  <div className="new-drop-info">
+                    <h3 className="new-drop-title">{drop.title}</h3>
+                    <p className="new-drop-price">{drop.price}</p>
+                  </div>
+                </motion.div>
               ))}
             </div>
           </div>

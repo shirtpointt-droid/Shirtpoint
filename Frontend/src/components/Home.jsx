@@ -168,7 +168,7 @@ function Home() {
       {/* Hero */}
       <section className="home-hero">
         <div className="home-center-text">
-          <p className="home-center-eyebrow">Est. 2024 — Premium Streetwear</p>
+          <p className="home-center-eyebrow">Est. 2026 — Premium Streetwear</p>
           <h1 className="home-center-heading">
             <span>T-SHIRT</span>
             <span className="home-center-outline">POINT</span>

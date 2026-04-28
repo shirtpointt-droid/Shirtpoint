@@ -1929,3 +1929,141 @@
   .promo-right { width: 100%; }
   .promo-badge-wrap { flex-direction: row; justify-content: center; }
 }
+
+/* ── NEW DROPS ── */
+.new-drops-section {
+  padding: 4rem 0;
+  overflow: hidden;
+}
+
+.new-drops-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 2.5rem;
+}
+
+.new-drops-section .uh-eyebrow {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: #f97316;
+  margin-bottom: 0.5rem;
+}
+
+.new-drops-section .uh-heading {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: -1.5px;
+  line-height: 1.1;
+}
+
+.uh-heading-outline {
+  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.4);
+  -webkit-text-fill-color: transparent;
+}
+
+.uh-view-all {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.75rem 1.5rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.uh-view-all:hover {
+  background: #f97316;
+  border-color: #f97316;
+  transform: translateX(5px);
+}
+
+.new-drops-slider {
+  overflow-x: auto;
+  padding: 1rem 0 3rem;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.new-drops-slider::-webkit-scrollbar {
+  display: none;
+}
+
+.new-drops-track {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.new-drop-card {
+  flex-shrink: 0;
+  width: 300px;
+  cursor: pointer;
+}
+
+.new-drop-img-wrap {
+  position: relative;
+  aspect-ratio: 4/5;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  background: #111;
+  margin-bottom: 1.25rem;
+}
+
+.new-drop-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+.new-drop-card:hover .new-drop-img {
+  transform: scale(1.1);
+}
+
+.new-drop-tag {
+  position: absolute;
+  top: 1.25rem;
+  left: 1.25rem;
+  background: #f97316;
+  color: #fff;
+  font-size: 0.6rem;
+  font-weight: 900;
+  padding: 0.3rem 0.75rem;
+  border-radius: 4px;
+  letter-spacing: 1px;
+  z-index: 2;
+}
+
+.new-drop-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.4), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.new-drop-card:hover .new-drop-overlay {
+  opacity: 1;
+}
+
+.new-drop-title {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 0.25rem;
+  letter-spacing: -0.3px;
+}
+
+.new-drop-price {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #f97316;
+}
+
+.uh-wrapper.light .new-drop-title { color: #111; }

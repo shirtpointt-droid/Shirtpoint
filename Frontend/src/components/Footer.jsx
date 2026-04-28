@@ -70,7 +70,7 @@ export default function Footer() {
 
       {/* Bottom bar */}
       <div className="footer-bottom">
-        <p className="footer-copy">© 2024 T-Shirt Point — All rights reserved</p>
+        <p className="footer-copy">© 2026 T-Shirt Point — All rights reserved</p>
         <div className="footer-legal">
           <button>Privacy</button>
           <button>Terms</button>
