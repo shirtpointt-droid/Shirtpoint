@@ -1,6 +1,7 @@
 @echo off
 cd /d "D:\T-Shirt Point"
 git add .
+git add Backend/uploads/ -f
 git commit -m "update %date% %time%"
 git pull origin main --rebase
 git push
