@@ -7,7 +7,9 @@ const getCarouselImages = async (req, res) => {
 
 const addCarouselImage = async (req, res) => {
   try {
-    const url = `http://localhost:5000/uploads/${req.file.filename}`
+    if (!req.file) return res.status(400).json({ message: 'No file uploaded' })
+    const baseUrl = process.env.BASE_URL || 'http://localhost:5000'
+    const url = `${baseUrl}/uploads/${req.file.filename}`
     const image = await CarouselImage.create({ url, order: req.body.order || 0 })
     res.status(201).json(image)
   } catch (err) {

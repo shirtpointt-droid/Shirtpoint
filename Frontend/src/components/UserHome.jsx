@@ -59,8 +59,8 @@ export default function UserHome() {
   ])
 
   const newDrops = [
-    { title: 'Neon Cyber Tee',          img: 'http://localhost:5000/uploads/new_drop_1.png' },
-    { title: 'Minimalist Cloud Hoodie', img: 'http://localhost:5000/uploads/new_drop_2.png' },
+    { title: 'Neon Cyber Tee',          img: 'https://images.unsplash.com/photo-1503341504253-dff4815485f1?w=800&q=95&fit=crop' },
+    { title: 'Minimalist Cloud Hoodie', img: 'https://images.unsplash.com/photo-1556821840-3a63f15732ce?w=800&q=95&fit=crop' },
     { title: 'Urban Legend Oversized',  img: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=800&q=95&fit=crop' },
     { title: 'Midnight Street Tee',     img: 'https://images.unsplash.com/photo-1578768079052-aa76e52ff62e?w=800&q=95&fit=crop' },
     { title: 'Shadow Drop Hoodie',      img: 'https://images.unsplash.com/photo-1556821840-3a63f15732ce?w=800&q=95&fit=crop' },
@@ -78,6 +78,10 @@ export default function UserHome() {
     'https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=400&q=90&fit=crop',
     'https://images.unsplash.com/photo-1503341504253-dff4815485f1?w=400&q=90&fit=crop',
     'https://images.unsplash.com/photo-1578768079052-aa76e52ff62e?w=400&q=90&fit=crop',
+  ]
+
+  const boxConfigs = [
+    { top: 0, bot: 1, color: '#f97316', icon: '⚡', glow: 'rgba(249,115,22,0.8)' },
   ]
 
   useEffect(() => {
@@ -122,14 +126,8 @@ export default function UserHome() {
 
   const hiwImgs = hiwImages.length > 0 ? hiwImages : defaultHiwImgs
   const brands = [
-    { name: 'Khaadi' },
-    { name: 'Gul Ahmed' },
-    { name: 'Sapphire' },
-    { name: 'Outfitters' },
-    { name: 'Alkaram' },
-    { name: 'Bonanza' },
-    { name: 'Nishat' },
-    { name: 'Breakout' },
+    { name: 'Khaadi' }, { name: 'Gul Ahmed' }, { name: 'Sapphire' }, { name: 'Outfitters' },
+    { name: 'Alkaram' }, { name: 'Bonanza' }, { name: 'Nishat' }, { name: 'Breakout' },
   ]
 
   return (
@@ -200,47 +198,56 @@ export default function UserHome() {
             <button className="uh-view-all" onClick={() => navigate('/marketplace')}>View Marketplace →</button>
           </div>
           <div className="nd-grid">
-            {/* Card 1 — Lightning Nexus Split */}
-            <div className="split-frame-container" onClick={() => navigate('/design-lab')}>
-              <div className="top-picture-panel">
-                <img src={newDrops[0].img} alt={newDrops[0].title} />
-                <div className="nd-overlay" />
-                <span className="nd-tag">LIMITED</span>
-                <span className="nd-title">{newDrops[0].title}</span>
-              </div>
-              <div className="central-nexus-group">
-                <div className="fracture-line fracture-left" />
-                <div className="fracture-line fracture-right" />
-                <div className="lightning-bolt-logo">
-                  <svg viewBox="0 0 24 24" fill="white">
-                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+            {boxConfigs.map((box, bi) => (
+              <div key={bi} className="product-card" style={{ '--energy-orange': box.color, '--energy-glow': box.glow }} onClick={() => navigate('/design-lab')}>
+                
+                {/* Top Panel */}
+                <div className="panel top-panel">
+                  <img src={newDrops[box.top].img} alt={newDrops[box.top].title} />
+                  <span className="badge">LIMITED</span>
+                  <h2 className="product-title">{newDrops[box.top].title}</h2>
+                </div>
+
+                {/* Divider */}
+                <div className="divider-section">
+                  <div className="crack-line crack-left" />
+                  <div className="bolt-nexus">
+                    <div className="glow-effect" />
+                    <div className="bolt-icon">{box.icon}</div>
+                  </div>
+                  <div className="crack-line crack-right" />
+                </div>
+
+                {/* Bottom Panel */}
+                <div className="panel bottom-panel">
+                  <img src={newDrops[box.bot].img} alt={newDrops[box.bot].title} />
+                  <span className="badge">LIMITED</span>
+                  <h2 className="product-title">{newDrops[box.bot].title}</h2>
+                </div>
+
+                {/* Glass Shatter SVG Overlay */}
+                <div className="glass-shatter-overlay">
+                  <svg width="100%" height="100%" viewBox="0 0 400 600" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                    <g stroke="rgba(255,255,255,0.12)" strokeWidth="0.8" fill="none">
+                      <line x1="200" y1="300" x2="80" y2="180" />
+                      <line x1="200" y1="300" x2="320" y2="160" />
+                      <line x1="200" y1="300" x2="50" y2="320" />
+                      <line x1="200" y1="300" x2="360" y2="340" />
+                      <line x1="200" y1="300" x2="120" y2="480" />
+                      <line x1="200" y1="300" x2="300" y2="500" />
+                      <line x1="80" y1="180" x2="20" y2="100" />
+                      <line x1="80" y1="180" x2="150" y2="80" />
+                      <line x1="320" y1="160" x2="380" y2="60" />
+                      <line x1="320" y1="160" x2="260" y2="50" />
+                      <line x1="50" y1="320" x2="0" y2="280" />
+                      <line x1="360" y1="340" x2="400" y2="300" />
+                      <line x1="120" y1="480" x2="60" y2="580" />
+                      <line x1="300" y1="500" x2="370" y2="580" />
+                    </g>
                   </svg>
                 </div>
-                <div className="scattered-debris debris-1" />
-                <div className="scattered-debris debris-2" />
-                <div className="scattered-debris debris-3" />
-                <div className="scattered-debris debris-4" />
+
               </div>
-              <div className="bottom-picture-panel">
-                <img src={newDrops[1].img} alt={newDrops[1].title} />
-                <div className="nd-overlay nd-overlay-top" />
-                <span className="nd-tag">LIMITED</span>
-                <span className="nd-title">{newDrops[1].title}</span>
-              </div>
-            </div>
-            {/* Cards 2,3,4 — different effects */}
-            {newDrops.slice(1).map((drop, i) => (
-              <motion.div key={i} className={`nd-normal-card nd-effect-${i+1}`} whileHover={{ y: -8 }} onClick={() => navigate('/design-lab')}>
-                <div className="nd-normal-img-wrap">
-                  <img src={drop.img} alt={drop.title} className="nd-img" />
-                  <div className={`nd-overlay nd-overlay-${i+1}`} />
-                  <span className="nd-tag">LIMITED</span>
-                  <span className="nd-title">{drop.title}</span>
-                  {i === 0 && <div className="nd-glitch-line" />}
-                  {i === 1 && <div className="nd-corner-glow" />}
-                  {i === 2 && <div className="nd-scan-line" />}
-                </div>
-              </motion.div>
             ))}
           </div>
         </div>
@@ -264,7 +271,6 @@ export default function UserHome() {
               </div>
               <button className="ct-btn" onClick={() => navigate('/design-lab')}>Start Designing →</button>
             </div>
-
             <div className="ct-right">
               <div className="ct-grid">
                 {(colorCards.length > 0 ? colorCards : defaultCards).map((c, i) => (
@@ -336,6 +342,7 @@ export default function UserHome() {
             </div>
           </div>
         </div>
+
         <div className="ct-section-wrap">
           <div className="uh-products-section">
             <div className="uh-products-header">
@@ -353,8 +360,6 @@ export default function UserHome() {
         {/* COLLECTION SPLIT SECTION */}
         <div className="ct-section-wrap">
           <div className="coll-split">
-
-            {/* LEFT — stacked images */}
             <div className="coll-images">
               <div className="coll-img-stack">
                 {(() => {
@@ -372,13 +377,10 @@ export default function UserHome() {
                 })()}
               </div>
             </div>
-
-            {/* RIGHT — info + steps */}
             <div className="coll-info">
               <span className="ct-eyebrow">Why Choose Us</span>
               <h2 className="ct-heading">500+ Free<br /><span className="ct-heading-outline">Designs</span></h2>
               <p className="ct-desc">Premium quality garments with unlimited customization. Your brand, your style.</p>
-
               <div className="coll-steps">
                 <div className="coll-step"><div className="coll-step-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f97316" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.34 2.23l.58 3.57a1 1 0 00.99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 002-2V10h2.15a1 1 0 00.99-.84l.58-3.57a2 2 0 00-1.34-2.23z"/></svg></div><div><div className="coll-step-title">500+ Garment Styles</div><div className="coll-step-desc">T-Shirts, Hoodies, Polos, Kurtas & more</div></div></div>
                 <div className="coll-step"><div className="coll-step-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f97316" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 011.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg></div><div><div className="coll-step-title">Free Design Icons</div><div className="coll-step-desc">500+ premium icons — no extra cost</div></div></div>
@@ -386,7 +388,6 @@ export default function UserHome() {
                 <div className="coll-step"><div className="coll-step-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f97316" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div><div><div className="coll-step-title">Affordable Pricing</div><div className="coll-step-desc">Bulk discounts available on all orders</div></div></div>
                 <div className="coll-step"><div className="coll-step-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f97316" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><div><div className="coll-step-title">Premium Quality</div><div className="coll-step-desc">100% organic cotton, HD print guaranteed</div></div></div>
               </div>
-
               <button className="ct-btn" onClick={() => navigate('/design-lab')}>Start Designing →</button>
             </div>
           </div>

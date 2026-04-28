@@ -3,14 +3,17 @@ const router = express.Router()
 const PreviewTshirt = require('../models/PreviewTshirt')
 
 router.get('/', async (req, res) => {
-  const item = await PreviewTshirt.findOne().sort({ createdAt: -1 })
-  res.json(item || {})
+  try {
+    const item = await PreviewTshirt.findOne().sort({ createdAt: -1 })
+    res.json(item || {})
+  } catch (err) { res.status(500).json({ message: err.message }) }
 })
-
 router.post('/', async (req, res) => {
-  await PreviewTshirt.deleteMany({})
-  const item = await PreviewTshirt.create(req.body)
-  res.json(item)
+  try {
+    await PreviewTshirt.deleteMany({})
+    const item = await PreviewTshirt.create(req.body)
+    res.json(item)
+  } catch (err) { res.status(400).json({ message: err.message }) }
 })
 
 module.exports = router

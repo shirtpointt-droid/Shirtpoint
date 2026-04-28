@@ -42,7 +42,8 @@ const upload = multer({ storage })
 // Normal image upload
 app.post('/api/upload', upload.single('image'), (req, res) => {
   if (!req.file) return res.status(400).json({ message: 'No file uploaded' })
-  res.json({ url: `http://localhost:5000/uploads/${req.file.filename}` })
+  const baseUrl = process.env.BASE_URL || 'http://localhost:5000'
+  res.json({ url: `${baseUrl}/uploads/${req.file.filename}` })
 })
 
 // Design image upload with background removal via remove.bg
@@ -62,19 +63,17 @@ app.post('/api/upload/remove-bg', upload.single('image'), async (req, res) => {
       responseType: 'arraybuffer'
     })
 
-    // Save the PNG with removed background
     const outputFilename = `rmbg_${Date.now()}.png`
     const outputPath = path.join(__dirname, '../uploads', outputFilename)
     fs.writeFileSync(outputPath, response.data)
-
-    // Delete original uploaded file
     fs.unlinkSync(req.file.path)
 
-    res.json({ url: `http://localhost:5000/uploads/${outputFilename}` })
+    const baseUrl = process.env.BASE_URL || 'http://localhost:5000'
+    res.json({ url: `${baseUrl}/uploads/${outputFilename}` })
   } catch (err) {
     console.error('Remove.bg error:', err.message)
-    // Fallback: return original image if API fails
-    res.json({ url: `http://localhost:5000/uploads/${req.file.filename}` })
+    const baseUrl = process.env.BASE_URL || 'http://localhost:5000'
+    res.json({ url: `${baseUrl}/uploads/${req.file.filename}` })
   }
 })
 

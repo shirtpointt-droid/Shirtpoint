@@ -4,7 +4,11 @@ const jwt = require('jsonwebtoken')
 const crypto = require('crypto')
 const QRCode = require('qrcode')
 
-const JWT_SECRET = process.env.JWT_SECRET || 'tshirtpoint_secret'
+const JWT_SECRET = () => {
+  const secret = process.env.JWT_SECRET
+  if (!secret) throw new Error('JWT_SECRET is not set in environment variables')
+  return secret
+}
 
 // ========== TOTP HELPERS (Node.js crypto, zero external deps) ==========
 const BASE32_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567'
@@ -77,7 +81,7 @@ const signup = async (req, res) => {
     const hashed = await bcrypt.hash(password, 10)
     const user = await User.create({ name, email, password: hashed })
 
-    const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '7d' })
+    const token = jwt.sign({ id: user._id }, JWT_SECRET(), { expiresIn: '7d' })
     res.status(201).json({ token, user: { id: user._id, name: user.name, email: user.email, phone: user.phone, city: user.city, photo: user.photo, credits: user.credits, isPro: user.isPro, activeOrders: user.activeOrders, savedDesigns: user.savedDesigns, totalSpent: user.totalSpent, isTwoFactorEnabled: user.isTwoFactorEnabled } })
   } catch (err) {
     res.status(500).json({ message: 'Server error' })
@@ -101,7 +105,7 @@ const login = async (req, res) => {
       return res.json({ requires2FA: true, userId: user._id })
     }
 
-    const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '7d' })
+    const token = jwt.sign({ id: user._id }, JWT_SECRET(), { expiresIn: '7d' })
     res.json({ token, user: { id: user._id, name: user.name, email: user.email, phone: user.phone, city: user.city, photo: user.photo, credits: user.credits, isPro: user.isPro, activeOrders: user.activeOrders, savedDesigns: user.savedDesigns, totalSpent: user.totalSpent, isTwoFactorEnabled: user.isTwoFactorEnabled } })
   } catch (err) {
     res.status(500).json({ message: 'Server error' })
@@ -155,7 +159,7 @@ const verify2FA = async (req, res) => {
     const isValid = verifyTOTP(code, user.twoFactorSecret)
     if (!isValid) return res.status(400).json({ message: 'Invalid 2FA code' })
 
-    const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '7d' })
+    const token = jwt.sign({ id: user._id }, JWT_SECRET(), { expiresIn: '7d' })
     res.json({ token, user: { id: user._id, name: user.name, email: user.email, phone: user.phone, city: user.city, photo: user.photo, credits: user.credits, isPro: user.isPro, activeOrders: user.activeOrders, savedDesigns: user.savedDesigns, totalSpent: user.totalSpent, isTwoFactorEnabled: user.isTwoFactorEnabled } })
   } catch (err) {
     res.status(500).json({ message: 'Verify error' })
