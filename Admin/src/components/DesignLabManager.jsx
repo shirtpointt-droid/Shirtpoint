@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { removeBg } from '../utils/removeBg'
 
 const DEFAULT_GRADIENT = 'linear-gradient(135deg, #f97316, #ea580c)'
 
@@ -25,6 +26,7 @@ export default function DesignLabManager() {
   const [cpForm, setCpForm] = useState({ categoryLabel: '', name: '', image: '', order: 0 })
   const [editingCp, setEditingCp] = useState(null)
   const [cpUploading, setCpUploading] = useState(false)
+  const [cpOriginalImg, setCpOriginalImg] = useState('')
   const [selectedCatFilter, setSelectedCatFilter] = useState('')
 
   const fetchCats = async () => {
@@ -224,9 +226,28 @@ export default function DesignLabManager() {
                 const res = await fetch('http://localhost:5000/api/upload', { method: 'POST', body: fd })
                 const data = await res.json()
                 setCpForm(p => ({ ...p, image: data.url }))
+                setCpOriginalImg(data.url)
                 setCpUploading(false)
               }} />
             </div>
+            {cpForm.image && (
+              <div className="admin-rmbg-actions">
+                <button className="admin-rmbg-btn" onClick={async () => {
+                  setCpUploading(true)
+                  try {
+                    const blob = await removeBg(cpForm.image)
+                    const fd = new FormData(); fd.append('image', blob, 'clean.png')
+                    const res = await fetch('http://localhost:5000/api/upload', { method: 'POST', body: fd })
+                    const data = await res.json()
+                    setCpForm(p => ({ ...p, image: data.url }))
+                  } catch { alert('Background remove nahi hua') }
+                  setCpUploading(false)
+                }} disabled={cpUploading}>✂️ {cpUploading ? 'Removing...' : 'Remove Background'}</button>
+                {cpForm.image !== cpOriginalImg && cpOriginalImg && (
+                  <button className="admin-rmbg-cancel" onClick={() => setCpForm(p => ({ ...p, image: cpOriginalImg }))}>↩️ Cancel</button>
+                )}
+              </div>
+            )}
           </div>
           <div className="admin-product-actions">
             {editingCp && <button className="admin-crop-cancel" onClick={() => { setEditingCp(null); setCpForm({ categoryLabel: '', name: '', image: '', order: 0 }) }}>Cancel</button>}
