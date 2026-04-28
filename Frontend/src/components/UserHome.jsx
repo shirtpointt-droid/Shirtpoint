@@ -59,10 +59,14 @@ export default function UserHome() {
   ])
 
   const newDrops = [
-    { title: 'Neon Cyber Tee', img: 'http://localhost:5000/uploads/new_drop_1.png' },
+    { title: 'Neon Cyber Tee',          img: 'http://localhost:5000/uploads/new_drop_1.png' },
     { title: 'Minimalist Cloud Hoodie', img: 'http://localhost:5000/uploads/new_drop_2.png' },
-    { title: 'Urban Legend Oversized', img: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=800&q=95&fit=crop' },
-    { title: 'Midnight Street Tee', img: 'https://images.unsplash.com/photo-1578768079052-aa76e52ff62e?w=800&q=95&fit=crop' },
+    { title: 'Urban Legend Oversized',  img: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=800&q=95&fit=crop' },
+    { title: 'Midnight Street Tee',     img: 'https://images.unsplash.com/photo-1578768079052-aa76e52ff62e?w=800&q=95&fit=crop' },
+    { title: 'Shadow Drop Hoodie',      img: 'https://images.unsplash.com/photo-1556821840-3a63f15732ce?w=800&q=95&fit=crop' },
+    { title: 'Acid Wash Classic',       img: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800&q=95&fit=crop' },
+    { title: 'Retro Wave Tee',          img: 'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=800&q=95&fit=crop' },
+    { title: 'Phantom Black',           img: 'https://images.unsplash.com/photo-1562157873-818bc0726f68?w=800&q=95&fit=crop' },
   ]
 
   const defaultHiwImgs = [
@@ -224,14 +228,17 @@ export default function UserHome() {
                 <span className="nd-title">{newDrops[1].title}</span>
               </div>
             </div>
-            {/* Cards 2,3,4 — normal */}
+            {/* Cards 2,3,4 — different effects */}
             {newDrops.slice(1).map((drop, i) => (
-              <motion.div key={i} className="nd-normal-card" whileHover={{ y: -8 }} onClick={() => navigate('/design-lab')}>
+              <motion.div key={i} className={`nd-normal-card nd-effect-${i+1}`} whileHover={{ y: -8 }} onClick={() => navigate('/design-lab')}>
                 <div className="nd-normal-img-wrap">
                   <img src={drop.img} alt={drop.title} className="nd-img" />
-                  <div className="nd-overlay" />
+                  <div className={`nd-overlay nd-overlay-${i+1}`} />
                   <span className="nd-tag">LIMITED</span>
                   <span className="nd-title">{drop.title}</span>
+                  {i === 0 && <div className="nd-glitch-line" />}
+                  {i === 1 && <div className="nd-corner-glow" />}
+                  {i === 2 && <div className="nd-scan-line" />}
                 </div>
               </motion.div>
             ))}
