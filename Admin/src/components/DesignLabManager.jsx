@@ -27,6 +27,7 @@ export default function DesignLabManager() {
   const [editingCp, setEditingCp] = useState(null)
   const [cpUploading, setCpUploading] = useState(false)
   const [cpOriginalImg, setCpOriginalImg] = useState('')
+  const [cpImgFit, setCpImgFit] = useState('cover')
   const [selectedCatFilter, setSelectedCatFilter] = useState('')
 
   const DEFAULT_CATS = ['T-Shirts','Hoodies','Switers','Trousers','Caps','Hats','Snokes','Mobile Covers','Laptop Sleeves','Mouse Pads','Earbud Cases','Notebooks','Books & Covers','Pens','Mugs','Stickers','Tote Bags','Backpacks','Duffle Bags','Wallets','Cushions','Water Bottles','Wall Arts']
@@ -218,7 +219,7 @@ export default function DesignLabManager() {
             <label>Image <small style={{ color: '#888' }}>(optional)</small></label>
             <div className="admin-image-upload" onClick={() => !cpUploading && document.getElementById('cpImgInput').click()}>
               {cpForm.image
-                ? <img src={cpForm.image} alt="product" className="admin-image-preview" />
+                ? <img src={cpForm.image} alt="product" className="admin-image-preview" style={{ objectFit: cpImgFit }} />
                 : <div className="admin-image-placeholder"><span>📦</span><p>{cpUploading ? 'Uploading...' : 'Upload Image'}</p></div>
               }
               <input id="cpImgInput" type="file" accept="image/*" style={{ display: 'none' }} onChange={async (e) => {
@@ -232,6 +233,13 @@ export default function DesignLabManager() {
                 setCpUploading(false)
               }} />
             </div>
+            {cpForm.image && (
+              <div style={{ display: 'flex', gap: '0.4rem', marginTop: 6, flexWrap: 'wrap' }}>
+                {['cover','contain','fill'].map(fit => (
+                  <button key={fit} onClick={() => setCpImgFit(fit)} style={{ padding: '0.25rem 0.75rem', borderRadius: 999, border: '1px solid rgba(255,255,255,0.15)', background: cpImgFit === fit ? '#f97316' : '#111', color: '#fff', cursor: 'pointer', fontSize: '0.68rem', fontWeight: 700 }}>{fit}</button>
+                ))}
+              </div>
+            )}
             {cpForm.image && (
               <div className="admin-rmbg-actions">
                 <button className="admin-rmbg-btn" onClick={async () => {
