@@ -186,7 +186,7 @@ export default function UserHome() {
           </div>
         </div>
 
-        {/* NEW DROPS CAROUSEL */}
+        {/* NEW DROPS */}
         <div className="new-drops-section">
           <div className="new-drops-header">
             <div>
@@ -195,21 +195,46 @@ export default function UserHome() {
             </div>
             <button className="uh-view-all" onClick={() => navigate('/marketplace')}>View Marketplace →</button>
           </div>
-          <div className="new-drops-slider">
-            <div className="new-drops-track">
-              {newDrops.map((drop, i) => (
-                <motion.div key={i} className="new-drop-card" whileHover={{ y: -8 }} onClick={() => navigate('/design-lab')}>
-                  <div className="new-drop-img-wrap">
-                    <img src={drop.img} alt={drop.title} className="new-drop-img" />
-                    <div className="new-drop-tag">LIMITED</div>
-                    <div className="new-drop-overlay" />
-                  </div>
-                  <div className="new-drop-info">
-                    <h3 className="new-drop-title">{drop.title}</h3>
-                  </div>
-                </motion.div>
-              ))}
+          <div className="nd-grid">
+            {/* Card 1 — Lightning Nexus Split */}
+            <div className="split-frame-container" onClick={() => navigate('/design-lab')}>
+              <div className="top-picture-panel">
+                <img src={newDrops[0].img} alt={newDrops[0].title} />
+                <div className="nd-overlay" />
+                <span className="nd-tag">LIMITED</span>
+                <span className="nd-title">{newDrops[0].title}</span>
+              </div>
+              <div className="central-nexus-group">
+                <div className="fracture-line fracture-left" />
+                <div className="fracture-line fracture-right" />
+                <div className="lightning-bolt-logo">
+                  <svg viewBox="0 0 24 24" fill="white">
+                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                  </svg>
+                </div>
+                <div className="scattered-debris debris-1" />
+                <div className="scattered-debris debris-2" />
+                <div className="scattered-debris debris-3" />
+                <div className="scattered-debris debris-4" />
+              </div>
+              <div className="bottom-picture-panel">
+                <img src={newDrops[1].img} alt={newDrops[1].title} />
+                <div className="nd-overlay nd-overlay-top" />
+                <span className="nd-tag">LIMITED</span>
+                <span className="nd-title">{newDrops[1].title}</span>
+              </div>
             </div>
+            {/* Cards 2,3,4 — normal */}
+            {newDrops.slice(1).map((drop, i) => (
+              <motion.div key={i} className="nd-normal-card" whileHover={{ y: -8 }} onClick={() => navigate('/design-lab')}>
+                <div className="nd-normal-img-wrap">
+                  <img src={drop.img} alt={drop.title} className="nd-img" />
+                  <div className="nd-overlay" />
+                  <span className="nd-tag">LIMITED</span>
+                  <span className="nd-title">{drop.title}</span>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
 

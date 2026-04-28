@@ -2257,3 +2257,595 @@
 @media (max-width: 768px) {
   .new-drops-pairs { grid-template-columns: 1fr; }
 }
+
+/* ── NEW DROPS SPLIT BOX ── */
+.nd-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.nd-box {
+  position: relative;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+}
+
+.nd-box:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.4);
+}
+
+.nd-half {
+  position: relative;
+  width: 100%;
+  height: 240px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.nd-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.nd-box:hover .nd-img { transform: scale(1.06); }
+
+.nd-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.65));
+}
+
+.nd-top .nd-overlay {
+  background: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.75));
+}
+
+.nd-bottom .nd-overlay {
+  background: linear-gradient(to top, transparent 40%, rgba(0,0,0,0.75));
+}
+
+.nd-tag {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  font-size: 0.52rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+  background: #f97316;
+  color: #fff;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  z-index: 2;
+}
+
+.nd-title {
+  position: absolute;
+  bottom: 0.85rem;
+  left: 0.85rem;
+  right: 0.85rem;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.6);
+  z-index: 2;
+  line-height: 1.3;
+}
+
+.nd-title-bottom {
+  bottom: auto;
+  top: 0.85rem;
+}
+
+/* ── 3D BOLT CENTER ── */
+.nd-bolt-wrap {
+  position: relative;
+  height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.nd-bolt-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f97316, #ea580c);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 0 0 4px rgba(249,115,22,0.2),
+    0 0 0 8px rgba(249,115,22,0.08),
+    0 8px 24px rgba(249,115,22,0.5),
+    inset 0 1px 0 rgba(255,255,255,0.3);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.nd-box:hover .nd-bolt-ring {
+  transform: translate(-50%, -50%) scale(1.15);
+  box-shadow:
+    0 0 0 6px rgba(249,115,22,0.25),
+    0 0 0 12px rgba(249,115,22,0.1),
+    0 12px 32px rgba(249,115,22,0.6),
+    inset 0 1px 0 rgba(255,255,255,0.3);
+}
+
+.uh-wrapper.light .nd-box {
+  border-color: rgba(0,0,0,0.08);
+}
+
+@media (max-width: 768px) {
+  .nd-grid { grid-template-columns: 1fr; }
+  .nd-half { height: 200px; }
+}
+
+/* ── NEW DROPS GRID ── */
+.nd-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  align-items: stretch;
+}
+
+/* Normal cards */
+.nd-normal-card {
+  border-radius: 1.25rem;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.nd-normal-card:hover { box-shadow: 0 16px 40px rgba(0,0,0,0.4); }
+
+.nd-normal-img-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 380px;
+}
+
+/* Split card */
+.nd-split-card {
+  border-radius: 1.25rem;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: box-shadow 0.3s;
+}
+.nd-split-card:hover { box-shadow: 0 16px 40px rgba(249,115,22,0.3); }
+
+.nd-split-top,
+.nd-split-bottom {
+  position: relative;
+  width: 100%;
+  height: 185px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+/* Bolt divider */
+.nd-split-bolt {
+  position: relative;
+  height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.nd-bolt-3d {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #ff9a3c, #f97316, #ea580c);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 0 0 3px rgba(249,115,22,0.25),
+    0 0 0 6px rgba(249,115,22,0.1),
+    0 6px 20px rgba(249,115,22,0.6),
+    0 2px 4px rgba(0,0,0,0.4),
+    inset 0 1px 0 rgba(255,255,255,0.35),
+    inset 0 -1px 0 rgba(0,0,0,0.2);
+  animation: boltPulse 2s ease-in-out infinite;
+}
+
+@keyframes boltPulse {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(249,115,22,0.25), 0 0 0 6px rgba(249,115,22,0.1), 0 6px 20px rgba(249,115,22,0.6), inset 0 1px 0 rgba(255,255,255,0.35); }
+  50% { box-shadow: 0 0 0 5px rgba(249,115,22,0.35), 0 0 0 10px rgba(249,115,22,0.15), 0 10px 30px rgba(249,115,22,0.8), inset 0 1px 0 rgba(255,255,255,0.35); }
+}
+
+.nd-img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s; }
+.nd-split-card:hover .nd-img,
+.nd-normal-card:hover .nd-img { transform: scale(1.06); }
+
+.nd-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%); }
+.nd-overlay-top { background: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, transparent 60%); }
+
+.nd-tag {
+  position: absolute;
+  top: 0.65rem; left: 0.65rem;
+  font-size: 0.5rem; font-weight: 900;
+  letter-spacing: 2px;
+  background: #f97316; color: #fff;
+  padding: 0.18rem 0.55rem;
+  border-radius: 999px; z-index: 2;
+}
+
+.nd-title {
+  position: absolute;
+  bottom: 0.65rem; left: 0.65rem; right: 0.65rem;
+  font-size: 0.72rem; font-weight: 800;
+  color: #fff; text-shadow: 0 1px 6px rgba(0,0,0,0.6);
+  z-index: 2; line-height: 1.3;
+}
+
+@media (max-width: 900px) { .nd-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .nd-grid { grid-template-columns: 1fr 1fr; } .nd-normal-img-wrap { min-height: 220px; } }
+
+/* ── LIGHTNING NEXUS SPLIT FRAME ── */
+:root { --bolt-scale: 0.28; }
+
+.split-frame-container {
+  position: relative;
+  border-radius: 1.25rem;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.08);
+  height: 100%;
+  min-height: 380px;
+  transition: box-shadow 0.3s;
+}
+
+.split-frame-container:hover {
+  box-shadow: 0 0 40px rgba(249,115,22,0.3), 0 16px 48px rgba(0,0,0,0.5);
+}
+
+/* Top Panel */
+.top-picture-panel {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 52%;
+  z-index: 10;
+  overflow: hidden;
+  clip-path: polygon(0 0, 100% 0, 100% 88%, 55% 100%, 45% 100%, 0 88%);
+}
+
+.top-picture-panel img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s;
+}
+
+.split-frame-container:hover .top-picture-panel img { transform: scale(1.05); }
+
+/* Bottom Panel */
+.bottom-picture-panel {
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 100%;
+  height: 52%;
+  z-index: 5;
+  overflow: hidden;
+  clip-path: polygon(0 12%, 45% 0, 55% 0, 100% 12%, 100% 100%, 0 100%);
+}
+
+.bottom-picture-panel img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s;
+}
+
+.split-frame-container:hover .bottom-picture-panel img { transform: scale(1.05); }
+
+/* Central Nexus */
+.central-nexus-group {
+  position: absolute;
+  top: 50%; left: 0;
+  transform: translateY(-50%);
+  width: 100%;
+  height: 40px;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Fracture Lines */
+.fracture-line {
+  position: absolute;
+  top: 50%;
+  height: 2px;
+  width: calc(50% - 28px);
+  background: linear-gradient(90deg, transparent, rgba(249,115,22,0.8), #f97316);
+  filter: blur(0.5px);
+  box-shadow: 0 0 8px rgba(249,115,22,0.8), 0 0 20px rgba(249,115,22,0.4);
+}
+
+.fracture-left {
+  right: calc(50% + 24px);
+  background: linear-gradient(90deg, transparent, rgba(249,115,22,0.6), #f97316);
+  clip-path: polygon(0 40%, 15% 0, 35% 60%, 55% 10%, 75% 50%, 90% 20%, 100% 50%, 100% 60%, 90% 30%, 75% 60%, 55% 20%, 35% 70%, 15% 10%, 0 60%);
+}
+
+.fracture-right {
+  left: calc(50% + 24px);
+  background: linear-gradient(90deg, #f97316, rgba(249,115,22,0.6), transparent);
+  clip-path: polygon(0 50%, 10% 20%, 25% 60%, 45% 10%, 65% 50%, 85% 0, 100% 40%, 100% 60%, 85% 10%, 65% 60%, 45% 20%, 25% 70%, 10% 30%, 0 60%);
+}
+
+/* Lightning Bolt */
+.lightning-bolt-logo {
+  width: calc(var(--bolt-scale) * 160px);
+  height: calc(var(--bolt-scale) * 160px);
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #ffb347, #f97316, #c2410c);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 25;
+  box-shadow:
+    0 0 0 3px rgba(249,115,22,0.3),
+    0 0 0 7px rgba(249,115,22,0.12),
+    0 0 20px rgba(249,115,22,0.8),
+    0 0 40px rgba(249,115,22,0.4),
+    inset 0 2px 0 rgba(255,255,255,0.4),
+    inset 0 -2px 0 rgba(0,0,0,0.3);
+  animation: nexusPulse 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+.lightning-bolt-logo svg {
+  width: 55%;
+  height: 55%;
+  filter: drop-shadow(0 0 4px rgba(255,200,0,0.8));
+}
+
+@keyframes nexusPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 3px rgba(249,115,22,0.3), 0 0 0 7px rgba(249,115,22,0.12), 0 0 20px rgba(249,115,22,0.8), 0 0 40px rgba(249,115,22,0.4), inset 0 2px 0 rgba(255,255,255,0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 5px rgba(249,115,22,0.4), 0 0 0 12px rgba(249,115,22,0.18), 0 0 30px rgba(249,115,22,1), 0 0 60px rgba(249,115,22,0.6), inset 0 2px 0 rgba(255,255,255,0.4);
+  }
+}
+
+/* Debris */
+.scattered-debris {
+  position: absolute;
+  background: rgba(249,115,22,0.9);
+  border-radius: 2px;
+  box-shadow: 0 0 6px rgba(249,115,22,0.8);
+  animation: debrisFloat 3s ease-in-out infinite;
+}
+
+.debris-1 { width: 6px; height: 6px; top: -8px; left: calc(50% - 40px); transform: rotate(35deg); animation-delay: 0s; }
+.debris-2 { width: 4px; height: 4px; top: 10px; left: calc(50% + 35px); transform: rotate(-20deg); animation-delay: 0.5s; }
+.debris-3 { width: 5px; height: 3px; top: -6px; left: calc(50% + 55px); transform: rotate(55deg); animation-delay: 1s; }
+.debris-4 { width: 3px; height: 5px; top: 8px; left: calc(50% - 60px); transform: rotate(-40deg); animation-delay: 1.5s; }
+
+@keyframes debrisFloat {
+  0%, 100% { transform: translateY(0) rotate(35deg); opacity: 0.9; }
+  50% { transform: translateY(-4px) rotate(45deg); opacity: 0.5; }
+}
+
+/* Tags & titles inside split panels */
+.top-picture-panel .nd-tag,
+.bottom-picture-panel .nd-tag { position: absolute; top: 0.65rem; left: 0.65rem; z-index: 3; }
+.top-picture-panel .nd-title { position: absolute; bottom: 1.5rem; left: 0.75rem; right: 0.75rem; z-index: 3; }
+.bottom-picture-panel .nd-title { position: absolute; bottom: 0.75rem; left: 0.75rem; right: 0.75rem; z-index: 3; }
+.top-picture-panel .nd-overlay,
+.bottom-picture-panel .nd-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 60%); z-index: 2; }
+
+/* ── SPLIT FRAME FIX ── */
+.split-frame-container {
+  min-height: 420px !important;
+}
+
+.top-picture-panel {
+  height: 50% !important;
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), 60% calc(100% - 12px), 52% 100%, 48% 100%, 40% calc(100% - 12px), 0 calc(100% - 12px)) !important;
+}
+
+.bottom-picture-panel {
+  height: 50% !important;
+  top: 50% !important;
+  bottom: auto !important;
+  clip-path: polygon(0 12px, 40% 12px, 48% 0, 52% 0, 60% 12px, 100% 12px, 100% 100%, 0 100%) !important;
+}
+
+.central-nexus-group {
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+}
+
+/* ── REAL 3D LIGHTNING BOLT ── */
+.lightning-bolt-logo {
+  width: 70px !important;
+  height: 70px !important;
+  min-width: 70px !important;
+  min-height: 70px !important;
+  background: none !important;
+  box-shadow: none !important;
+  animation: none !important;
+  position: relative;
+  z-index: 25;
+  flex-shrink: 0;
+}
+
+.lightning-bolt-logo svg { display: none; }
+
+.lightning-bolt-logo::before {
+  content: '⚡';
+  font-size: 3.5rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotateY(0deg) scale(1);
+  filter:
+    drop-shadow(0 0 8px #f97316)
+    drop-shadow(0 0 20px #f97316)
+    drop-shadow(0 0 40px rgba(249,115,22,0.8))
+    drop-shadow(2px 4px 6px rgba(0,0,0,0.6));
+  animation: bolt3D 2s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+
+@keyframes bolt3D {
+  0% {
+    transform: translate(-50%, -50%) rotateY(0deg) scale(1);
+    filter: drop-shadow(0 0 8px #f97316) drop-shadow(0 0 20px #f97316) drop-shadow(0 0 40px rgba(249,115,22,0.8)) drop-shadow(2px 4px 6px rgba(0,0,0,0.6));
+  }
+  25% {
+    transform: translate(-50%, -50%) rotateY(20deg) scale(1.15);
+    filter: drop-shadow(0 0 12px #ffb347) drop-shadow(0 0 30px #f97316) drop-shadow(0 0 60px rgba(249,115,22,1)) drop-shadow(4px 6px 8px rgba(0,0,0,0.5));
+  }
+  50% {
+    transform: translate(-50%, -50%) rotateY(0deg) scale(1.2);
+    filter: drop-shadow(0 0 16px #fff) drop-shadow(0 0 40px #f97316) drop-shadow(0 0 80px rgba(249,115,22,0.9)) drop-shadow(0 8px 12px rgba(0,0,0,0.4));
+  }
+  75% {
+    transform: translate(-50%, -50%) rotateY(-20deg) scale(1.15);
+    filter: drop-shadow(0 0 12px #ffb347) drop-shadow(0 0 30px #f97316) drop-shadow(0 0 60px rgba(249,115,22,1)) drop-shadow(-4px 6px 8px rgba(0,0,0,0.5));
+  }
+  100% {
+    transform: translate(-50%, -50%) rotateY(0deg) scale(1);
+    filter: drop-shadow(0 0 8px #f97316) drop-shadow(0 0 20px #f97316) drop-shadow(0 0 40px rgba(249,115,22,0.8)) drop-shadow(2px 4px 6px rgba(0,0,0,0.6));
+  }
+}
+
+/* Glow ring around bolt */
+.lightning-bolt-logo::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(249,115,22,0.3) 0%, transparent 70%);
+  animation: glowRing 2s ease-in-out infinite;
+}
+
+@keyframes glowRing {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+  50% { transform: translate(-50%, -50%) scale(1.4); opacity: 1; }
+}
+
+/* ── PREMIUM 3D BOLT & CRACK EFFECT ── */
+
+/* Jagged top panel edge */
+.top-picture-panel {
+  clip-path: polygon(
+    0 0, 100% 0, 100% 85%,
+    95% 90%, 88% 84%, 80% 92%, 72% 86%,
+    62% 95%, 55% 88%, 50% 100%,
+    45% 88%, 38% 95%, 30% 86%,
+    22% 92%, 14% 84%, 7% 90%,
+    0 85%
+  ) !important;
+  filter: drop-shadow(0 8px 16px rgba(249,115,22,0.5));
+}
+
+/* Jagged bottom panel edge */
+.bottom-picture-panel {
+  clip-path: polygon(
+    0 15%, 7% 10%, 14% 16%, 22% 8%,
+    30% 14%, 38% 5%, 45% 12%,
+    50% 0, 55% 12%, 62% 5%,
+    70% 14%, 78% 8%, 86% 16%,
+    93% 10%, 100% 15%,
+    100% 100%, 0 100%
+  ) !important;
+  filter: drop-shadow(0 -8px 16px rgba(249,115,22,0.5));
+}
+
+/* Glow seepage line between panels */
+.central-nexus-group::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 0;
+  transform: translateY(-50%);
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,140,0,0.8) 20%, #ff8c00 50%, rgba(255,140,0,0.8) 80%, transparent 100%);
+  box-shadow: 0 0 20px 4px rgba(255,69,0,0.6), 0 0 40px 8px rgba(255,140,0,0.3);
+  z-index: 1;
+}
+
+/* 3D Bolt */
+.lightning-bolt-logo::before {
+  font-size: 4rem !important;
+  filter:
+    drop-shadow(0px 0px 15px rgba(255,165,0,0.9))
+    drop-shadow(0px 4px 8px rgba(255,69,0,0.7))
+    drop-shadow(0px 0px 30px rgba(255,140,0,0.8)) !important;
+  transform: translate(-50%, -50%) perspective(500px) translateZ(20px) scale(1) !important;
+  animation: bolt3DPremium 2s ease-in-out infinite !important;
+}
+
+@keyframes bolt3DPremium {
+  0%, 100% {
+    transform: translate(-50%, -50%) perspective(500px) translateZ(20px) scale(1) rotateY(0deg);
+    filter: drop-shadow(0px 0px 15px rgba(255,165,0,0.9)) drop-shadow(0px 4px 8px rgba(255,69,0,0.7)) drop-shadow(0px 0px 30px rgba(255,140,0,0.8));
+  }
+  25% {
+    transform: translate(-50%, -50%) perspective(500px) translateZ(30px) scale(1.2) rotateY(15deg);
+    filter: drop-shadow(0px 0px 25px rgba(255,200,0,1)) drop-shadow(4px 6px 12px rgba(255,69,0,0.9)) drop-shadow(0px 0px 50px rgba(255,140,0,1));
+  }
+  50% {
+    transform: translate(-50%, -50%) perspective(500px) translateZ(40px) scale(1.3) rotateY(0deg);
+    filter: drop-shadow(0px 0px 30px #fff) drop-shadow(0px 6px 16px rgba(255,69,0,1)) drop-shadow(0px 0px 60px rgba(255,140,0,1));
+  }
+  75% {
+    transform: translate(-50%, -50%) perspective(500px) translateZ(30px) scale(1.2) rotateY(-15deg);
+    filter: drop-shadow(0px 0px 25px rgba(255,200,0,1)) drop-shadow(-4px 6px 12px rgba(255,69,0,0.9)) drop-shadow(0px 0px 50px rgba(255,140,0,1));
+  }
+}
+
+/* Glow ring pulse */
+.lightning-bolt-logo::after {
+  width: 90px !important;
+  height: 90px !important;
+  background: radial-gradient(circle, rgba(255,140,0,0.4) 0%, rgba(255,69,0,0.2) 40%, transparent 70%) !important;
+  box-shadow: 0 0 20px 2px rgba(255,69,0,0.5) !important;
+  animation: glowRingPremium 2s ease-in-out infinite !important;
+}
+
+@keyframes glowRingPremium {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.7; }
+  50% { transform: translate(-50%, -50%) scale(1.6); opacity: 1; }
+}
+
+/* Fracture lines zig-zag glow */
+.fracture-left, .fracture-right {
+  height: 3px !important;
+  box-shadow: 0 0 20px 2px rgba(255,69,0,0.5), 0 0 8px rgba(255,140,0,0.8) !important;
+}
