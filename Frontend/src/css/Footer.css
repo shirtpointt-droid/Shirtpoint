@@ -44,7 +44,7 @@
 
 .footer-tagline {
   font-size: 0.72rem;
-  color: #555;
+  color: #888;
   font-weight: 500;
   line-height: 1.6;
   margin: 0.1rem 0 0.5rem;
@@ -60,7 +60,7 @@
   border: 1px solid rgba(255,255,255,0.08);
   background: rgba(255,255,255,0.03);
   display: flex; align-items: center; justify-content: center;
-  color: #555;
+  color: #888;
   font-size: 0.9rem;
   text-decoration: none;
   transition: all 0.2s;
@@ -79,7 +79,7 @@
   gap: 0.35rem;
   font-size: 0.65rem;
   font-weight: 700;
-  color: #444;
+  color: #777;
   background: rgba(255,255,255,0.03);
   border: 1px solid rgba(255,255,255,0.06);
   border-radius: 999px;
@@ -112,7 +112,7 @@
   gap: 0.5rem;
   background: none;
   border: none;
-  color: #555;
+  color: #999;
   font-size: 0.8rem;
   font-weight: 500;
   cursor: pointer;
@@ -178,7 +178,7 @@
 .footer-copy {
   font-size: 0.62rem;
   font-weight: 500;
-  color: #333;
+  color: #555;
   letter-spacing: 0.5px;
 }
 
@@ -191,7 +191,7 @@
   border: none;
   font-size: 0.62rem;
   font-weight: 600;
-  color: #333;
+  color: #555;
   cursor: pointer;
   font-family: inherit;
   letter-spacing: 0.5px;
