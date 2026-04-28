@@ -12,6 +12,8 @@ const userSchema = new mongoose.Schema({
   activeOrders:  { type: Number, default: 0 },
   savedDesigns:  { type: Number, default: 0 },
   totalSpent:    { type: Number, default: 0 },
+  twoFactorSecret:    { type: String, default: '' },
+  isTwoFactorEnabled: { type: Boolean, default: false },
 }, { timestamps: true })
 
 module.exports = mongoose.model('User', userSchema)

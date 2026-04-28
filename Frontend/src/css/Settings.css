@@ -256,3 +256,61 @@
   .st-fields { grid-template-columns: 1fr; }
   .st-page { padding: 5rem 1rem 2rem; }
 }
+
+/* 2FA Section */
+.st-divider { height: 1px; background: rgba(255,255,255,0.06); margin: 2rem 0; }
+
+.st-2fa-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  background: rgba(249,115,22,0.04);
+  border: 1px solid rgba(249,115,22,0.1);
+  border-radius: 1.25rem;
+  padding: 1.5rem;
+}
+
+.st-2fa-title { font-size: 0.95rem; font-weight: 800; color: #fff; margin-bottom: 0.3rem; }
+.st-2fa-desc { font-size: 0.72rem; color: #666; line-height: 1.5; }
+
+.st-status-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 1rem;
+  background: rgba(34,197,94,0.1);
+  color: #22c55e;
+  border: 1px solid rgba(34,197,94,0.3);
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.st-enable-2fa-btn {
+  padding: 0.6rem 1.25rem;
+  background: #f97316;
+  border: none;
+  border-radius: 999px;
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 12px rgba(249,115,22,0.3);
+  white-space: nowrap;
+}
+.st-enable-2fa-btn:hover { background: #ea580c; transform: translateY(-1px); }
+
+.st-disable-btn-small {
+  padding: 0.4rem 0.8rem;
+  background: rgba(239,68,68,0.1);
+  border: 1px solid rgba(239,68,68,0.2);
+  border-radius: 999px;
+  color: #ef4444;
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.st-disable-btn-small:hover { background: #ef4444; color: #fff; }
