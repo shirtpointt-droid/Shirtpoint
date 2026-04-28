@@ -21,12 +21,19 @@ export default function DesignLabManager() {
   const [color1, setColor1] = useState('#f97316')
   const [color2, setColor2] = useState('#ea580c')
 
+  const [tshirtTypes, setTshirtTypes] = useState([])
+  const [ttForm, setTtForm] = useState({ name: '', image: '', order: 0 })
+  const [editingTt, setEditingTt] = useState(null)
+  const [ttUploading, setTtUploading] = useState(false)
+
   const fetchCats = async () => {
     const res = await fetch('http://localhost:5000/api/design-lab-categories')
     setCats(await res.json())
   }
 
-  useEffect(() => { fetchCats() }, [])
+  const fetchTt = async () => setTshirtTypes(await fetch('http://localhost:5000/api/tshirt-types').then(r => r.json()))
+
+  useEffect(() => { fetchCats(); fetchTt() }, [])
 
   const handleImgUpload = async (e) => {
     const file = e.target.files[0]; if (!file) return
@@ -67,6 +74,16 @@ export default function DesignLabManager() {
     await fetch(`http://localhost:5000/api/design-lab-categories/${id}`, { method: 'DELETE' })
     fetchCats()
   }
+
+  const handleTtSave = async () => {
+    if (!ttForm.name || !ttForm.image) return
+    const method = editingTt ? 'PUT' : 'POST'
+    const url = editingTt ? `http://localhost:5000/api/tshirt-types/${editingTt._id}` : 'http://localhost:5000/api/tshirt-types'
+    await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(ttForm) })
+    setTtForm({ name: '', image: '', order: 0 }); setEditingTt(null); fetchTt()
+  }
+  const handleTtEdit = (t) => { setTtForm({ name: t.name, image: t.image, order: t.order }); setEditingTt(t) }
+  const handleTtDelete = async (id) => { await fetch(`http://localhost:5000/api/tshirt-types/${id}`, { method: 'DELETE' }); fetchTt() }
 
   return (
     <div className="admin-page">
@@ -166,6 +183,60 @@ export default function DesignLabManager() {
           }
         </div>
       </div>
+
+      {/* T-SHIRT TYPES */}
+      <div className="admin-carousel-section">
+        <h2 className="admin-carousel-title">👕 T-Shirt Types — Browse by Style</h2>
+        <p className="admin-carousel-sub">12 T-shirt types add karo — User Home par grid mein show honge</p>
+        <div className="admin-product-form">
+          <h3>{editingTt ? 'Edit Type' : 'Add New Type'}</h3>
+          <div className="admin-split-field">
+            <label>Type Name</label>
+            <input value={ttForm.name} onChange={e => setTtForm(p => ({ ...p, name: e.target.value }))} placeholder="Classic T-Shirt, Oversized..." />
+          </div>
+          <div className="admin-split-field">
+            <label>Image</label>
+            <div className="admin-image-upload" onClick={() => !ttUploading && document.getElementById('ttImgInput').click()}>
+              {ttForm.image
+                ? <img src={ttForm.image} alt="type" className="admin-image-preview" />
+                : <div className="admin-image-placeholder"><span>👕</span><p>{ttUploading ? 'Uploading...' : 'Upload Image'}</p></div>
+              }
+              <input id="ttImgInput" type="file" accept="image/*" style={{ display: 'none' }} onChange={async (e) => {
+                const file = e.target.files[0]; if (!file) return
+                setTtUploading(true)
+                const fd = new FormData(); fd.append('image', file)
+                const res = await fetch('http://localhost:5000/api/upload', { method: 'POST', body: fd })
+                const data = await res.json()
+                setTtForm(p => ({ ...p, image: data.url }))
+                setTtUploading(false)
+              }} />
+            </div>
+          </div>
+          <div className="admin-product-actions">
+            {editingTt && <button className="admin-crop-cancel" onClick={() => { setEditingTt(null); setTtForm({ name: '', image: '', order: 0 }) }}>Cancel</button>}
+            <button className="admin-carousel-btn" onClick={handleTtSave} disabled={ttUploading || !ttForm.name || !ttForm.image}>{editingTt ? 'Update Type' : 'Add Type'}</button>
+          </div>
+        </div>
+        <div className="admin-carousel-grid">
+          {tshirtTypes.length === 0
+            ? <div className="admin-carousel-empty"><span>👕</span><p>Koi type nahi — upar se add karo</p></div>
+            : tshirtTypes.map((t, i) => (
+              <div key={t._id} className="admin-carousel-card">
+                <div className="admin-carousel-badge">#{i + 1}</div>
+                <img src={t.image} alt={t.name} className="admin-carousel-img" />
+                <div className="admin-carousel-footer">
+                  <span className="admin-carousel-url">{t.name}</span>
+                  <div style={{ display: 'flex', gap: 6 }}>
+                    <button className="admin-product-edit" onClick={() => handleTtEdit(t)}>✏️ Edit</button>
+                    <button className="admin-carousel-delete" onClick={() => handleTtDelete(t._id)}>🗑 Delete</button>
+                  </div>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+
     </div>
   )
 }
