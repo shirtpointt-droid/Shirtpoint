@@ -273,6 +273,7 @@ export default function DesignLabManager() {
             {cpForm.image && (
               <div className="admin-rmbg-actions">
                 <button className="admin-rmbg-btn" onClick={async () => {
+                  if (!window.confirm('Note: White ya light color items ka background remove karte waqt item bhi affect ho sakta hai. Continue?')) return
                   setCpUploading(true)
                   try {
                     const blob = await removeBg(cpForm.image)
