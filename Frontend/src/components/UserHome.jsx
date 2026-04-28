@@ -199,7 +199,7 @@ export default function UserHome() {
           
           <div className="new-drops-slider">
             <div className="new-drops-track">
-              {newDrops.map((drop, i) => (
+              {newDrops.slice(0, 4).map((drop, i) => (
                 <motion.div 
                   key={i} 
                   className="new-drop-card"
@@ -217,7 +217,6 @@ export default function UserHome() {
                   </div>
                   <div className="new-drop-info">
                     <h3 className="new-drop-title">{drop.title}</h3>
-                    <p className="new-drop-price">{drop.price}</p>
                   </div>
                 </motion.div>
               ))}

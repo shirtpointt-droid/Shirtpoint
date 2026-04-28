@@ -2102,3 +2102,58 @@
 }
 
 .uh-wrapper.light .new-drop-title { color: #111; }
+
+/* ── NEW DROPS 4 CARDS FIX ── */
+.new-drops-track {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 1rem !important;
+  overflow: visible !important;
+  width: 100% !important;
+}
+
+.new-drop-price { display: none !important; }
+
+@media (max-width: 768px) {
+  .new-drops-track { grid-template-columns: repeat(2, 1fr) !important; }
+}
+
+/* ── NEW DROP CARDS FULL FRAME FIX ── */
+.new-drops-section { width: 100%; }
+.new-drops-slider { width: 100%; overflow: hidden; }
+
+.new-drops-track {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 1rem !important;
+  width: 100% !important;
+}
+
+.new-drop-card {
+  width: 100% !important;
+  flex-shrink: unset !important;
+  cursor: pointer;
+  border-radius: 1.25rem;
+  overflow: hidden;
+}
+
+.new-drop-img-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3/4;
+  overflow: hidden;
+}
+
+.new-drop-img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.new-drop-card:hover .new-drop-img { transform: scale(1.06); }
+
+@media (max-width: 768px) {
+  .new-drops-track { grid-template-columns: repeat(2, 1fr) !important; }
+}
