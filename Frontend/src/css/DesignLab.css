@@ -1716,14 +1716,20 @@
   width: 100%;
   aspect-ratio: 1;
   overflow: hidden;
+  background: rgba(255,255,255,0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .dl-product-card-img img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
   transition: transform 0.4s;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
 }
 
 .dl-product-card:hover .dl-product-card-img img { transform: scale(1.06); }
