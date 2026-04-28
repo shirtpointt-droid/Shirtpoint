@@ -128,6 +128,7 @@ export default function DesignLabManager() {
   const handleCpDelete = async (id) => { await fetch(`http://localhost:5000/api/category-products/${id}`, { method: 'DELETE' }); fetchCp(selectedCatFilter) }
 
   return (
+    <>
     <div className="admin-page">
       <div className="admin-carousel-section">
         <h2 className="admin-carousel-title">🎨 Design Lab — Categories</h2>
@@ -350,7 +351,6 @@ export default function DesignLabManager() {
           </div>
         </div>
       )}
-
-    </div>
+    </>
   )
 }
