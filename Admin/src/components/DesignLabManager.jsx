@@ -350,8 +350,11 @@ export default function DesignLabManager() {
             ].map(([w, h, label]) => (
               <button key={label} onClick={() => setCropAspect(w/h)} style={{ padding: '0.3rem 0.75rem', borderRadius: 999, border: '1px solid rgba(255,255,255,0.2)', background: Math.abs(cropAspect - w/h) < 0.01 ? '#f97316' : '#222', color: '#fff', cursor: 'pointer', fontSize: 11, fontWeight: 700 }}>{label}</button>
             ))}
-            <input type="range" min={1} max={3} step={0.1} value={zoom} onChange={e => setZoom(Number(e.target.value))} style={{ width: 100, accentColor: '#f97316' }} />
-            <span style={{ color: '#aaa', fontSize: 12 }}>Zoom: {zoom.toFixed(1)}x</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <button onClick={() => setZoom(z => Math.max(1, +(z - 0.1).toFixed(1)))} style={{ width: 28, height: 28, borderRadius: '50%', border: '1px solid rgba(255,255,255,0.2)', background: '#222', color: '#fff', cursor: 'pointer', fontSize: 16, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>−</button>
+              <span style={{ color: '#aaa', fontSize: 12, minWidth: 50, textAlign: 'center' }}>Zoom: {zoom.toFixed(1)}x</span>
+              <button onClick={() => setZoom(z => Math.min(3, +(z + 0.1).toFixed(1)))} style={{ width: 28, height: 28, borderRadius: '50%', border: '1px solid rgba(255,255,255,0.2)', background: '#222', color: '#fff', cursor: 'pointer', fontSize: 16, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>+</button>
+            </div>
           </div>
           <div style={{ display: 'flex', gap: '0.75rem' }}>
             <button onClick={() => setShowCrop(false)} style={{ padding: '0.6rem 1.5rem', borderRadius: 999, border: '1px solid rgba(255,255,255,0.2)', background: '#222', color: '#fff', cursor: 'pointer', fontWeight: 700 }}>Cancel</button>
