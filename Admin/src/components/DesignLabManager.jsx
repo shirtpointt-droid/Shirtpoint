@@ -79,7 +79,7 @@ export default function DesignLabManager() {
   }
 
   const handleCpSave = async () => {
-    if (!cpForm.categoryLabel || !cpForm.name) return
+    if (!cpForm.categoryLabel || cpForm.categoryLabel === '__custom__' || !cpForm.name) return
     const method = editingCp ? 'PUT' : 'POST'
     const url = editingCp ? `http://localhost:5000/api/category-products/${editingCp._id}` : 'http://localhost:5000/api/category-products'
     await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(cpForm) })
@@ -243,7 +243,7 @@ export default function DesignLabManager() {
                   } catch { alert('Background remove nahi hua') }
                   setCpUploading(false)
                 }} disabled={cpUploading}>✂️ {cpUploading ? 'Removing...' : 'Remove Background'}</button>
-                {cpForm.image !== cpOriginalImg && cpOriginalImg && (
+                {cpOriginalImg && cpForm.image !== cpOriginalImg && (
                   <button className="admin-rmbg-cancel" onClick={() => setCpForm(p => ({ ...p, image: cpOriginalImg }))}>↩️ Cancel</button>
                 )}
               </div>
