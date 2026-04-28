@@ -2157,3 +2157,103 @@
 @media (max-width: 768px) {
   .new-drops-track { grid-template-columns: repeat(2, 1fr) !important; }
 }
+
+/* ── NEW DROPS PAIRS ── */
+.new-drops-pairs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.new-drop-pair {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.03);
+  position: relative;
+}
+
+.new-drop-pair .new-drop-card {
+  flex: 1;
+  cursor: pointer;
+  overflow: hidden;
+  border-radius: 0;
+}
+
+.new-drop-pair .new-drop-img-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3/4;
+  overflow: hidden;
+}
+
+.new-drop-pair .new-drop-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.new-drop-pair .new-drop-card:hover .new-drop-img { transform: scale(1.06); }
+
+.new-drop-pair .new-drop-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%);
+}
+
+.new-drop-pair .new-drop-tag {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  font-size: 0.55rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+  background: #f97316;
+  color: #fff;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+}
+
+.new-drop-name {
+  position: absolute;
+  bottom: 0.75rem;
+  left: 0.75rem;
+  right: 0.75rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+  z-index: 2;
+}
+
+.new-drop-bolt {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  width: 44px;
+  height: 44px;
+  background: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(249,115,22,0.5);
+  border: 2px solid rgba(249,115,22,0.3);
+  flex-shrink: 0;
+}
+
+.uh-wrapper.light .new-drop-pair {
+  border-color: rgba(0,0,0,0.08);
+  background: rgba(0,0,0,0.03);
+}
+
+@media (max-width: 768px) {
+  .new-drops-pairs { grid-template-columns: 1fr; }
+}

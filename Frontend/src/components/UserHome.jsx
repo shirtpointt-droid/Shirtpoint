@@ -59,11 +59,10 @@ export default function UserHome() {
   ])
 
   const newDrops = [
-    { title: 'Neon Cyber Tee', price: 'Rs 1,800', img: 'http://localhost:5000/uploads/new_drop_1.png' },
-    { title: 'Minimalist Cloud Hoodie', price: 'Rs 3,200', img: 'http://localhost:5000/uploads/new_drop_2.png' },
-    { title: 'Urban Legend Oversized', price: 'Rs 1,950', img: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=800&q=95&fit=crop' },
-    { title: 'Midnight Street Tee', price: 'Rs 1,750', img: 'https://images.unsplash.com/photo-1578768079052-aa76e52ff62e?w=800&q=95&fit=crop' },
-    { title: 'Cyber Dragon Limited', price: 'Rs 2,100', img: 'https://images.unsplash.com/photo-1562157873-818bc0726f68?w=800&q=95&fit=crop' },
+    { title: 'Neon Cyber Tee', img: 'http://localhost:5000/uploads/new_drop_1.png' },
+    { title: 'Minimalist Cloud Hoodie', img: 'http://localhost:5000/uploads/new_drop_2.png' },
+    { title: 'Urban Legend Oversized', img: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=800&q=95&fit=crop' },
+    { title: 'Midnight Street Tee', img: 'https://images.unsplash.com/photo-1578768079052-aa76e52ff62e?w=800&q=95&fit=crop' },
   ]
 
   const defaultHiwImgs = [
@@ -196,20 +195,10 @@ export default function UserHome() {
             </div>
             <button className="uh-view-all" onClick={() => navigate('/marketplace')}>View Marketplace →</button>
           </div>
-          
           <div className="new-drops-slider">
             <div className="new-drops-track">
-              {newDrops.slice(0, 4).map((drop, i) => (
-                <motion.div 
-                  key={i} 
-                  className="new-drop-card"
-                  initial={{ opacity: 0, x: 50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.1, duration: 0.5 }}
-                  viewport={{ once: true }}
-                  whileHover={{ y: -10 }}
-                  onClick={() => navigate('/design-lab')}
-                >
+              {newDrops.map((drop, i) => (
+                <motion.div key={i} className="new-drop-card" whileHover={{ y: -8 }} onClick={() => navigate('/design-lab')}>
                   <div className="new-drop-img-wrap">
                     <img src={drop.img} alt={drop.title} className="new-drop-img" />
                     <div className="new-drop-tag">LIMITED</div>
