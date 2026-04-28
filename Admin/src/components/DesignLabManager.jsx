@@ -29,6 +29,8 @@ export default function DesignLabManager() {
   const [cpOriginalImg, setCpOriginalImg] = useState('')
   const [selectedCatFilter, setSelectedCatFilter] = useState('')
 
+  const DEFAULT_CATS = ['T-Shirts','Hoodies','Switers','Trousers','Caps','Hats','Snokes','Mobile Covers','Laptop Sleeves','Mouse Pads','Earbud Cases','Notebooks','Books & Covers','Pens','Mugs','Stickers','Tote Bags','Backpacks','Duffle Bags','Wallets','Cushions','Water Bottles','Wall Arts']
+
   const fetchCats = async () => {
     const res = await fetch('http://localhost:5000/api/design-lab-categories')
     setCats(await res.json())
@@ -198,7 +200,7 @@ export default function DesignLabManager() {
             <label>Category *</label>
             <select value={cpForm.categoryLabel} onChange={e => setCpForm(p => ({ ...p, categoryLabel: e.target.value }))} style={{ width: '100%', padding: '0.6rem', borderRadius: 8, background: '#1a1a1a', color: '#fff', border: '1px solid rgba(255,255,255,0.1)' }}>
               <option value="">-- Category Select Karo --</option>
-              {cats.map(c => <option key={c._id} value={c.label}>{c.label}</option>)}
+              {(cats.length > 0 ? cats.map(c => c.label) : DEFAULT_CATS).map((label, i) => <option key={i} value={label}>{label}</option>)}
               <option value="__custom__">+ Custom (khud likho)</option>
             </select>
             {cpForm.categoryLabel === '__custom__' && (
@@ -258,8 +260,8 @@ export default function DesignLabManager() {
         {/* Filter by category */}
         <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '1rem' }}>
           <button onClick={() => { setSelectedCatFilter(''); fetchCp('') }} style={{ padding: '0.35rem 0.85rem', borderRadius: 999, border: '1px solid rgba(255,255,255,0.15)', background: selectedCatFilter === '' ? '#f97316' : '#111', color: '#fff', cursor: 'pointer', fontSize: '0.72rem', fontWeight: 700 }}>All</button>
-          {cats.map(c => (
-            <button key={c._id} onClick={() => { setSelectedCatFilter(c.label); fetchCp(c.label) }} style={{ padding: '0.35rem 0.85rem', borderRadius: 999, border: '1px solid rgba(255,255,255,0.15)', background: selectedCatFilter === c.label ? '#f97316' : '#111', color: '#fff', cursor: 'pointer', fontSize: '0.72rem', fontWeight: 700 }}>{c.label}</button>
+          {(cats.length > 0 ? cats.map(c => c.label) : DEFAULT_CATS).map((label, i) => (
+            <button key={i} onClick={() => { setSelectedCatFilter(label); fetchCp(label) }} style={{ padding: '0.35rem 0.85rem', borderRadius: 999, border: '1px solid rgba(255,255,255,0.15)', background: selectedCatFilter === label ? '#f97316' : '#111', color: '#fff', cursor: 'pointer', fontSize: '0.72rem', fontWeight: 700 }}>{label}</button>
           ))}
         </div>
 

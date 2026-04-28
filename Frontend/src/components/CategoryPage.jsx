@@ -77,10 +77,7 @@ export default function CategoryPage() {
             </button>
             <div className="dl-step1-steps">
               {[1,2,3,4].map(n => (
-                <div key={n} className={`dl-step1-pill ${n === 2 ? 'active' : ''}`}
-                  onClick={() => n === 1 && navigate('/design-lab')}
-                  style={{ cursor: n === 1 ? 'pointer' : 'default' }}
-                >
+                <div key={n} className={`dl-step1-pill ${n === 2 ? 'active' : ''}`}>
                   <span className="dl-step1-pill-num">{`0${n}`}</span>
                   <span className="dl-step1-pill-label">
                     {n === 1 && 'Category'}{n === 2 && 'Product'}{n === 3 && 'Design'}{n === 4 && 'Order'}
