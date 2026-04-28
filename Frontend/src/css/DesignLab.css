@@ -1720,7 +1720,7 @@
   width: 100%;
   aspect-ratio: 1;
   overflow: hidden;
-  background: rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.08);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1815,3 +1815,92 @@
   border-color: #f97316;
   color: #f97316;
 }
+
+/* ── PRODUCT ZOOM BUTTON ── */
+.dl-product-card { position: relative; }
+
+.dl-product-zoom-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0,0,0,0.55);
+  color: #fff;
+  font-size: 0.75rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s, background 0.2s;
+  z-index: 5;
+  backdrop-filter: blur(4px);
+}
+
+.dl-product-card:hover .dl-product-zoom-btn { opacity: 1; }
+.dl-product-zoom-btn:hover { background: #f97316; }
+
+/* ── LIGHTBOX ── */
+.dl-lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0,0,0,0.88);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.dl-lightbox-box {
+  position: relative;
+  background: #111;
+  border-radius: 1.5rem;
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 1.5rem;
+  max-width: 520px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.6);
+}
+
+.dl-lightbox-img {
+  width: 100%;
+  max-height: 420px;
+  object-fit: contain;
+  border-radius: 1rem;
+  background: rgba(255,255,255,0.06);
+}
+
+.dl-lightbox-name {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.3px;
+}
+
+.dl-lightbox-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+.dl-lightbox-close:hover { background: #ef4444; border-color: #ef4444; }

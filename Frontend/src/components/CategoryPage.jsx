@@ -38,6 +38,7 @@ export default function CategoryPage() {
   const [search, setSearch] = useState('')
   const [catData, setCatData] = useState(null)
   const [products, setProducts] = useState([])
+  const [lightbox, setLightbox] = useState(null)
 
   const catName = decodeURIComponent(category)
 
@@ -118,6 +119,9 @@ export default function CategoryPage() {
                     </div>
                 }
               </div>
+              {product.image && (
+                <button className="dl-product-zoom-btn" onClick={e => { e.stopPropagation(); setLightbox(product) }}>🔍</button>
+              )}
               <div className="dl-product-card-name">{product.name}</div>
               <div className="dl-product-card-arrow">→</div>
             </motion.button>
@@ -126,6 +130,17 @@ export default function CategoryPage() {
 
         {filtered.length === 0 && (
           <div className="dl-step1-empty">{products.length === 0 ? 'Admin se products add karo' : `No products found for "${search}"`}</div>
+        )}
+
+        {/* LIGHTBOX */}
+        {lightbox && (
+          <div className="dl-lightbox-overlay" onClick={() => setLightbox(null)}>
+            <div className="dl-lightbox-box" onClick={e => e.stopPropagation()}>
+              <img src={lightbox.image} alt={lightbox.name} className="dl-lightbox-img" />
+              <div className="dl-lightbox-name">{lightbox.name}</div>
+              <button className="dl-lightbox-close" onClick={() => setLightbox(null)}>✕</button>
+            </div>
+          </div>
         )}
 
       </div>
