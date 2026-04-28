@@ -428,6 +428,43 @@ function Home() {
         </motion.div>
       </section>
 
+      {/* ===== WHY CHOOSE US ===== */}
+      <section className="why-us-section">
+        <div className="container mx-auto px-6">
+          <motion.div 
+            className="why-header"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <span className="why-eyebrow">Why Choose Us</span>
+            <h2 className="why-heading">Everything you need for <span className="why-highlight">Premium</span> apparel</h2>
+          </motion.div>
+
+          <div className="why-grid">
+            {[
+              { icon: '⚡', title: 'No Minimum Order', desc: 'Order even a single T-shirt. No bulk requirement, just your unique style.' },
+              { icon: '💎', title: 'HD Printing', desc: 'Premium high-definition prints with vibrant colors that never fade or crack.' },
+              { icon: '🚚', title: 'Fast Delivery', desc: 'Custom products delivered to your doorstep in just 3–5 business days.' },
+              { icon: '🏆', title: 'Premium Quality', desc: '100% organic cotton and high-stitch count for maximum comfort and durability.' }
+            ].map((item, i) => (
+              <motion.div 
+                key={i} 
+                className="why-card"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.15, duration: 0.6 }}
+                viewport={{ once: true }}
+              >
+                <div className="why-icon-wrap">{item.icon}</div>
+                <h3 className="why-card-title">{item.title}</h3>
+                <p className="why-card-desc">{item.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ===== REVIEWS SECTION ===== */}
       <section className="reviews-section">
         <div className="reviews-header">

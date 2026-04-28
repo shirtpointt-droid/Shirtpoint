@@ -175,10 +175,10 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  font-size: clamp(2.8rem, 6vw, 5.5rem);
+  font-size: clamp(2rem, 5vw, 4.2rem);
   font-weight: 900;
   line-height: 1;
-  letter-spacing: -2px;
+  letter-spacing: -1.5px;
 }
 
 .home-center-heading span:first-child {
@@ -290,7 +290,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 6rem 8rem;
+  padding: 8rem 10%;
   overflow: hidden;
   background: transparent;
 }
@@ -330,18 +330,18 @@
 }
 
 .mid-hero-heading {
-  font-size: clamp(5rem, 12vw, 11rem);
+  font-size: clamp(4rem, 10vw, 8.5rem);
   font-weight: 900;
-  line-height: 0.85;
-  letter-spacing: -4px;
+  line-height: 0.9;
+  letter-spacing: -3px;
   text-transform: uppercase;
   color: #111;
   -webkit-text-fill-color: #111;
   background: none;
   position: relative;
   z-index: 2;
-  margin-bottom: 3rem;
-  text-shadow: 0 2px 40px rgba(0,0,0,0.08);
+  margin-bottom: 2.5rem;
+  text-shadow: 0 2px 30px rgba(0,0,0,0.05);
 }
 
 .mid-hero-outline {
@@ -360,7 +360,7 @@
 }
 
 .mid-hero-desc {
-  max-width: 280px;
+  max-width: 320px;
   font-size: 0.85rem;
   color: #555;
   line-height: 1.8;
@@ -369,8 +369,8 @@
 }
 
 .mid-hero-btn {
-  width: 130px;
-  height: 130px;
+  width: 115px;
+  height: 115px;
   background: #111;
   border: none;
   border-radius: 50%;
@@ -948,8 +948,8 @@
 /* ===== MID HERO STATS ===== */
 .mid-hero-stats {
   display: flex;
-  gap: 2.5rem;
-  margin-bottom: 3rem;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
   position: relative;
   z-index: 2;
   flex-wrap: wrap;
@@ -959,21 +959,21 @@
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
-  padding: 1rem 1.5rem;
+  padding: 0.75rem 1.25rem;
   border: 1px solid rgba(255, 255, 255, 0.5);
   border-radius: 1rem;
   background: linear-gradient(145deg, rgba(255, 210, 170, 0.75), rgba(251, 146, 60, 0.55));
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  box-shadow: 0 20px 60px rgba(234, 88, 12, 0.2), inset 0 1px 0 rgba(255,255,255,0.7);
-  min-width: 100px;
+  box-shadow: 0 15px 40px rgba(234, 88, 12, 0.15), inset 0 1px 0 rgba(255,255,255,0.7);
+  min-width: 90px;
 }
 
 .mid-hero-stat-value {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   font-weight: 900;
   color: #111;
-  letter-spacing: -1px;
+  letter-spacing: -0.5px;
   line-height: 1;
 }
 
@@ -1395,4 +1395,114 @@
 .pk-dot {
   color: #f97316;
   font-size: 0.5rem;
+}
+
+/* ===== WHY CHOOSE US ===== */
+.why-us-section {
+  padding: 8rem 0;
+  background: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.why-header {
+  text-align: center;
+  margin-bottom: 5rem;
+  padding: 0 1rem;
+}
+
+.why-eyebrow {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: #f97316;
+  margin-bottom: 1rem;
+}
+
+.why-heading {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 900;
+  color: #111;
+  letter-spacing: -1.5px;
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 1.1;
+}
+
+.why-highlight {
+  color: #f97316;
+  font-style: italic;
+}
+
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.why-card {
+  padding: 2.5rem 2rem;
+  background: #f8fafc;
+  border: 1px solid rgba(0,0,0,0.05);
+  border-radius: 2rem;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.why-card:hover {
+  background: white;
+  transform: translateY(-10px);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.08);
+  border-color: #f97316;
+}
+
+.why-icon-wrap {
+  width: 70px;
+  height: 70px;
+  background: rgba(249, 115, 22, 0.1);
+  border-radius: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.why-card:hover .why-icon-wrap {
+  transform: scale(1.1) rotate(5deg);
+  background: #f97316;
+  color: white;
+}
+
+.why-card-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #111;
+  margin-bottom: 1rem;
+  letter-spacing: -0.5px;
+}
+
+.why-card-desc {
+  font-size: 0.9rem;
+  color: #64748b;
+  line-height: 1.6;
+}
+
+@media (max-width: 1024px) {
+  .why-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .why-grid { grid-template-columns: 1fr; }
+  .why-us-section { padding: 5rem 0; }
+  .why-header { margin-bottom: 3rem; }
 }
