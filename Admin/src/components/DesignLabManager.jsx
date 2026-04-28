@@ -197,7 +197,14 @@ export default function DesignLabManager() {
             <select value={cpForm.categoryLabel} onChange={e => setCpForm(p => ({ ...p, categoryLabel: e.target.value }))} style={{ width: '100%', padding: '0.6rem', borderRadius: 8, background: '#1a1a1a', color: '#fff', border: '1px solid rgba(255,255,255,0.1)' }}>
               <option value="">-- Category Select Karo --</option>
               {cats.map(c => <option key={c._id} value={c.label}>{c.label}</option>)}
+              <option value="__custom__">+ Custom (khud likho)</option>
             </select>
+            {cpForm.categoryLabel === '__custom__' && (
+              <input style={{ marginTop: 8, width: '100%', padding: '0.6rem', borderRadius: 8, background: '#1a1a1a', color: '#fff', border: '1px solid rgba(255,255,255,0.1)' }}
+                placeholder="Category name likho..."
+                onChange={e => setCpForm(p => ({ ...p, categoryLabel: e.target.value === '' ? '__custom__' : e.target.value }))}
+              />
+            )}
           </div>
           <div className="admin-split-field">
             <label>Product Name *</label>
