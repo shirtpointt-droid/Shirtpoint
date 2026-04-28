@@ -1930,7 +1930,6 @@
   .promo-badge-wrap { flex-direction: row; justify-content: center; }
 }
 
-<<<<<<< HEAD
 /* ── LIGHT MODE TEXT FIXES ── */
 .uh-wrapper.light .ct-heading { color: #111; }
 .uh-wrapper.light .ct-heading-outline { -webkit-text-stroke-color: #f97316; }
@@ -1966,7 +1965,6 @@
 .uh-wrapper .coll-step-desc { color: #555; }
 .uh-wrapper .trust-rating-name { color: #fff; }
 .uh-wrapper .trust-score { color: #fff; }
-=======
 /* ── NEW DROPS ── */
 .new-drops-section {
   padding: 4rem 0;
@@ -2104,4 +2102,3 @@
 }
 
 .uh-wrapper.light .new-drop-title { color: #111; }
->>>>>>> ff416cfbbfb64805e36d9b7b2d8867485c1889f5
