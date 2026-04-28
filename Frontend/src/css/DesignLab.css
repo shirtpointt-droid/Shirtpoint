@@ -2057,6 +2057,37 @@
 
 .cp-top-bar .dl-step1-pill.active .dl-step1-pill-num { opacity: 1; }
 
-.dl-wrapper.dl-light .cp-top-bar .dl-step1-pill { color: rgba(0,0,0,0.35); }
-.dl-wrapper.dl-light .cp-top-bar .dl-step1-pill::after { color: rgba(0,0,0,0.15); }
+.dl-wrapper.dl-light .cp-top-bar .dl-step1-pill { color: rgba(0,0,0,0.55); }
 .dl-wrapper.dl-light .cp-top-bar .dl-step1-pill.active { color: #f97316; background: rgba(249,115,22,0.1); }
+
+/* ── ACTIVE PILL OVERRIDE ── */
+.cp-top-bar .dl-step1-pill.active {
+  background: rgba(255,255,255,0.12) !important;
+  color: #fff !important;
+  font-weight: 800;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+.dl-wrapper.dl-light .cp-top-bar .dl-step1-pill { color: rgba(0,0,0,0.55); }
+
+.dl-wrapper.dl-light .cp-top-bar .dl-step1-pill.active {
+  background: rgba(0,0,0,0.08) !important;
+  color: #111 !important;
+  border: 1px solid rgba(0,0,0,0.15);
+}
+
+/* ── ACTIVE PILL FINAL ── */
+.cp-top-bar .dl-step1-pill.active {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6) !important;
+  color: #fff !important;
+  font-weight: 800;
+  border: none !important;
+  box-shadow: 0 4px 16px rgba(99,102,241,0.4);
+}
+
+.dl-wrapper.dl-light .cp-top-bar .dl-step1-pill.active {
+  background: linear-gradient(135deg, #1e293b, #334155) !important;
+  color: #fff !important;
+  border: none !important;
+  box-shadow: 0 4px 16px rgba(30,41,59,0.3);
+}
