@@ -1,5 +1,5 @@
 node_modules/
 .env
-uploads/
+# uploads/ — tracked intentionally
 dist/
 .DS_Store
