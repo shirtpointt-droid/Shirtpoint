@@ -567,17 +567,68 @@
   gap: 0.75rem;
   border-top: 1px solid rgba(255,255,255,0.06);
   padding-top: 1.5rem;
+  width: 100%;
 }
 
 .split-features div {
   position: relative;
-  background: linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 1.25rem;
-  padding: 1.1rem 1.2rem;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 1rem;
+  padding: 0.75rem 1.25rem;
+  overflow: hidden;
+  transition: all 0.25s ease;
+  backdrop-filter: blur(10px);
+  border-left: 2px solid #f97316;
+  min-height: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.split-features div:hover {
+  background: rgba(249,115,22,0.06);
+  border-color: rgba(249,115,22,0.4);
+  border-left-color: #f97316;
+  transform: translateX(4px);
+}
+
+.split-feature-card {
+  position: relative;
+  background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)) !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  border-radius: 1.25rem !important;
+  padding: 1rem 1.2rem !important;
   overflow: hidden;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   backdrop-filter: blur(10px);
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.85rem !important;
+}
+
+.split-feature-card:hover {
+  border-color: rgba(249,115,22,0.5) !important;
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 12px 32px rgba(249,115,22,0.2);
+}
+
+.split-feature-icon {
+  font-size: 1.4rem;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(249,115,22,0.1);
+  border-radius: 0.75rem;
+  flex-shrink: 0;
+  transition: all 0.3s;
+}
+
+.split-feature-card:hover .split-feature-icon {
+  background: #f97316;
+  transform: scale(1.1) rotate(5deg);
 }
 
 .split-features div::after {
