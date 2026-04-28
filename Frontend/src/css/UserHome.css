@@ -1596,7 +1596,18 @@
   overflow: hidden;
   box-shadow: 0 16px 48px rgba(0,0,0,0.4);
   border: 1px solid rgba(255,255,255,0.08);
+  transition: transform 0.4s cubic-bezier(0.4,0,0.2,1), box-shadow 0.4s;
+  cursor: pointer;
 }
+
+.coll-img-card:hover {
+  box-shadow: 0 24px 64px rgba(249,115,22,0.3);
+  z-index: 10 !important;
+}
+
+.coll-img-1:hover { transform: rotate(-2deg) scale(1.06); }
+.coll-img-2:hover { transform: rotate(2deg) scale(1.06); }
+.coll-img-3:hover { transform: rotate(-1deg) scale(1.06); }
 
 .coll-img-card img {
   width: 100%;
@@ -1670,19 +1681,26 @@
 .coll-step:hover { border-color: transparent; background: none; }
 
 .coll-step-icon {
-  font-size: 1.5rem;
   width: 42px;
   height: 42px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(249,115,22,0.12);
+  background: rgba(249,115,22,0.1);
   border-radius: 50%;
   flex-shrink: 0;
-  border: 2px solid rgba(249,115,22,0.25);
+  border: 1.5px solid rgba(249,115,22,0.25);
   position: relative;
   z-index: 1;
+  transition: all 0.2s;
 }
+
+.coll-step:hover .coll-step-icon {
+  background: #f97316;
+  border-color: #f97316;
+}
+
+.coll-step:hover .coll-step-icon svg { stroke: #fff; }
 
 .coll-step-title {
   font-size: 0.88rem;

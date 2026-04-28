@@ -314,41 +314,11 @@ export default function UserHome() {
               <p className="ct-desc">Premium quality garments with unlimited customization. Your brand, your style.</p>
 
               <div className="coll-steps">
-                <div className="coll-step">
-                  <div className="coll-step-icon">👕</div>
-                  <div>
-                    <div className="coll-step-title">500+ Garment Styles</div>
-                    <div className="coll-step-desc">T-Shirts, Hoodies, Polos, Kurtas & more</div>
-                  </div>
-                </div>
-                <div className="coll-step">
-                  <div className="coll-step-icon">🎨</div>
-                  <div>
-                    <div className="coll-step-title">Free Design Icons</div>
-                    <div className="coll-step-desc">500+ premium icons — no extra cost</div>
-                  </div>
-                </div>
-                <div className="coll-step">
-                  <div className="coll-step-icon">⚡</div>
-                  <div>
-                    <div className="coll-step-title">Fast Delivery</div>
-                    <div className="coll-step-desc">3–5 business days across Pakistan</div>
-                  </div>
-                </div>
-                <div className="coll-step">
-                  <div className="coll-step-icon">💰</div>
-                  <div>
-                    <div className="coll-step-title">Affordable Pricing</div>
-                    <div className="coll-step-desc">Bulk discounts available on all orders</div>
-                  </div>
-                </div>
-                <div className="coll-step">
-                  <div className="coll-step-icon">✅</div>
-                  <div>
-                    <div className="coll-step-title">Premium Quality</div>
-                    <div className="coll-step-desc">100% organic cotton, HD print guaranteed</div>
-                  </div>
-                </div>
+                <div className="coll-step"><div className="coll-step-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f97316" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.34 2.23l.58 3.57a1 1 0 00.99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 002-2V10h2.15a1 1 0 00.99-.84l.58-3.57a2 2 0 00-1.34-2.23z"/></svg></div><div><div className="coll-step-title">500+ Garment Styles</div><div className="coll-step-desc">T-Shirts, Hoodies, Polos, Kurtas & more</div></div></div>
+                <div className="coll-step"><div className="coll-step-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f97316" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 011.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg></div><div><div className="coll-step-title">Free Design Icons</div><div className="coll-step-desc">500+ premium icons — no extra cost</div></div></div>
+                <div className="coll-step"><div className="coll-step-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f97316" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div><div><div className="coll-step-title">Fast Delivery</div><div className="coll-step-desc">3–5 business days across Pakistan</div></div></div>
+                <div className="coll-step"><div className="coll-step-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f97316" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div><div><div className="coll-step-title">Affordable Pricing</div><div className="coll-step-desc">Bulk discounts available on all orders</div></div></div>
+                <div className="coll-step"><div className="coll-step-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f97316" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><div><div className="coll-step-title">Premium Quality</div><div className="coll-step-desc">100% organic cotton, HD print guaranteed</div></div></div>
               </div>
 
               <button className="ct-btn" onClick={() => navigate('/design-lab')}>Start Designing →</button>
