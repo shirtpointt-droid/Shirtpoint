@@ -1399,7 +1399,7 @@
 
 /* ===== WHY CHOOSE US ===== */
 .why-us-section {
-  padding: 8rem 0;
+  padding: 4.5rem 0;
   background: #050505;
   position: relative;
   overflow: hidden;
@@ -1414,7 +1414,7 @@
 
 .why-header {
   text-align: center;
-  margin-bottom: 5rem;
+  margin-bottom: 3.5rem;
   padding: 0 1rem;
 }
 
@@ -1429,11 +1429,11 @@
 }
 
 .why-heading {
-  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-size: clamp(1.6rem, 3.5vw, 2.4rem);
   font-weight: 900;
   color: #fff;
-  letter-spacing: -1.5px;
-  max-width: 800px;
+  letter-spacing: -0.8px;
+  max-width: 700px;
   margin: 0 auto;
   line-height: 1.1;
 }
@@ -1446,20 +1446,20 @@
 .why-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 2rem;
+  gap: 1.25rem;
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 2rem;
 }
 
 .why-card {
-  padding: 2.5rem 2rem;
-  background: rgba(255, 255, 255, 0.03);
+  padding: 2rem 1.5rem;
+  background: rgba(255, 255, 255, 0.02);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 2rem;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 1.5rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1474,15 +1474,15 @@
 }
 
 .why-icon-wrap {
-  width: 70px;
-  height: 70px;
-  background: rgba(249, 115, 22, 0.1);
-  border-radius: 1.5rem;
+  width: 54px;
+  height: 54px;
+  background: rgba(249, 115, 22, 0.08);
+  border-radius: 1.25rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2rem;
-  margin-bottom: 1.5rem;
+  font-size: 1.6rem;
+  margin-bottom: 1.25rem;
   transition: all 0.3s ease;
 }
 
@@ -1493,15 +1493,15 @@
 }
 
 .why-card-title {
-  font-size: 1.25rem;
+  font-size: 1.1rem;
   font-weight: 800;
   color: #fff;
-  margin-bottom: 1rem;
-  letter-spacing: -0.5px;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.4px;
 }
 
 .why-card-desc {
-  font-size: 0.9rem;
+  font-size: 0.82rem;
   color: #9ca3af;
   line-height: 1.6;
 }
