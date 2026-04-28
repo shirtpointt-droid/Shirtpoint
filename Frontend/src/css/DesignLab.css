@@ -1843,7 +1843,14 @@
 }
 
 .dl-product-card:hover .dl-product-zoom-btn { opacity: 1; }
-.dl-product-zoom-btn:hover { background: #f97316; }
+.dl-product-zoom-btn:hover { background: #f97316; border-color: #f97316; }
+
+.dl-wrapper.dl-light .dl-product-zoom-btn {
+  background: rgba(255,255,255,0.85);
+  border-color: rgba(0,0,0,0.15);
+  color: #111;
+}
+.dl-wrapper.dl-light .dl-product-zoom-btn:hover { background: #f97316; border-color: #f97316; color: #fff; }
 
 /* ── LIGHTBOX ── */
 .dl-lightbox-overlay {
