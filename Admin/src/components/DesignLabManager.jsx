@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { removeBg } from '../utils/removeBg'
+import Cropper from 'react-easy-crop'
 
 const DEFAULT_GRADIENT = 'linear-gradient(135deg, #f97316, #ea580c)'
 
@@ -28,6 +29,16 @@ export default function DesignLabManager() {
   const [cpUploading, setCpUploading] = useState(false)
   const [cpOriginalImg, setCpOriginalImg] = useState('')
   const [cpImgFit, setCpImgFit] = useState('cover')
+
+  // Crop states
+  const [cropSrc, setCropSrc] = useState('')
+  const [crop, setCrop] = useState({ x: 0, y: 0 })
+  const [zoom, setZoom] = useState(1)
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState(null)
+  const [showCrop, setShowCrop] = useState(false)
+  const [cropAspect, setCropAspect] = useState(1)
+
+  const onCropComplete = useCallback((_, cap) => setCroppedAreaPixels(cap), [])
   const [selectedCatFilter, setSelectedCatFilter] = useState('')
 
   const DEFAULT_CATS = ['T-Shirts','Hoodies','Switers','Trousers','Caps','Hats','Snokes','Mobile Covers','Laptop Sleeves','Mouse Pads','Earbud Cases','Notebooks','Books & Covers','Pens','Mugs','Stickers','Tote Bags','Backpacks','Duffle Bags','Wallets','Cushions','Water Bottles','Wall Arts']
@@ -79,6 +90,30 @@ export default function DesignLabManager() {
   const handleDelete = async (id) => {
     await fetch(`http://localhost:5000/api/design-lab-categories/${id}`, { method: 'DELETE' })
     fetchCats()
+  }
+
+  const getCroppedImg = async () => {
+    const image = new Image()
+    image.src = cropSrc
+    await new Promise(r => { image.onload = r })
+    const canvas = document.createElement('canvas')
+    canvas.width = croppedAreaPixels.width
+    canvas.height = croppedAreaPixels.height
+    const ctx = canvas.getContext('2d')
+    ctx.drawImage(image, croppedAreaPixels.x, croppedAreaPixels.y, croppedAreaPixels.width, croppedAreaPixels.height, 0, 0, croppedAreaPixels.width, croppedAreaPixels.height)
+    return new Promise(r => canvas.toBlob(r, 'image/jpeg', 0.92))
+  }
+
+  const handleCropDone = async () => {
+    setCpUploading(true)
+    const blob = await getCroppedImg()
+    const fd = new FormData(); fd.append('image', blob, 'cropped.jpg')
+    const res = await fetch('http://localhost:5000/api/upload', { method: 'POST', body: fd })
+    const data = await res.json()
+    setCpForm(p => ({ ...p, image: data.url }))
+    setCpOriginalImg(data.url)
+    setShowCrop(false)
+    setCpUploading(false)
   }
 
   const handleCpSave = async () => {
@@ -224,20 +259,14 @@ export default function DesignLabManager() {
               }
               <input id="cpImgInput" type="file" accept="image/*" style={{ display: 'none' }} onChange={async (e) => {
                 const file = e.target.files[0]; if (!file) return
-                setCpUploading(true)
-                const fd = new FormData(); fd.append('image', file)
-                const res = await fetch('http://localhost:5000/api/upload', { method: 'POST', body: fd })
-                const data = await res.json()
-                setCpForm(p => ({ ...p, image: data.url }))
-                setCpOriginalImg(data.url)
-                setCpUploading(false)
+                const reader = new FileReader()
+                reader.onload = () => { setCropSrc(reader.result); setCrop({ x:0, y:0 }); setZoom(1); setShowCrop(true) }
+                reader.readAsDataURL(file)
               }} />
             </div>
             {cpForm.image && (
-              <div style={{ display: 'flex', gap: '0.4rem', marginTop: 6, flexWrap: 'wrap' }}>
-                {['cover','contain','fill'].map(fit => (
-                  <button key={fit} onClick={() => setCpImgFit(fit)} style={{ padding: '0.25rem 0.75rem', borderRadius: 999, border: '1px solid rgba(255,255,255,0.15)', background: cpImgFit === fit ? '#f97316' : '#111', color: '#fff', cursor: 'pointer', fontSize: '0.68rem', fontWeight: 700 }}>{fit}</button>
-                ))}
+              <div style={{ display: 'flex', gap: '0.4rem', marginTop: 6 }}>
+                <button onClick={() => { setCropSrc(cpForm.image); setCrop({x:0,y:0}); setZoom(1); setShowCrop(true) }} style={{ padding: '0.25rem 0.75rem', borderRadius: 999, border: '1px solid rgba(255,255,255,0.15)', background: '#111', color: '#fff', cursor: 'pointer', fontSize: '0.68rem', fontWeight: 700 }}>✂️ Re-Crop</button>
               </div>
             )}
             {cpForm.image && (
@@ -298,6 +327,29 @@ export default function DesignLabManager() {
           }
         </div>
       </div>
+
+      </div>
+
+      {/* CROP MODAL */}
+      {showCrop && (
+        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.85)', zIndex: 9999, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '1rem' }}>
+          <div style={{ position: 'relative', width: '90vw', maxWidth: 500, height: 400, borderRadius: 16, overflow: 'hidden', background: '#111' }}>
+            <Cropper image={cropSrc} crop={crop} zoom={zoom} aspect={cropAspect} onCropChange={setCrop} onZoomChange={setZoom} onCropComplete={onCropComplete} />
+          </div>
+          <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
+            <span style={{ color: '#aaa', fontSize: 12 }}>Aspect:</span>
+            {[[1,1,'1:1'],[4,3,'4:3'],[3,4,'3:4'],[16,9,'16:9']].map(([w,h,label]) => (
+              <button key={label} onClick={() => setCropAspect(w/h)} style={{ padding: '0.3rem 0.75rem', borderRadius: 999, border: '1px solid rgba(255,255,255,0.2)', background: cropAspect === w/h ? '#f97316' : '#222', color: '#fff', cursor: 'pointer', fontSize: 12, fontWeight: 700 }}>{label}</button>
+            ))}
+            <input type="range" min={1} max={3} step={0.1} value={zoom} onChange={e => setZoom(Number(e.target.value))} style={{ width: 100, accentColor: '#f97316' }} />
+            <span style={{ color: '#aaa', fontSize: 12 }}>Zoom: {zoom.toFixed(1)}x</span>
+          </div>
+          <div style={{ display: 'flex', gap: '0.75rem' }}>
+            <button onClick={() => setShowCrop(false)} style={{ padding: '0.6rem 1.5rem', borderRadius: 999, border: '1px solid rgba(255,255,255,0.2)', background: '#222', color: '#fff', cursor: 'pointer', fontWeight: 700 }}>Cancel</button>
+            <button onClick={handleCropDone} disabled={cpUploading} style={{ padding: '0.6rem 1.5rem', borderRadius: 999, border: 'none', background: '#f97316', color: '#fff', cursor: 'pointer', fontWeight: 700 }}>{cpUploading ? 'Saving...' : 'Crop & Save'}</button>
+          </div>
+        </div>
+      )}
 
     </div>
   )
