@@ -204,7 +204,7 @@ function UserHomeManager() {
           <div className="admin-split-field">
             <label>Slide Image</label>
             <div className="admin-image-upload" onClick={() => document.getElementById('sliderImgInput').click()}>
-              {form.img ? <img src={form.img} alt="slide" className="admin-image-preview" style={{ objectFit: 'cover', height: 160 }} /> : <div className="admin-image-placeholder"><span>🖼️</span><p>{uploading ? 'Uploading...' : 'Upload Image'}</p><small>Recommended: 1200×560px</small></div>}
+              {form.img ? <img src={form.img} alt="slide" className="admin-image-preview" style={{ objectFit: 'cover', height: 160 }} /> : <div className="admin-image-placeholder"><span>🖼️</span><p>{uploading ? 'Uploading...' : 'Upload Image'}</p><small>Recommended: 1920×700px</small></div>}
               <input id="sliderImgInput" type="file" accept="image/*" style={{ display: 'none' }} onChange={handleImageUpload} />
             </div>
           </div>
