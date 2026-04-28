@@ -1720,7 +1720,7 @@
   width: 100%;
   aspect-ratio: 1;
   overflow: hidden;
-  background: rgba(255,255,255,0.06);
+  background: #1a1a1a;
   display: flex;
   align-items: center;
   justify-content: center;
