@@ -28,32 +28,7 @@ function WavyGrid({ color, bgColor }) {
   )
 }
 
-// Products per category
-const CATEGORY_PRODUCTS = {
-  'T-Shirts':       ['Classic T-Shirt','Oversized T-Shirt','V-Neck T-Shirt','Polo T-Shirt','Half Sleeve','Full Sleeve','Crop T-Shirt','Longline T-Shirt','Slim Fit','Graphic Tee','Striped Tee','Henley T-Shirt'],
-  'Hoodies':        ['Pullover Hoodie','Zip-Up Hoodie','Oversized Hoodie','Crop Hoodie','Fleece Hoodie','Tech Fleece','Sleeveless Hoodie','Printed Hoodie'],
-  'Switers':        ['Classic Sweatshirt','Zip Sweatshirt','Crop Sweatshirt','Pullover','Ribbed Sweater','Knit Sweater','Varsity Sweater'],
-  'Trousers':       ['Jogger Pants','Cargo Pants','Chino Pants','Slim Fit Jeans','Wide Leg Jeans','Track Pants','Linen Pants','Shorts','Sweatpants'],
-  'Caps':           ['Baseball Cap','Snapback Cap','Dad Cap','Trucker Cap','Flat Cap','5-Panel Cap','Embroidered Cap'],
-  'Hats':           ['Bucket Hat','Beanie','Fedora','Cowboy Hat','Fisherman Hat','Wide Brim Hat'],
-  'Snokes':         ['Ankle Socks','Crew Socks','No-Show Socks','Knee High Socks','Compression Socks','Printed Socks','Sports Socks'],
-  'Mobile Covers':  ['iPhone 16 Pro Max','iPhone 16 Pro','iPhone 16','iPhone 15 Pro Max','iPhone 15 Pro','iPhone 15','iPhone 14 Pro Max','iPhone 14','iPhone 13','Samsung S25 Ultra','Samsung S25+','Samsung S25','Samsung S24 Ultra','Samsung S24','Samsung A55','Samsung A35','Xiaomi 14 Pro','Xiaomi 14','OnePlus 12','OnePlus 11','Google Pixel 9','Google Pixel 8','Realme 12 Pro','Oppo Reno 12'],
-  'Laptop Sleeves': ['13" MacBook Sleeve','14" Laptop Sleeve','15.6" Laptop Sleeve','16" MacBook Sleeve','Dell XPS Sleeve','HP Spectre Sleeve','Universal 13"','Universal 15"'],
-  'Mouse Pads':     ['Small Mouse Pad','Medium Mouse Pad','Large Mouse Pad','XL Desk Mat','Gaming Mouse Pad','Wireless Charging Pad','Custom Print Pad'],
-  'Earbud Cases':   ['AirPods Pro Case','AirPods 3 Case','Samsung Buds Case','Nothing Ear Case','JBL Buds Case','Custom Earbud Case'],
-  'Notebooks':      ['A5 Hardcover','A4 Hardcover','A5 Softcover','Spiral Notebook','Dotted Journal','Lined Notebook','Blank Sketchbook'],
-  'Books & Covers': ['Custom Book Cover','Planner Cover','Diary Cover','Portfolio Cover','Binder Cover'],
-  'Pens':           ['Ballpoint Pen','Gel Pen','Fountain Pen','Marker Set','Highlighter Set','Custom Engraved Pen'],
-  'Mugs':           ['Classic Mug','Magic Color Mug','Travel Mug','Tall Latte Mug','Espresso Cup','Glass Mug','Enamel Mug'],
-  'Stickers':       ['Die-Cut Sticker','Circle Sticker','Rectangle Sticker','Holographic Sticker','Waterproof Sticker','Sticker Sheet','Laptop Sticker Pack'],
-  'Tote Bags':      ['Canvas Tote','Cotton Tote','Printed Tote','Zipper Tote','Mini Tote','Large Tote','Eco Tote'],
-  'Backpacks':      ['Classic Backpack','Laptop Backpack','Mini Backpack','Drawstring Bag','Roll-Top Backpack','Travel Backpack'],
-  'Duffle Bags':    ['Small Duffle','Medium Duffle','Large Duffle','Gym Bag','Weekend Bag','Sports Duffle'],
-  'Wallets':        ['Bifold Wallet','Slim Card Holder','Trifold Wallet','Zip Wallet','Phone Wallet','Leather Wallet'],
-  'Cushions':       ['Square Cushion','Rectangle Cushion','Round Cushion','Throw Pillow','Floor Cushion','Custom Print Cushion'],
-  'Water Bottles':  ['500ml Bottle','750ml Bottle','1L Bottle','Insulated Flask','Glass Bottle','Sports Bottle','Infuser Bottle'],
-  'Wall Arts':      ['A4 Print','A3 Print','A2 Print','Canvas Print','Framed Print','Poster Print','Panoramic Print'],
-}
+// Products per category — removed, now fetched from Admin
 
 export default function CategoryPage() {
   const { category } = useParams()
@@ -62,8 +37,8 @@ export default function CategoryPage() {
   const isDark = theme === 'dark'
   const [search, setSearch] = useState('')
   const [catData, setCatData] = useState(null)
+  const [products, setProducts] = useState([])
 
-  // Decode category name from URL
   const catName = decodeURIComponent(category)
 
   useEffect(() => {
@@ -72,12 +47,15 @@ export default function CategoryPage() {
       .then(data => {
         const found = data.find(c => c._id === category || c.label === catName)
         if (found) setCatData(found)
-      })
+      }).catch(() => {})
+
+    fetch(`http://localhost:5000/api/category-products?category=${encodeURIComponent(catName)}`)
+      .then(r => r.json())
+      .then(data => setProducts(data))
       .catch(() => {})
   }, [category])
 
-  const products = CATEGORY_PRODUCTS[catName] || []
-  const filtered = products.filter(p => p.toLowerCase().includes(search.toLowerCase()))
+  const filtered = products.filter(p => p.name.toLowerCase().includes(search.toLowerCase()))
 
   return (
     <div className={`dl-wrapper${isDark ? '' : ' dl-light'}`}>
@@ -127,9 +105,9 @@ export default function CategoryPage() {
         <div className="dl-products-grid">
           {filtered.map((product, i) => (
             <motion.button
-              key={i}
+              key={product._id || i}
               className="dl-product-card"
-              onClick={() => navigate(`/design-lab/${encodeURIComponent(catName)}/${encodeURIComponent(product)}`)}
+              onClick={() => navigate(`/design-lab/${encodeURIComponent(catName)}/${encodeURIComponent(product.name)}`)}
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.03, type: 'spring', stiffness: 300, damping: 24 }}
@@ -137,21 +115,21 @@ export default function CategoryPage() {
               whileTap={{ scale: 0.97 }}
             >
               <div className="dl-product-card-img">
-                {catData?.img
-                  ? <img src={catData.img} alt={product} />
+                {product.image
+                  ? <img src={product.image} alt={product.name} />
                   : <div className="dl-product-card-placeholder" style={{ background: catData?.gradient || 'linear-gradient(135deg,#f97316,#ea580c)' }}>
                       <span>👕</span>
                     </div>
                 }
               </div>
-              <div className="dl-product-card-name">{product}</div>
+              <div className="dl-product-card-name">{product.name}</div>
               <div className="dl-product-card-arrow">→</div>
             </motion.button>
           ))}
         </div>
 
         {filtered.length === 0 && (
-          <div className="dl-step1-empty">No products found for "{search}"</div>
+          <div className="dl-step1-empty">{products.length === 0 ? 'Admin se products add karo' : `No products found for "${search}"`}</div>
         )}
 
       </div>

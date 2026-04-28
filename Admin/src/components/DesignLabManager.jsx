@@ -26,14 +26,21 @@ export default function DesignLabManager() {
   const [editingTt, setEditingTt] = useState(null)
   const [ttUploading, setTtUploading] = useState(false)
 
+  const [catProducts, setCatProducts] = useState([])
+  const [cpForm, setCpForm] = useState({ categoryLabel: '', name: '', image: '', order: 0 })
+  const [editingCp, setEditingCp] = useState(null)
+  const [cpUploading, setCpUploading] = useState(false)
+  const [selectedCatFilter, setSelectedCatFilter] = useState('')
+
   const fetchCats = async () => {
     const res = await fetch('http://localhost:5000/api/design-lab-categories')
     setCats(await res.json())
   }
 
   const fetchTt = async () => setTshirtTypes(await fetch('http://localhost:5000/api/tshirt-types').then(r => r.json()))
+  const fetchCp = async (cat) => setCatProducts(await fetch(`http://localhost:5000/api/category-products${cat ? `?category=${encodeURIComponent(cat)}` : ''}`).then(r => r.json()))
 
-  useEffect(() => { fetchCats(); fetchTt() }, [])
+  useEffect(() => { fetchCats(); fetchTt(); fetchCp('') }, [])
 
   const handleImgUpload = async (e) => {
     const file = e.target.files[0]; if (!file) return
@@ -84,6 +91,17 @@ export default function DesignLabManager() {
   }
   const handleTtEdit = (t) => { setTtForm({ name: t.name, image: t.image, order: t.order }); setEditingTt(t) }
   const handleTtDelete = async (id) => { await fetch(`http://localhost:5000/api/tshirt-types/${id}`, { method: 'DELETE' }); fetchTt() }
+
+  const handleCpSave = async () => {
+    if (!cpForm.categoryLabel || !cpForm.name) return
+    const method = editingCp ? 'PUT' : 'POST'
+    const url = editingCp ? `http://localhost:5000/api/category-products/${editingCp._id}` : 'http://localhost:5000/api/category-products'
+    await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(cpForm) })
+    setCpForm({ categoryLabel: '', name: '', image: '', order: 0 }); setEditingCp(null)
+    fetchCp(selectedCatFilter)
+  }
+  const handleCpEdit = (p) => { setCpForm({ categoryLabel: p.categoryLabel, name: p.name, image: p.image, order: p.order }); setEditingCp(p) }
+  const handleCpDelete = async (id) => { await fetch(`http://localhost:5000/api/category-products/${id}`, { method: 'DELETE' }); fetchCp(selectedCatFilter) }
 
   return (
     <div className="admin-page">
@@ -229,6 +247,81 @@ export default function DesignLabManager() {
                   <div style={{ display: 'flex', gap: 6 }}>
                     <button className="admin-product-edit" onClick={() => handleTtEdit(t)}>✏️ Edit</button>
                     <button className="admin-carousel-delete" onClick={() => handleTtDelete(t._id)}>🗑 Delete</button>
+                  </div>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+
+      {/* CATEGORY PRODUCTS */}
+      <div className="admin-carousel-section">
+        <h2 className="admin-carousel-title">📦 Category Products — Step 2</h2>
+        <p className="admin-carousel-sub">Har category ke products yahan add karo — Design Lab Step 2 mein show honge</p>
+        <div className="admin-product-form">
+          <h3>{editingCp ? 'Edit Product' : 'Add New Product'}</h3>
+          <div className="admin-split-field">
+            <label>Category *</label>
+            <select value={cpForm.categoryLabel} onChange={e => setCpForm(p => ({ ...p, categoryLabel: e.target.value }))} style={{ width: '100%', padding: '0.6rem', borderRadius: 8, background: '#1a1a1a', color: '#fff', border: '1px solid rgba(255,255,255,0.1)' }}>
+              <option value="">-- Category Select Karo --</option>
+              {cats.map(c => <option key={c._id} value={c.label}>{c.label}</option>)}
+            </select>
+          </div>
+          <div className="admin-split-field">
+            <label>Product Name *</label>
+            <input value={cpForm.name} onChange={e => setCpForm(p => ({ ...p, name: e.target.value }))} placeholder="Classic T-Shirt, iPhone 16 Pro..." />
+          </div>
+          <div className="admin-split-field">
+            <label>Image <small style={{ color: '#888' }}>(optional)</small></label>
+            <div className="admin-image-upload" onClick={() => !cpUploading && document.getElementById('cpImgInput').click()}>
+              {cpForm.image
+                ? <img src={cpForm.image} alt="product" className="admin-image-preview" />
+                : <div className="admin-image-placeholder"><span>📦</span><p>{cpUploading ? 'Uploading...' : 'Upload Image'}</p></div>
+              }
+              <input id="cpImgInput" type="file" accept="image/*" style={{ display: 'none' }} onChange={async (e) => {
+                const file = e.target.files[0]; if (!file) return
+                setCpUploading(true)
+                const fd = new FormData(); fd.append('image', file)
+                const res = await fetch('http://localhost:5000/api/upload', { method: 'POST', body: fd })
+                const data = await res.json()
+                setCpForm(p => ({ ...p, image: data.url }))
+                setCpUploading(false)
+              }} />
+            </div>
+          </div>
+          <div className="admin-product-actions">
+            {editingCp && <button className="admin-crop-cancel" onClick={() => { setEditingCp(null); setCpForm({ categoryLabel: '', name: '', image: '', order: 0 }) }}>Cancel</button>}
+            <button className="admin-carousel-btn" onClick={handleCpSave} disabled={cpUploading || !cpForm.categoryLabel || !cpForm.name}>{editingCp ? 'Update Product' : 'Add Product'}</button>
+          </div>
+        </div>
+
+        {/* Filter by category */}
+        <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '1rem' }}>
+          <button onClick={() => { setSelectedCatFilter(''); fetchCp('') }} style={{ padding: '0.35rem 0.85rem', borderRadius: 999, border: '1px solid rgba(255,255,255,0.15)', background: selectedCatFilter === '' ? '#f97316' : 'transparent', color: '#fff', cursor: 'pointer', fontSize: '0.72rem', fontWeight: 700 }}>All</button>
+          {cats.map(c => (
+            <button key={c._id} onClick={() => { setSelectedCatFilter(c.label); fetchCp(c.label) }} style={{ padding: '0.35rem 0.85rem', borderRadius: 999, border: '1px solid rgba(255,255,255,0.15)', background: selectedCatFilter === c.label ? '#f97316' : 'transparent', color: '#fff', cursor: 'pointer', fontSize: '0.72rem', fontWeight: 700 }}>{c.label}</button>
+          ))}
+        </div>
+
+        <div className="admin-carousel-grid">
+          {catProducts.length === 0
+            ? <div className="admin-carousel-empty"><span>📦</span><p>Koi product nahi — upar se add karo</p></div>
+            : catProducts.map((p, i) => (
+              <div key={p._id} className="admin-carousel-card">
+                <div className="admin-carousel-badge">#{i + 1}</div>
+                {p.image
+                  ? <img src={p.image} alt={p.name} className="admin-carousel-img" />
+                  : <div className="admin-carousel-img" style={{ background: 'rgba(249,115,22,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem' }}>📦</div>
+                }
+                <div className="admin-carousel-footer">
+                  <div>
+                    <span className="admin-carousel-url">{p.name}</span>
+                    <span style={{ display: 'block', fontSize: 10, color: '#f97316', marginTop: 2 }}>{p.categoryLabel}</span>
+                  </div>
+                  <div style={{ display: 'flex', gap: 6 }}>
+                    <button className="admin-product-edit" onClick={() => handleCpEdit(p)}>✏️</button>
+                    <button className="admin-carousel-delete" onClick={() => handleCpDelete(p._id)}>🗑</button>
                   </div>
                 </div>
               </div>
