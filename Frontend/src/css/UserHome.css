@@ -2679,3 +2679,333 @@
 }
 
 .bolt-nexus { display: none !important; }
+
+/* ── ND CARD — MODERN SPLIT FRAME ── */
+.nd-grid {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.nd-card {
+  position: relative;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  cursor: pointer;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #0d0d0d;
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: transform 0.4s cubic-bezier(0.2,0,0.2,1), box-shadow 0.4s;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+}
+
+.nd-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.7), 0 0 0 1px var(--ec), 0 0 40px rgba(249,115,22,0.15);
+}
+
+/* ── FRAMES ── */
+.nd-frame {
+  position: relative;
+  width: 100%;
+  height: 248px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.nd-frame-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.2,0,0.2,1);
+}
+
+.nd-card:hover .nd-frame-img { transform: scale(1.07); }
+
+/* top frame — slides up on hover */
+.nd-frame-top { transform-origin: bottom center; }
+.nd-card:hover .nd-frame-top { transform: translateY(-4px); }
+
+/* bottom frame — slides down on hover */
+.nd-frame-bottom { transform-origin: top center; }
+.nd-card:hover .nd-frame-bottom { transform: translateY(4px); }
+
+.nd-frame-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.1) 50%, transparent 100%);
+  z-index: 1;
+}
+
+.nd-frame-overlay-bottom {
+  background: linear-gradient(to bottom, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.1) 50%, transparent 100%);
+}
+
+/* badge */
+.nd-badge {
+  position: absolute;
+  top: 12px; left: 12px;
+  background: var(--ec);
+  color: #fff;
+  font-size: 0.48rem;
+  font-weight: 900;
+  letter-spacing: 2.5px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  z-index: 3;
+  text-transform: uppercase;
+}
+
+.nd-badge-bottom { top: auto; bottom: 12px; }
+
+/* title */
+.nd-frame-title {
+  position: absolute;
+  bottom: 14px; left: 14px; right: 14px;
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 900;
+  letter-spacing: -0.3px;
+  line-height: 1.3;
+  z-index: 3;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.9);
+}
+
+.nd-frame-title-bottom {
+  bottom: auto;
+  top: 14px;
+}
+
+/* corner accents — modern frame feel */
+.nd-corner {
+  position: absolute;
+  width: 14px; height: 14px;
+  z-index: 4;
+  border-color: var(--ec);
+  border-style: solid;
+  opacity: 0.7;
+  transition: opacity 0.3s, width 0.3s, height 0.3s;
+}
+
+.nd-card:hover .nd-corner { opacity: 1; width: 18px; height: 18px; }
+
+.nd-corner-tl { top: 8px; left: 8px; border-width: 2px 0 0 2px; }
+.nd-corner-tr { top: 8px; right: 8px; border-width: 2px 2px 0 0; }
+.nd-corner-bl { bottom: 8px; left: 8px; border-width: 0 0 2px 2px; }
+.nd-corner-br { bottom: 8px; right: 8px; border-width: 0 2px 2px 0; }
+
+/* ── CRACK ZONE ── */
+.nd-crack-zone {
+  position: relative;
+  width: 100%;
+  height: 48px;
+  flex-shrink: 0;
+  background: #0d0d0d;
+  z-index: 5;
+  overflow: visible;
+}
+
+/* ── GLASS OVERLAY ── */
+.nd-glass {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 20;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+  backdrop-filter: blur(0.3px);
+  -webkit-backdrop-filter: blur(0.3px);
+}
+
+.nd-card:hover .nd-glass {
+  opacity: 1;
+  backdrop-filter: blur(0.6px);
+  -webkit-backdrop-filter: blur(0.6px);
+}
+
+@media (max-width: 600px) {
+  .nd-card { width: 100%; }
+  .nd-grid { flex-direction: column; align-items: center; }
+}
+
+/* ── ND CARD CRACK FIX ── */
+.nd-card {
+  position: relative;
+  flex-direction: column;
+  gap: 0;
+}
+
+.nd-frame-top,
+.nd-frame-bottom {
+  position: relative;
+  z-index: 1;
+}
+
+.nd-crack-zone {
+  position: absolute;
+  left: 0; right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 48px;
+  background: transparent !important;
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* ── ND CRACK ZONE FINAL FIX ── */
+.nd-crack-zone {
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  height: 48px !important;
+  background: transparent !important;
+  z-index: 10 !important;
+  pointer-events: none !important;
+  flex-shrink: 0;
+}
+
+/* Remove any gap between frames */
+.nd-frame-top,
+.nd-frame-bottom {
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+
+.nd-card {
+  overflow: hidden;
+  position: relative;
+}
+
+/* ── ND CARD FINAL FIXES ── */
+
+/* Hide all corner accents */
+.nd-corner { display: none !important; }
+
+/* Hide bottom badge */
+.nd-badge-bottom { display: none !important; }
+
+/* ── HOVER SPLIT EFFECT — frames pull apart ── */
+.nd-card:hover .nd-frame-top {
+  transform: translateY(-6px);
+  transition: transform 0.4s cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+.nd-card:hover .nd-frame-bottom {
+  transform: translateY(6px);
+  transition: transform 0.4s cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+.nd-frame-top,
+.nd-frame-bottom {
+  transition: transform 0.4s cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+/* crack zone stays fixed in center while frames move */
+.nd-crack-zone {
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  height: 48px !important;
+  background: transparent !important;
+  z-index: 10 !important;
+  pointer-events: none !important;
+}
+
+/* glow intensifies on hover */
+.nd-card:hover .nd-crack-zone svg polyline {
+  filter: drop-shadow(0 0 6px var(--ec)) drop-shadow(0 0 12px var(--ec));
+}
+
+/* ── SLOPED CRACK SPLIT ON HOVER ── */
+.nd-frame-top {
+  transform-origin: center bottom;
+  transition: transform 0.45s cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+.nd-frame-bottom {
+  transform-origin: center top;
+  transition: transform 0.45s cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+.nd-card:hover .nd-frame-top {
+  transform: translateY(-10px) rotate(-1.5deg) skewX(-1deg);
+}
+
+.nd-card:hover .nd-frame-bottom {
+  transform: translateY(10px) rotate(1.5deg) skewX(1deg);
+}
+
+/* ── REAL CRACK BREAK OUT ── */
+.nd-card {
+  overflow: visible !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.nd-card:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.nd-frame {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.nd-card:hover .nd-frame-top {
+  transform: translateY(-14px) rotate(-2deg) skewX(-1.5deg);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.7), 0 0 20px rgba(249,115,22,0.15);
+}
+
+.nd-card:hover .nd-frame-bottom {
+  transform: translateY(14px) rotate(2deg) skewX(1.5deg);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.7), 0 0 20px rgba(249,115,22,0.15);
+}
+
+.nd-glass {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* ── REMOVE CARD BOX COMPLETELY ── */
+.nd-card,
+.nd-card:hover {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  overflow: visible !important;
+  transform: none !important;
+}
+
+.nd-glass { display: none !important; }
+
+.nd-frame-top,
+.nd-frame-bottom {
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+}
+
+.nd-card:hover .nd-frame-top {
+  transform: translateY(-16px) rotate(-2.5deg) skewX(-1.5deg) !important;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.75), 0 0 24px rgba(249,115,22,0.2) !important;
+}
+
+.nd-card:hover .nd-frame-bottom {
+  transform: translateY(16px) rotate(2.5deg) skewX(1.5deg) !important;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.75), 0 0 24px rgba(249,115,22,0.2) !important;
+}

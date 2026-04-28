@@ -43,7 +43,7 @@ export default function UserHome() {
   const [collImages, setCollImages] = useState([])
   const canvasRef = useRef(null)
 
-  const [newDrop, setNewDrop] = useState(null)
+  const [newDropsData, setNewDropsData] = useState([])
 
   const defaultCards = [
     { name: 'T-Shirts', imgDefault: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800&q=95&fit=crop', imgHover: 'https://images.unsplash.com/photo-1503341504253-dff4815485f1?w=800&q=95&fit=crop' },
@@ -60,16 +60,7 @@ export default function UserHome() {
     { img: 'https://images.unsplash.com/photo-1562157873-818bc0726f68?w=800&q=80', title: 'New Arrivals' },
   ])
 
-  const newDrops = [
-    { title: newDrop?.topTitle || 'Neon Cyber Tee',          img: newDrop?.topImage || 'https://images.unsplash.com/photo-1503341504253-dff4815485f1?w=800&q=95&fit=crop' },
-    { title: newDrop?.bottomTitle || 'Minimalist Cloud Hoodie', img: newDrop?.bottomImage || 'https://images.unsplash.com/photo-1556821840-3a63f15732ce?w=800&q=95&fit=crop' },
-    { title: 'Urban Legend Oversized',  img: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=800&q=95&fit=crop' },
-    { title: 'Midnight Street Tee',     img: 'https://images.unsplash.com/photo-1578768079052-aa76e52ff62e?w=800&q=95&fit=crop' },
-    { title: 'Shadow Drop Hoodie',      img: 'https://images.unsplash.com/photo-1556821840-3a63f15732ce?w=800&q=95&fit=crop' },
-    { title: 'Acid Wash Classic',       img: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800&q=95&fit=crop' },
-    { title: 'Retro Wave Tee',          img: 'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=800&q=95&fit=crop' },
-    { title: 'Phantom Black',           img: 'https://images.unsplash.com/photo-1562157873-818bc0726f68?w=800&q=95&fit=crop' },
-  ]
+
 
   const defaultHiwImgs = [
     'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&q=90&fit=crop',
@@ -82,9 +73,12 @@ export default function UserHome() {
     'https://images.unsplash.com/photo-1578768079052-aa76e52ff62e?w=400&q=90&fit=crop',
   ]
 
-  const boxConfigs = [
-    { top: 0, bot: 1, color: '#f97316', icon: '⚡', glow: 'rgba(249,115,22,0.8)' },
+  const defaultBoxes = [
+    { top: { title: 'Neon Cyber Tee', img: 'https://images.unsplash.com/photo-1503341504253-dff4815485f1?w=800&q=95&fit=crop' }, bot: { title: 'Minimalist Cloud Hoodie', img: 'https://images.unsplash.com/photo-1556821840-3a63f15732ce?w=800&q=95&fit=crop' } }
   ]
+  const activeBoxes = newDropsData.length > 0
+    ? newDropsData.map(d => ({ top: { title: d.topTitle, img: d.topImage }, bot: { title: d.bottomTitle, img: d.bottomImage }, color: '#f97316', glow: 'rgba(249,115,22,0.8)' }))
+    : defaultBoxes.map(d => ({ ...d, color: '#f97316', glow: 'rgba(249,115,22,0.8)' }))
 
   useEffect(() => {
     fetch('http://localhost:5000/api/user-banners').then(r => r.json()).then(data => { if (data.length > 0) setSlides(data.map(b => ({ img: b.image, title: b.title || '' }))) }).catch(() => {})
@@ -92,7 +86,7 @@ export default function UserHome() {
     fetch('http://localhost:5000/api/preview-tshirt').then(r => r.json()).then(data => { if (data.image) setPreviewTshirt(data.image) }).catch(() => {})
     fetch('http://localhost:5000/api/how-it-works').then(r => r.json()).then(data => { if (data.length > 0) setHiwImages(data.map(d => d.image)) }).catch(() => {})
     fetch('http://localhost:5000/api/collection-images').then(r => r.json()).then(data => { if (data.length > 0) setCollImages(data) }).catch(() => {})
-    fetch('http://localhost:5000/api/new-drop').then(r => r.json()).then(data => { if (data.topImage) setNewDrop(data) }).catch(() => {})
+    fetch('http://localhost:5000/api/new-drop').then(r => r.json()).then(data => { if (Array.isArray(data) && data.length > 0) setNewDropsData(data) }).catch(() => {})
   }, [])
 
   useEffect(() => {
@@ -201,82 +195,30 @@ export default function UserHome() {
             <button className="uh-view-all" onClick={() => navigate('/marketplace')}>View Marketplace →</button>
           </div>
           <div className="nd-grid">
-            {boxConfigs.map((box, bi) => (
-              <div key={bi} className="product-card" style={{ '--energy-orange': box.color, '--energy-glow': box.glow }} onClick={() => navigate('/design-lab')}>
-                
-                {/* Top Panel */}
-                <div className="panel top-panel">
-                  <img src={newDrops[box.top].img} alt={newDrops[box.top].title} />
-                  <span className="badge">LIMITED</span>
-                  <h2 className="product-title">{newDrops[box.top].title}</h2>
+            {activeBoxes.map((box, bi) => (
+              <div key={bi} className="nd-card" style={{ '--ec': box.color, '--eg': box.glow }} onClick={() => navigate('/design-lab')}>
+                <div className="nd-frame nd-frame-top">
+                  <img src={box.top.img} alt={box.top.title} className="nd-frame-img" />
+                  <div className="nd-frame-overlay" />
+                  <span className="nd-badge">LIMITED</span>
+                  <span className="nd-frame-title">{box.top.title}</span>
                 </div>
-
-                {/* Divider */}
-                <div className="divider-section">
-                  <div className="crack-line crack-left" />
-                  <div className="crack-line crack-right" />
-                </div>
-
-                {/* Bottom Panel */}
-                <div className="panel bottom-panel">
-                  <img src={newDrops[box.bot].img} alt={newDrops[box.bot].title} />
-                  <span className="badge">LIMITED</span>
-                  <h2 className="product-title">{newDrops[box.bot].title}</h2>
-                </div>
-
-                {/* Glass Overlay */}
-                <div className="glass-shatter-overlay">
-                  <svg width="100%" height="100%" viewBox="0 0 400 600" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                      <linearGradient id="glassShine" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="rgba(255,255,255,0.18)" />
-                        <stop offset="40%" stopColor="rgba(255,255,255,0.04)" />
-                        <stop offset="60%" stopColor="rgba(255,255,255,0.10)" />
-                        <stop offset="100%" stopColor="rgba(255,255,255,0.02)" />
-                      </linearGradient>
-                      <linearGradient id="crackGlow" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="rgba(255,255,255,0.0)" />
-                        <stop offset="50%" stopColor="rgba(255,255,255,0.6)" />
-                        <stop offset="100%" stopColor="rgba(255,255,255,0.0)" />
-                      </linearGradient>
-                    </defs>
-                    {/* Full glass tint */}
-                    <rect width="400" height="600" fill="url(#glassShine)" />
-                    {/* Top-left shine streak */}
-                    <polygon points="0,0 160,0 60,180 0,120" fill="rgba(255,255,255,0.07)" />
-                    {/* Bottom-right shine streak */}
-                    <polygon points="400,600 240,600 340,420 400,480" fill="rgba(255,255,255,0.05)" />
-                    {/* Crack lines radiating from center */}
-                    <g stroke="url(#crackGlow)" strokeWidth="1" fill="none" opacity="0.7">
-                      <line x1="200" y1="300" x2="45" y2="155" />
-                      <line x1="200" y1="300" x2="355" y2="140" />
-                      <line x1="200" y1="300" x2="20" y2="310" />
-                      <line x1="200" y1="300" x2="385" y2="330" />
-                      <line x1="200" y1="300" x2="100" y2="490" />
-                      <line x1="200" y1="300" x2="310" y2="510" />
-                      <line x1="200" y1="300" x2="200" y2="10" />
-                      <line x1="200" y1="300" x2="200" y2="590" />
-                    </g>
-                    {/* Secondary branch cracks */}
-                    <g stroke="rgba(255,255,255,0.3)" strokeWidth="0.6" fill="none">
-                      <line x1="45" y1="155" x2="10" y2="80" />
-                      <line x1="45" y1="155" x2="110" y2="60" />
-                      <line x1="355" y1="140" x2="390" y2="55" />
-                      <line x1="355" y1="140" x2="280" y2="30" />
-                      <line x1="20" y1="310" x2="0" y2="250" />
-                      <line x1="20" y1="310" x2="0" y2="380" />
-                      <line x1="385" y1="330" x2="400" y2="260" />
-                      <line x1="385" y1="330" x2="400" y2="410" />
-                      <line x1="100" y1="490" x2="40" y2="570" />
-                      <line x1="100" y1="490" x2="55" y2="430" />
-                      <line x1="310" y1="510" x2="375" y2="585" />
-                      <line x1="310" y1="510" x2="360" y2="450" />
-                    </g>
-                    {/* Edge border shimmer */}
-                    <rect width="400" height="600" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="1" />
+                <div className="nd-crack-zone">
+                  <svg width="100%" height="100%" viewBox="0 0 300 48" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                    <defs><filter id={`glow${bi}`}><feGaussianBlur stdDeviation="1.5" result="blur" /><feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge></filter></defs>
+                    <polyline points="0,24 18,24 26,10 34,36 44,14 52,32 62,18 72,30 82,12 92,34 102,20 112,28 120,24 138,24 148,8 158,38 168,16 178,32 188,20 196,28 204,24 222,24 232,12 242,34 252,18 262,30 272,14 282,36 292,10 300,24" fill="none" stroke="var(--ec)" strokeWidth="1.5" filter={`url(#glow${bi})`} />
+                    <polyline points="100,24 112,28 120,24 138,24 148,8 158,38 168,16 178,32 188,20 196,28 204,24" fill="none" stroke="white" strokeWidth="0.8" opacity="0.9" />
+                    <line x1="62" y1="18" x2="55" y2="4" stroke="var(--ec)" strokeWidth="0.8" opacity="0.6" />
+                    <line x1="148" y1="8" x2="142" y2="0" stroke="white" strokeWidth="0.6" opacity="0.5" />
+                    <line x1="92" y1="34" x2="86" y2="46" stroke="var(--ec)" strokeWidth="0.8" opacity="0.6" />
+                    <line x1="158" y1="38" x2="164" y2="48" stroke="white" strokeWidth="0.6" opacity="0.5" />
                   </svg>
                 </div>
-
+                <div className="nd-frame nd-frame-bottom">
+                  <img src={box.bot.img} alt={box.bot.title} className="nd-frame-img" />
+                  <div className="nd-frame-overlay nd-frame-overlay-bottom" />
+                  <span className="nd-frame-title nd-frame-title-bottom">{box.bot.title}</span>
+                </div>
               </div>
             ))}
           </div>

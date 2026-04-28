@@ -23,7 +23,8 @@ function UserHomeManager() {
   const [collImages, setCollImages] = useState([])
   const [collUploading, setCollUploading] = useState(false)
 
-  const [newDrop, setNewDrop] = useState({ topImage: '', topTitle: 'Neon Cyber Tee', bottomImage: '', bottomTitle: 'Minimalist Cloud Hoodie' })
+  const [newDrops, setNewDrops] = useState([])
+  const [ndForm, setNdForm] = useState({ topImage: '', topTitle: '', bottomImage: '', bottomTitle: '' })
   const [ndUploading, setNdUploading] = useState(false)
 
   const [userProducts, setUserProducts] = useState([])
@@ -49,7 +50,7 @@ function UserHomeManager() {
     const ci = await fetch('http://localhost:5000/api/collection-images').then(r => r.json())
     setCollImages(ci)
     const nd = await fetch('http://localhost:5000/api/new-drop').then(r => r.json())
-    if (nd.topImage) setNewDrop({ topImage: nd.topImage, topTitle: nd.topTitle || '', bottomImage: nd.bottomImage || '', bottomTitle: nd.bottomTitle || '' })
+    if (Array.isArray(nd)) setNewDrops(nd)
   }
 
   useEffect(() => { fetchAll() }, [])
@@ -185,14 +186,21 @@ function UserHomeManager() {
     const file = e.target.files[0]; if (!file) return
     setNdUploading(true)
     const url = await upload(file)
-    setNewDrop(p => ({ ...p, [field]: url }))
+    setNdForm(p => ({ ...p, [field]: url }))
     setNdUploading(false)
   }
 
   const handleNdSave = async () => {
-    if (!newDrop.topImage || !newDrop.bottomImage) return
-    await fetch('http://localhost:5000/api/new-drop', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(newDrop) })
-    alert('✅ New Drop saved!')
+    if (!ndForm.topImage || !ndForm.bottomImage) return
+    const res = await fetch('http://localhost:5000/api/new-drop', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(ndForm) })
+    const saved = await res.json()
+    setNewDrops(p => [...p, saved])
+    setNdForm({ topImage: '', topTitle: '', bottomImage: '', bottomTitle: '' })
+  }
+
+  const handleNdDelete = async (id) => {
+    await fetch(`http://localhost:5000/api/new-drop/${id}`, { method: 'DELETE' })
+    setNewDrops(p => p.filter(d => d._id !== id))
   }
 
   const handleUpDelete = async (id) => {
@@ -404,48 +412,53 @@ function UserHomeManager() {
       {/* NEW DROPS BOX */}
       <div className="admin-carousel-section">
         <h2 className="admin-carousel-title">⚡ New Drops — Split Box Images</h2>
-        <p className="admin-carousel-sub">User Home ke "New Drops" box ki Top aur Bottom image yahan upload karo</p>
+        <p className="admin-carousel-sub">Jitne chahein utne boxes add karo — har box mein Top + Bottom image</p>
         <div className="admin-product-form">
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
-
             <div className="admin-split-field">
-              <label>Top Image (e.g. Neon Cyber Tee)</label>
+              <label>Top Image</label>
               <div className="admin-image-upload" onClick={() => !ndUploading && document.getElementById('ndTopImg').click()}>
-                {newDrop.topImage
-                  ? <img src={newDrop.topImage} alt="top" className="admin-image-preview" style={{ objectFit: 'cover' }} />
+                {ndForm.topImage
+                  ? <img src={ndForm.topImage} alt="top" className="admin-image-preview" style={{ objectFit: 'cover' }} />
                   : <div className="admin-image-placeholder"><span>👕</span><p>{ndUploading ? 'Uploading...' : 'Upload Top Image'}</p></div>}
                 <input id="ndTopImg" type="file" accept="image/*" style={{ display: 'none' }} onChange={e => handleNdUpload(e, 'topImage')} />
               </div>
-              <input
-                value={newDrop.topTitle}
-                onChange={e => setNewDrop(p => ({ ...p, topTitle: e.target.value }))}
-                placeholder="Top title (e.g. Neon Cyber Tee)"
-                style={{ marginTop: 8, width: '100%', padding: '8px 12px', borderRadius: 8, border: '1px solid #333', background: '#1a1a1a', color: '#fff', fontSize: 13 }}
-              />
+              <input value={ndForm.topTitle} onChange={e => setNdForm(p => ({ ...p, topTitle: e.target.value }))} placeholder="Top title" style={{ marginTop: 8, width: '100%', padding: '8px 12px', borderRadius: 8, border: '1px solid #333', background: '#1a1a1a', color: '#fff', fontSize: 13 }} />
             </div>
-
             <div className="admin-split-field">
-              <label>Bottom Image (e.g. Minimalist Cloud Hoodie)</label>
+              <label>Bottom Image</label>
               <div className="admin-image-upload" onClick={() => !ndUploading && document.getElementById('ndBotImg').click()}>
-                {newDrop.bottomImage
-                  ? <img src={newDrop.bottomImage} alt="bottom" className="admin-image-preview" style={{ objectFit: 'cover' }} />
+                {ndForm.bottomImage
+                  ? <img src={ndForm.bottomImage} alt="bottom" className="admin-image-preview" style={{ objectFit: 'cover' }} />
                   : <div className="admin-image-placeholder"><span>👕</span><p>{ndUploading ? 'Uploading...' : 'Upload Bottom Image'}</p></div>}
                 <input id="ndBotImg" type="file" accept="image/*" style={{ display: 'none' }} onChange={e => handleNdUpload(e, 'bottomImage')} />
               </div>
-              <input
-                value={newDrop.bottomTitle}
-                onChange={e => setNewDrop(p => ({ ...p, bottomTitle: e.target.value }))}
-                placeholder="Bottom title (e.g. Minimalist Cloud Hoodie)"
-                style={{ marginTop: 8, width: '100%', padding: '8px 12px', borderRadius: 8, border: '1px solid #333', background: '#1a1a1a', color: '#fff', fontSize: 13 }}
-              />
+              <input value={ndForm.bottomTitle} onChange={e => setNdForm(p => ({ ...p, bottomTitle: e.target.value }))} placeholder="Bottom title" style={{ marginTop: 8, width: '100%', padding: '8px 12px', borderRadius: 8, border: '1px solid #333', background: '#1a1a1a', color: '#fff', fontSize: 13 }} />
             </div>
           </div>
-
           <div className="admin-product-actions" style={{ marginTop: '1rem' }}>
-            <button className="admin-carousel-btn" onClick={handleNdSave} disabled={ndUploading || !newDrop.topImage || !newDrop.bottomImage}>
-              💾 Save New Drop
-            </button>
+            <button className="admin-carousel-btn" onClick={handleNdSave} disabled={ndUploading || !ndForm.topImage || !ndForm.bottomImage}>💾 Add Box</button>
           </div>
+        </div>
+
+        {/* Saved boxes */}
+        <div className="admin-carousel-grid">
+          {newDrops.length === 0
+            ? <div className="admin-carousel-empty"><span>⚡</span><p>Koi box nahi — upar se add karo</p></div>
+            : newDrops.map((d, i) => (
+              <div key={d._id} className="admin-carousel-card">
+                <div className="admin-carousel-badge">#{i + 1}</div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                  <img src={d.topImage} alt="top" className="admin-carousel-img" style={{ height: 90, objectFit: 'cover' }} />
+                  <img src={d.bottomImage} alt="bottom" className="admin-carousel-img" style={{ height: 90, objectFit: 'cover' }} />
+                </div>
+                <div className="admin-carousel-footer">
+                  <span className="admin-carousel-url">{d.topTitle || 'Box'} / {d.bottomTitle || ''}</span>
+                  <button className="admin-carousel-delete" onClick={() => handleNdDelete(d._id)}>🗑 Delete</button>
+                </div>
+              </div>
+            ))
+          }
         </div>
       </div>
 
