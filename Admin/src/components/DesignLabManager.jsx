@@ -338,9 +338,16 @@ export default function DesignLabManager() {
             <Cropper image={cropSrc} crop={crop} zoom={zoom} aspect={cropAspect} onCropChange={setCrop} onZoomChange={setZoom} onCropComplete={onCropComplete} />
           </div>
           <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
-            <span style={{ color: '#aaa', fontSize: 12 }}>Aspect:</span>
-            {[[1,1,'1:1'],[4,3,'4:3'],[3,4,'3:4'],[16,9,'16:9']].map(([w,h,label]) => (
-              <button key={label} onClick={() => setCropAspect(w/h)} style={{ padding: '0.3rem 0.75rem', borderRadius: 999, border: '1px solid rgba(255,255,255,0.2)', background: cropAspect === w/h ? '#f97316' : '#222', color: '#fff', cursor: 'pointer', fontSize: 12, fontWeight: 700 }}>{label}</button>
+            <span style={{ color: '#aaa', fontSize: 12 }}>Frame:</span>
+            {[
+              [1, 1, '1:1 Square'],
+              [4, 3, '4:3 Landscape'],
+              [3, 4, '3:4 Portrait'],
+              [16, 9, '16:9 Wide'],
+              [1920, 700, 'Slider (1920×700)'],
+              [800, 800, 'Product Card'],
+            ].map(([w, h, label]) => (
+              <button key={label} onClick={() => setCropAspect(w/h)} style={{ padding: '0.3rem 0.75rem', borderRadius: 999, border: '1px solid rgba(255,255,255,0.2)', background: Math.abs(cropAspect - w/h) < 0.01 ? '#f97316' : '#222', color: '#fff', cursor: 'pointer', fontSize: 11, fontWeight: 700 }}>{label}</button>
             ))}
             <input type="range" min={1} max={3} step={0.1} value={zoom} onChange={e => setZoom(Number(e.target.value))} style={{ width: 100, accentColor: '#f97316' }} />
             <span style={{ color: '#aaa', fontSize: 12 }}>Zoom: {zoom.toFixed(1)}x</span>
