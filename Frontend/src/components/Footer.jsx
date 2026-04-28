@@ -1,111 +1,74 @@
-import React, { useState } from 'react'
-import { motion } from 'framer-motion'
+import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { FaInstagram, FaTiktok, FaTwitter, FaArrowUp } from 'react-icons/fa'
+import { FaInstagram, FaTiktok, FaTwitter, FaArrowUp, FaYoutube } from 'react-icons/fa'
+import { FiShoppingBag, FiGrid, FiStar, FiTruck, FiRefreshCw, FiHelpCircle, FiMail, FiInfo, FiBriefcase, FiShield, FiFileText } from 'react-icons/fi'
 import '../css/Footer.css'
 
-function Footer() {
-  const [email, setEmail] = useState('')
-  const [subscribed, setSubscribed] = useState(false)
+export default function Footer() {
   const navigate = useNavigate()
-
-  const handleSubscribe = () => {
-    if (email.trim()) { setSubscribed(true); setEmail('') }
-  }
 
   return (
     <footer className="footer">
 
-      {/* Big CTA + Newsletter */}
-      <div className="footer-top">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-          viewport={{ once: true }}
-        >
-          <p className="footer-eyebrow">Stay in the loop</p>
-          <h2 className="footer-cta">JOIN THE<br /><span className="footer-cta-outline">CREATIVE LAB.</span></h2>
-          <p className="footer-cta-sub">Naye drops aur exclusive offers ki updates ke liye subscribe karein.</p>
-          <button className="footer-signup-btn" onClick={() => navigate('/signup')}>Create Account →</button>
-        </motion.div>
+      {/* Top divider glow */}
+      <div className="footer-glow-line" />
 
-        <motion.div className="footer-newsletter"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.2 }}
-          viewport={{ once: true }}
-        >
-          {subscribed
-            ? <p className="footer-subscribed">✅ Subscribed! Thank you.</p>
-            : <>
-                <div className="footer-input-wrap">
-                  <input
-                    type="email"
-                    placeholder="YOUR EMAIL"
-                    value={email}
-                    onChange={e => setEmail(e.target.value)}
-                    onKeyDown={e => e.key === 'Enter' && handleSubscribe()}
-                    className="footer-input"
-                  />
-                  <button className="footer-input-btn" onClick={() => navigate('/signup')}>SIGN UP →</button>
-                </div>
-                <p className="footer-input-hint">No spam. Unsubscribe anytime.</p>
-              </>
-          }
-        </motion.div>
-      </div>
+      <div className="footer-inner">
 
-      {/* Links Grid */}
-      <div className="footer-grid">
-        <div className="footer-col">
-          <h4 className="footer-col-title">Navigation</h4>
-          <a href="#">Shop All</a>
-          <a href="#">Customizer</a>
-          <a href="#">3D Studio</a>
-          <a href="#">New Arrivals</a>
+        {/* Brand col */}
+        <div className="footer-brand">
+          <div className="footer-logo">
+            <span className="footer-logo-icon">👕</span>
+            <span>T-SHIRT<span className="footer-logo-dot">.</span>POINT</span>
+          </div>
+          <p className="footer-tagline">Wear Bold. Live Free.<br />Define Your Style.</p>
+          <div className="footer-socials">
+            <a href="#" className="footer-social" title="Instagram"><FaInstagram /></a>
+            <a href="#" className="footer-social" title="TikTok"><FaTiktok /></a>
+            <a href="#" className="footer-social" title="Twitter"><FaTwitter /></a>
+            <a href="#" className="footer-social" title="YouTube"><FaYoutube /></a>
+          </div>
+          <div className="footer-badge">🇵🇰 Made in Pakistan</div>
         </div>
+
+        {/* Shop */}
+        <div className="footer-col">
+          <h4 className="footer-col-title">Shop</h4>
+          <button onClick={() => navigate('/design-lab')}><FiShoppingBag /> Design Lab</button>
+          <button onClick={() => navigate('/marketplace')}><FiGrid /> Marketplace</button>
+          <button onClick={() => navigate('/membership')}><FiStar /> Membership</button>
+        </div>
+
+        {/* Support */}
         <div className="footer-col">
           <h4 className="footer-col-title">Support</h4>
-          <a href="#">Shipping</a>
-          <a href="#">Returns</a>
-          <a href="#">Contact Us</a>
-          <a href="#">FAQ</a>
+          <button><FiTruck /> Shipping</button>
+          <button><FiRefreshCw /> Returns</button>
+          <button><FiHelpCircle /> FAQ</button>
+          <button><FiMail /> Contact Us</button>
         </div>
+
+        {/* Company */}
         <div className="footer-col">
           <h4 className="footer-col-title">Company</h4>
-          <a href="#">About Us</a>
-          <a href="#">Careers</a>
-          <a href="#">Press</a>
-          <a href="#">Blog</a>
+          <button><FiInfo /> About Us</button>
+          <button><FiBriefcase /> Careers</button>
+          <button><FiShield /> Privacy Policy</button>
+          <button><FiFileText /> Terms of Service</button>
         </div>
-        <div className="footer-col footer-col-right">
-          <h4 className="footer-col-title">Follow Us</h4>
-          <div className="footer-socials">
-            <a href="#" className="footer-social-btn"><FaInstagram /></a>
-            <a href="#" className="footer-social-btn"><FaTiktok /></a>
-            <a href="#" className="footer-social-btn"><FaTwitter /></a>
-          </div>
-          <button className="footer-top-btn" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-            <FaArrowUp /> Back to Top
-          </button>
-        </div>
+
       </div>
 
-      {/* Bottom Bar */}
+      {/* Bottom bar */}
       <div className="footer-bottom">
-        <p className="footer-copy">© 2024 T-SHIRT POINT — MADE IN PAKISTAN</p>
+        <p className="footer-copy">© 2024 T-Shirt Point — All rights reserved</p>
         <div className="footer-legal">
-          <a href="#">Privacy Policy</a>
-          <a href="#">Terms of Service</a>
+          <button>Privacy</button>
+          <button>Terms</button>
+          <button>Cookies</button>
         </div>
       </div>
-
-      {/* Massive Watermark */}
-      <h1 className="footer-watermark">T-SHIRT POINT</h1>
 
     </footer>
   )
 }
-
-export default Footer
