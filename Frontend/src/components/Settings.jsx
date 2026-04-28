@@ -8,7 +8,7 @@ import UserNavbar from './UserNavbar'
 import Footer from './Footer'
 import {
   FiUser, FiLock, FiBell, FiShield, FiTrash2,
-  FiEye, FiEyeOff, FiSave, FiChevronRight
+  FiEye, FiEyeOff, FiSave, FiChevronRight, FiCheck
 } from 'react-icons/fi'
 import { RiVipCrownFill } from 'react-icons/ri'
 import '../css/Settings.css'
@@ -111,6 +111,23 @@ export default function Settings() {
     }
   }
 
+  const handleDisable2FA = async () => {
+    if (window.confirm('Are you sure you want to disable 2FA? This will make your account less secure.')) {
+      try {
+        const res = await fetch('http://localhost:5000/api/auth/2fa-disable', {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${token}` }
+        })
+        if (res.ok) {
+          login({ ...user, isTwoFactorEnabled: false }, token)
+          showToast('🔓 2FA Disabled')
+        }
+      } catch {
+        showToast('❌ Failed to disable 2FA')
+      }
+    }
+  }
+
   return (
     <div className="st-wrapper">
       <div className="st-bg">
@@ -194,6 +211,25 @@ export default function Settings() {
                 </div>
                 {passError && <p className="st-error">{passError}</p>}
                 <button className="st-save-btn" onClick={savePassword}><FiSave /> Update Password</button>
+
+                <div className="st-divider" />
+
+                <div className="st-2fa-box">
+                  <div className="st-2fa-text">
+                    <h3 className="st-2fa-title">Two-Factor Authentication</h3>
+                    <p className="st-2fa-desc">Secure your account with a 6-digit TOTP code from your mobile device.</p>
+                  </div>
+                  <div className={`st-2fa-status ${user?.isTwoFactorEnabled ? 'enabled' : ''}`}>
+                    {user?.isTwoFactorEnabled ? (
+                      <div style={{ display: 'flex', gap: '0.5rem' }}>
+                        <span className="st-status-pill"><FiCheck /> Enabled</span>
+                        <button className="st-disable-btn-small" onClick={handleDisable2FA}>Disable</button>
+                      </div>
+                    ) : (
+                      <button className="st-enable-2fa-btn" onClick={() => navigate('/2fa-setup')}>Enable 2FA</button>
+                    )}
+                  </div>
+                </div>
               </motion.div>
             )}
 

@@ -10,6 +10,8 @@ import Settings from './components/Settings'
 import Marketplace from './components/Marketplace'
 import DesignerDashboard from './components/DesignerDashboard'
 import Membership from './components/Membership'
+import ForgotPassword from './components/ForgotPassword'
+import TwoFactorSetup from './components/TwoFactorSetup'
 
 function App() {
   return (
@@ -26,6 +28,8 @@ function App() {
         <Route path="/marketplace" element={<Marketplace />} />
         <Route path="/designer-dashboard" element={<DesignerDashboard />} />
         <Route path="/membership" element={<Membership />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/2fa-setup" element={<TwoFactorSetup />} />
       </Routes>
     </BrowserRouter>
   )

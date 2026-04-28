@@ -38,6 +38,9 @@ function Login() {
   const [loading, setLoading] = useState(false)
   const [loginError, setLoginError] = useState('')
   const [remember, setRemember] = useState(false)
+  const [requires2FA, setRequires2FA] = useState(false)
+  const [tempUserId, setTempUserId] = useState(null)
+  const [code, setCode] = useState('')
 
   const set = (k, v) => {
     setForm(f => ({ ...f, [k]: v }))
@@ -67,10 +70,38 @@ function Login() {
       })
       const data = await res.json()
       if (!res.ok) { setLoginError(data.message || 'Login failed'); setLoading(false); return }
+      
+      if (data.requires2FA) {
+        setRequires2FA(true)
+        setTempUserId(data.userId)
+        setLoading(false)
+        return
+      }
+
       login(data.user, data.token)
       navigate('/user-home')
     } catch {
       setLoginError('Server error. Please try again.')
+    }
+    setLoading(false)
+  }
+
+  const handle2FA = async (e) => {
+    e.preventDefault()
+    if (code.length < 6) return
+    setLoading(true)
+    try {
+      const res = await fetch('http://localhost:5000/api/auth/verify-2fa', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: tempUserId, code })
+      })
+      const data = await res.json()
+      if (!res.ok) { setLoginError(data.message || 'Invalid code'); setLoading(false); return }
+      login(data.user, data.token)
+      navigate('/user-home')
+    } catch {
+      setLoginError('Server error')
     }
     setLoading(false)
   }
@@ -142,7 +173,7 @@ function Login() {
           <div className={`login-field ${errors.password ? 'error' : form.password && !errors.password ? 'success' : ''}`}>
             <div className="login-label-row">
               <label>Password</label>
-              <a href="#" className="login-forgot">Forgot password?</a>
+              <a href="#" className="login-forgot" onClick={() => navigate('/forgot-password')}>Forgot password?</a>
             </div>
             <div className="login-input-wrap">
               <FiLock className="login-input-icon" />
@@ -186,6 +217,37 @@ function Login() {
             <button type="button" className="login-social-btn"><FcGoogle /> Google</button>
             <button type="button" className="login-social-btn"><FiPhone /> Contact</button>
           </div>
+
+          {/* 2FA Overlay */}
+          <AnimatePresence>
+            {requires2FA && (
+              <motion.div className="login-2fa-overlay"
+                initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                <motion.div className="login-2fa-modal"
+                  initial={{ scale: 0.9, y: 20 }} animate={{ scale: 1, y: 0 }}>
+                  <button type="button" className="login-2fa-close" onClick={() => setRequires2FA(false)}><FiX /></button>
+                  <h3 className="login-2fa-title">Two-Factor Authentication</h3>
+                  <p className="login-2fa-sub">Authenticator app se 6-digit code enter karein</p>
+                  <div className="login-field">
+                    <div className="login-input-wrap">
+                      <input
+                        type="text"
+                        placeholder="000000"
+                        maxLength={6}
+                        value={code}
+                        onChange={e => setCode(e.target.value.replace(/\D/g, ''))}
+                        className="login-2fa-input"
+                        autoFocus
+                      />
+                    </div>
+                  </div>
+                  <button type="button" onClick={handle2FA} className="login-submit" disabled={loading || code.length < 6}>
+                    {loading ? <span className="login-spinner" /> : 'Verify & Sign In'}
+                  </button>
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
         </form>
       </motion.div>

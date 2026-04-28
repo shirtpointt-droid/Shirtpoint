@@ -377,3 +377,75 @@
   .login-title { font-size: 1.3rem; }
   .login-nav { padding: 0.75rem 1rem; }
 }
+
+/* ===== 2FA MODAL ===== */
+.login-2fa-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.login-2fa-modal {
+  background: #fff;
+  border-radius: 2rem;
+  padding: 2.5rem 2rem;
+  width: 100%;
+  max-width: 400px;
+  position: relative;
+  text-align: center;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.4);
+}
+
+.login-2fa-close {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  background: #f3f4f6;
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #666;
+  transition: all 0.2s;
+}
+.login-2fa-close:hover { background: #fee2e2; color: #ef4444; }
+
+.login-2fa-title {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #111;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.5px;
+}
+
+.login-2fa-sub {
+  font-size: 0.88rem;
+  color: #666;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+.login-2fa-input {
+  text-align: center;
+  font-size: 2rem !important;
+  letter-spacing: 0.5rem !important;
+  font-weight: 900 !important;
+  color: #f97316 !important;
+  padding: 1rem !important;
+  height: auto !important;
+}
+
+.login-2fa-input::placeholder {
+  color: #eee !important;
+  letter-spacing: normal;
+}
