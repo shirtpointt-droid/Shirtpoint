@@ -3083,3 +3083,92 @@
   letter-spacing: 2px;
   padding: 3px 8px;
 }
+
+/* ── ND TITLES AROUND CRACK ── */
+.nd-title-top,
+.nd-title-bottom {
+  position: relative;
+  z-index: 15;
+  text-align: center;
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #fff;
+  padding: 5px 12px;
+  text-shadow: 0 0 12px rgba(249,115,22,0.8), 0 1px 4px rgba(0,0,0,0.9);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background: transparent;
+  pointer-events: none;
+}
+
+.nd-title-top {
+  margin-bottom: -2px;
+}
+
+.nd-title-bottom {
+  margin-top: -2px;
+}
+
+/* ── ND FRAME TITLE CLEAN ── */
+.nd-frame-title {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 999px;
+  white-space: nowrap;
+  z-index: 5;
+  text-shadow: none;
+  background: none;
+  pointer-events: none;
+}
+
+.nd-frame-title-bottom {
+  bottom: auto;
+  top: 14px;
+}
+
+/* hide outside titles */
+.nd-title-top, .nd-title-bottom { display: none !important; }
+
+/* ── ND TITLE BELOW LIMITED BADGE ── */
+.nd-frame-title {
+  position: absolute;
+  top: 32px;
+  left: 12px;
+  right: 12px;
+  bottom: auto;
+  transform: none;
+  background: none !important;
+  backdrop-filter: none;
+  border: none;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  text-transform: none;
+  padding: 0;
+  border-radius: 0;
+  white-space: normal;
+  line-height: 1.3;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.9);
+  z-index: 5;
+}
+
+.nd-frame-title-bottom {
+  top: 32px;
+  bottom: auto;
+}
