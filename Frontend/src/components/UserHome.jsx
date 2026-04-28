@@ -41,7 +41,6 @@ export default function UserHome() {
   const [colorCards, setColorCards] = useState([])
   const [hiwImages, setHiwImages] = useState([])
   const [collImages, setCollImages] = useState([])
-  const [tshirtTypes, setTshirtTypes] = useState([])
   const canvasRef = useRef(null)
 
   const defaultCards = [
@@ -76,7 +75,6 @@ export default function UserHome() {
     fetch('http://localhost:5000/api/preview-tshirt').then(r => r.json()).then(data => { if (data.image) setPreviewTshirt(data.image) }).catch(() => {})
     fetch('http://localhost:5000/api/how-it-works').then(r => r.json()).then(data => { if (data.length > 0) setHiwImages(data.map(d => d.image)) }).catch(() => {})
     fetch('http://localhost:5000/api/collection-images').then(r => r.json()).then(data => { if (data.length > 0) setCollImages(data) }).catch(() => {})
-    fetch('http://localhost:5000/api/tshirt-types').then(r => r.json()).then(data => { if (data.length > 0) setTshirtTypes(data) }).catch(() => {})
   }, [])
 
   useEffect(() => {
@@ -285,29 +283,6 @@ export default function UserHome() {
             <UserProductGrid navigate={navigate} />
           </div>
         </div>
-
-        {/* T-SHIRT TYPES */}
-        {tshirtTypes.length > 0 && (
-          <div className="ct-section-wrap">
-            <div className="tst-section">
-              <span className="ct-eyebrow">Browse by Style</span>
-              <h2 className="ct-heading">T-Shirt <span className="ct-heading-outline">Types</span></h2>
-              <div className="tst-grid">
-                {tshirtTypes.map((t, i) => (
-                  <div key={t._id || i} className="tst-card" onClick={() => navigate('/design-lab')}>
-                    <div className="tst-img-wrap">
-                      <img src={t.image} alt={t.name} className="tst-img" />
-                    </div>
-                    <div className="tst-footer">
-                      <span className="tst-name">{t.name}</span>
-                      <span className="tst-arrow">→</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
 
         {/* COLLECTION SPLIT SECTION */}
         <div className="ct-section-wrap">

@@ -23,22 +23,12 @@ function UserHomeManager() {
   const [collImages, setCollImages] = useState([])
   const [collUploading, setCollUploading] = useState(false)
 
-  const [tshirtTypes, setTshirtTypes] = useState([])
-  const [ttForm, setTtForm] = useState({ name: '', image: '', order: 0 })
-  const [editingTt, setEditingTt] = useState(null)
-  const [ttUploading, setTtUploading] = useState(false)
-
   const [userProducts, setUserProducts] = useState([])
   const [upForm, setUpForm] = useState({ name: '', baseImage: '', logos: ['', '', ''], logoSizes: [30, 30, 30], logoPos: [{top:45,left:50},{top:45,left:50},{top:45,left:50}] })
   const [editingUp, setEditingUp] = useState(null)
   const [upLoading, setUpLoading] = useState(false)
   const [upOriginals, setUpOriginals] = useState({ baseImage: '' })
   const [logosLocked, setLogosLocked] = useState([false, false, false])
-
-  const [tshirtTypes, setTshirtTypes] = useState([])
-  const [ttForm, setTtForm] = useState({ name: '', image: '', order: 0 })
-  const [editingTt, setEditingTt] = useState(null)
-  const [ttUploading, setTtUploading] = useState(false)
 
   const fetchAll = async () => {
     const [b, c, h, up] = await Promise.all([
@@ -167,36 +157,6 @@ function UserHomeManager() {
   const handleHiwDelete = async (id) => {
     await fetch(`http://localhost:5000/api/how-it-works/${id}`, { method: 'DELETE' })
     setHiwImages(await fetch('http://localhost:5000/api/how-it-works').then(r => r.json()))
-  }
-
-  // ── T-Shirt Types ──
-  const handleTtSave = async () => {
-    if (!ttForm.name || !ttForm.image) return
-    const method = editingTt ? 'PUT' : 'POST'
-    const url = editingTt ? `http://localhost:5000/api/tshirt-types/${editingTt._id}` : 'http://localhost:5000/api/tshirt-types'
-    await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(ttForm) })
-    setTtForm({ name: '', image: '', order: 0 }); setEditingTt(null)
-    setTshirtTypes(await fetch('http://localhost:5000/api/tshirt-types').then(r => r.json()))
-  }
-  const handleTtEdit = (t) => { setTtForm({ name: t.name, image: t.image, order: t.order }); setEditingTt(t) }
-  const handleTtDelete = async (id) => {
-    await fetch(`http://localhost:5000/api/tshirt-types/${id}`, { method: 'DELETE' })
-    setTshirtTypes(await fetch('http://localhost:5000/api/tshirt-types').then(r => r.json()))
-  }
-
-  // ── T-Shirt Types ──
-  const handleTtSave = async () => {
-    if (!ttForm.name || !ttForm.image) return
-    const method = editingTt ? 'PUT' : 'POST'
-    const url = editingTt ? `http://localhost:5000/api/tshirt-types/${editingTt._id}` : 'http://localhost:5000/api/tshirt-types'
-    await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(ttForm) })
-    setTtForm({ name: '', image: '', order: 0 }); setEditingTt(null)
-    setTshirtTypes(await fetch('http://localhost:5000/api/tshirt-types').then(r => r.json()))
-  }
-  const handleTtEdit = (t) => { setTtForm({ name: t.name, image: t.image, order: t.order }); setEditingTt(t) }
-  const handleTtDelete = async (id) => {
-    await fetch(`http://localhost:5000/api/tshirt-types/${id}`, { method: 'DELETE' })
-    setTshirtTypes(await fetch('http://localhost:5000/api/tshirt-types').then(r => r.json()))
   }
 
   // ── User Products ──
