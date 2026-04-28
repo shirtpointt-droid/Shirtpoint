@@ -1400,9 +1400,16 @@
 /* ===== WHY CHOOSE US ===== */
 .why-us-section {
   padding: 8rem 0;
-  background: white;
+  background: #050505;
   position: relative;
   overflow: hidden;
+}
+
+.why-us-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.6;
 }
 
 .why-header {
@@ -1424,7 +1431,7 @@
 .why-heading {
   font-size: clamp(2rem, 5vw, 3.5rem);
   font-weight: 900;
-  color: #111;
+  color: #fff;
   letter-spacing: -1.5px;
   max-width: 800px;
   margin: 0 auto;
@@ -1447,10 +1454,12 @@
 
 .why-card {
   padding: 2.5rem 2rem;
-  background: #f8fafc;
-  border: 1px solid rgba(0,0,0,0.05);
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 2rem;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1458,10 +1467,10 @@
 }
 
 .why-card:hover {
-  background: white;
-  transform: translateY(-10px);
-  box-shadow: 0 30px 60px rgba(0,0,0,0.08);
-  border-color: #f97316;
+  background: rgba(255, 255, 255, 0.06);
+  transform: translateY(-12px);
+  box-shadow: 0 40px 80px rgba(0,0,0,0.4);
+  border-color: rgba(249, 115, 22, 0.5);
 }
 
 .why-icon-wrap {
@@ -1486,14 +1495,14 @@
 .why-card-title {
   font-size: 1.25rem;
   font-weight: 800;
-  color: #111;
+  color: #fff;
   margin-bottom: 1rem;
   letter-spacing: -0.5px;
 }
 
 .why-card-desc {
   font-size: 0.9rem;
-  color: #64748b;
+  color: #9ca3af;
   line-height: 1.6;
 }
 

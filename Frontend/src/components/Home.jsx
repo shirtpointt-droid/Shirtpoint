@@ -430,7 +430,12 @@ function Home() {
 
       {/* ===== WHY CHOOSE US ===== */}
       <section className="why-us-section">
-        <div className="container mx-auto px-6">
+        <div className="why-us-bg">
+          <Canvas camera={{ position: [0, 0, 10], fov: 75 }}>
+            <WavyGrid color="#f97316" />
+          </Canvas>
+        </div>
+        <div className="container mx-auto px-6 relative z-10">
           <motion.div 
             className="why-header"
             initial={{ opacity: 0, y: 20 }}
