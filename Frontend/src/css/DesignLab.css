@@ -1762,3 +1762,46 @@
 
 @media (max-width: 900px) { .dl-products-grid { grid-template-columns: repeat(3,1fr); } }
 @media (max-width: 600px) { .dl-products-grid { grid-template-columns: repeat(2,1fr); } }
+
+/* ── CATEGORY PAGE TOP BAR ── */
+.cp-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.cp-back-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 1.25rem;
+  background: rgba(255,255,255,0.06);
+  border: 1.5px solid rgba(255,255,255,0.15);
+  border-radius: 999px;
+  color: rgba(255,255,255,0.7);
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.5px;
+  width: 80px;
+}
+
+.cp-back-btn:hover {
+  background: rgba(249,115,22,0.1);
+  border-color: #f97316;
+  color: #f97316;
+}
+
+.dl-wrapper.dl-light .cp-back-btn {
+  background: rgba(0,0,0,0.05);
+  border-color: rgba(0,0,0,0.15);
+  color: #555;
+}
+
+.dl-wrapper.dl-light .cp-back-btn:hover {
+  background: rgba(249,115,22,0.08);
+  border-color: #f97316;
+  color: #f97316;
+}

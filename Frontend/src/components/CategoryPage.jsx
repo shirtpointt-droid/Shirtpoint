@@ -69,29 +69,28 @@ export default function CategoryPage() {
 
       <div className="dl-step1-wrap">
 
-        {/* Step pills */}
+        {/* Header */}
         <div className="dl-step1-header">
-          <div className="dl-step1-steps">
-            {[1,2,3,4].map(n => (
-              <div key={n} className={`dl-step1-pill ${n === 2 ? 'active' : ''}`}>
-                <span className="dl-step1-pill-num">{`0${n}`}</span>
-                <span className="dl-step1-pill-label">
-                  {n === 1 && 'Category'}{n === 2 && 'Product'}{n === 3 && 'Design'}{n === 4 && 'Order'}
-                </span>
-              </div>
-            ))}
-          </div>
-
-          {/* Back + Title */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', justifyContent: 'center', marginBottom: '0.5rem' }}>
-            <button onClick={() => navigate('/design-lab')} style={{ background: 'none', border: '1px solid rgba(255,255,255,0.15)', borderRadius: 999, padding: '0.4rem 1rem', color: 'rgba(255,255,255,0.6)', cursor: 'pointer', fontSize: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+          <div className="cp-top-bar">
+            <button className="cp-back-btn" onClick={() => navigate('/design-lab')}>
               <FiArrowLeft /> Back
             </button>
+            <div className="dl-step1-steps">
+              {[1,2,3,4].map(n => (
+                <div key={n} className={`dl-step1-pill ${n === 2 ? 'active' : ''}`}
+                  onClick={() => n === 1 && navigate('/design-lab')}
+                  style={{ cursor: n === 1 ? 'pointer' : 'default' }}
+                >
+                  <span className="dl-step1-pill-num">{`0${n}`}</span>
+                  <span className="dl-step1-pill-label">
+                    {n === 1 && 'Category'}{n === 2 && 'Product'}{n === 3 && 'Design'}{n === 4 && 'Order'}
+                  </span>
+                </div>
+              ))}
+            </div>
+            <div style={{ width: 80 }} />
           </div>
-
-          <h2 className="dl-step1-heading">
-            Pick a <span>{catName}</span>
-          </h2>
+          <h2 className="dl-step1-heading">Pick a <span>{catName}</span></h2>
           <p className="dl-step1-sub">{products.length} products available — select one to customize</p>
         </div>
 
