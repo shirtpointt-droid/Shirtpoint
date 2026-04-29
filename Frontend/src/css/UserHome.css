@@ -3172,3 +3172,179 @@
   top: 32px;
   bottom: auto;
 }
+
+/* ── NEW DROPS HEADER FIX ── */
+.new-drops-section .uh-eyebrow {
+  color: #f97316 !important;
+}
+
+.new-drops-section .uh-heading {
+  color: #fff !important;
+}
+
+.uh-wrapper.light .new-drops-section .uh-heading {
+  color: #111 !important;
+}
+
+.uh-heading-outline {
+  -webkit-text-stroke: 1.5px #f97316 !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+/* ── CT SECTION WRAP TRANSPARENT ── */
+.ct-section-wrap {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.uh-wrapper.light .ct-section-wrap {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* ── CT CARD LIGHT MODE ── */
+.uh-wrapper.light .ct-card {
+  background: rgba(0,0,0,0.06) !important;
+  border: 1px solid rgba(0,0,0,0.1) !important;
+}
+
+.uh-wrapper.light .ct-card:hover {
+  background: rgba(0,0,0,0.1) !important;
+  border-color: rgba(249,115,22,0.4) !important;
+}
+
+/* ── CT SECTION WRAP DARK MODE BORDER ── */
+.ct-section-wrap {
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  border-radius: 2rem !important;
+  padding: 2.5rem !important;
+}
+
+.uh-wrapper.light .ct-section-wrap {
+  border: 1px solid rgba(0,0,0,0.08) !important;
+}
+
+/* ── CT SECTION WRAP BORDER BRIGHTER ── */
+.ct-section-wrap {
+  border: 1px solid rgba(255,255,255,0.18) !important;
+}
+
+.uh-wrapper.light .ct-section-wrap {
+  border: 1px solid rgba(0,0,0,0.12) !important;
+}
+
+/* ── CT SECTION WRAP BORDER FINAL ── */
+.ct-section-wrap {
+  border: 1px solid rgba(255,255,255,1) !important;
+}
+
+.uh-wrapper.light .ct-section-wrap {
+  border: 1px solid #93c5fd !important;
+}
+
+/* ── CT SECTION WRAP DARK BLUE BORDER ── */
+.ct-section-wrap {
+  border: 2px solid #1d4ed8 !important;
+  border-radius: 2.5rem !important;
+}
+
+.uh-wrapper.light .ct-section-wrap {
+  border: 2px solid #93c5fd !important;
+  border-radius: 2.5rem !important;
+}
+
+/* ── LIGHT MODE FULL TEXT FIX ── */
+
+/* Headings */
+.uh-wrapper.light .ct-heading { color: #111 !important; }
+.uh-wrapper.light .hiw-heading { color: #111 !important; }
+.uh-wrapper.light .coll-step-title { color: #111 !important; }
+.uh-wrapper.light .uh-heading { color: #111 !important; }
+
+/* Descriptions */
+.uh-wrapper.light .ct-desc { color: #444 !important; }
+.uh-wrapper.light .hiw-desc { color: #444 !important; }
+.uh-wrapper.light .coll-step-desc { color: #555 !important; }
+
+/* Steps */
+.uh-wrapper.light .hiw-step-title { color: #111 !important; }
+.uh-wrapper.light .hiw-step-desc { color: #555 !important; }
+.uh-wrapper.light .hiw-step-num { color: #f97316 !important; }
+
+/* Labels */
+.uh-wrapper.light .ct-color-label { color: #555 !important; }
+.uh-wrapper.light .ct-eyebrow { color: #f97316 !important; }
+.uh-wrapper.light .hiw-eyebrow { color: #f97316 !important; }
+
+/* Products section */
+.uh-wrapper.light .uh-products-header .ct-heading { color: #111 !important; }
+.uh-wrapper.light .uh-products-header .ct-desc { color: #555 !important; }
+
+/* Trust section */
+.uh-wrapper.light .trust-rating-name { color: #111 !important; }
+.uh-wrapper.light .trust-score { color: #111 !important; }
+.uh-wrapper.light .trust-count { color: #555 !important; }
+.uh-wrapper.light .trust-logo-text { color: #111 !important; }
+.uh-wrapper.light .trust-stars { color: #f97316 !important; }
+
+/* View all / buttons text */
+.uh-wrapper.light .uh-view-all { color: #111 !important; border-color: rgba(0,0,0,0.2) !important; }
+.uh-wrapper.light .uh-view-all:hover { color: #fff !important; }
+
+/* Collection section */
+.uh-wrapper.light .ct-heading-outline {
+  -webkit-text-stroke-color: #f97316 !important;
+}
+
+/* How it works button */
+.uh-wrapper.light .hiw-btn { color: #fff !important; }
+
+/* nd-frame title in light mode */
+.uh-wrapper.light .nd-frame-title { color: #fff !important; }
+.uh-wrapper.light .nd-badge { color: #fff !important; }
+
+/* ── LIGHT MODE ALL HEADINGS FORCE FIX ── */
+.uh-wrapper.light h1,
+.uh-wrapper.light h2,
+.uh-wrapper.light h3,
+.uh-wrapper.light h4,
+.uh-wrapper.light p,
+.uh-wrapper.light span:not(.ct-heading-outline):not(.hiw-heading-accent) {
+  color: #111;
+}
+
+.uh-wrapper.light .ct-eyebrow,
+.uh-wrapper.light .hiw-eyebrow,
+.uh-wrapper.light .uh-eyebrow,
+.uh-wrapper.light .ct-heading-outline,
+.uh-wrapper.light .hiw-heading-accent,
+.uh-wrapper.light .hiw-step-num,
+.uh-wrapper.light .ct-card-arrow,
+.uh-wrapper.light .trust-stars {
+  color: #f97316 !important;
+}
+
+.uh-wrapper.light .ct-heading-outline {
+  -webkit-text-fill-color: transparent !important;
+  -webkit-text-stroke: 2px #f97316 !important;
+}
+
+.uh-wrapper.light .hiw-heading-accent {
+  -webkit-text-fill-color: transparent !important;
+  -webkit-text-stroke: 2px #f97316 !important;
+}
+
+.uh-wrapper.light .nd-frame-title,
+.uh-wrapper.light .nd-badge,
+.uh-wrapper.light .ct-card-name,
+.uh-wrapper.light .ct-btn,
+.uh-wrapper.light .hiw-btn,
+.uh-wrapper.light .promo-heading,
+.uh-wrapper.light .promo-badge-num,
+.uh-wrapper.light .promo-badge-label {
+  color: #fff !important;
+}
