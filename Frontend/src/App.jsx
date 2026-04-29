@@ -7,7 +7,7 @@ import CategoryPage from './components/CategoryPage'
 import UserHome from './components/UserHome'
 import UserProfile from './components/UserProfile'
 import Settings from './components/Settings'
-import Marketplace from './components/Marketplace'
+import SellerPlace from './components/SellerPlace'
 import DesignerDashboard from './components/DesignerDashboard'
 import Membership from './components/Membership'
 import ForgotPassword from './components/ForgotPassword'
@@ -25,7 +25,7 @@ function App() {
         <Route path="/user-home" element={<UserHome />} />
         <Route path="/profile" element={<UserProfile />} />
         <Route path="/settings" element={<Settings />} />
-        <Route path="/marketplace" element={<Marketplace />} />
+        <Route path="/marketplace" element={<SellerPlace />} />
         <Route path="/designer-dashboard" element={<DesignerDashboard />} />
         <Route path="/membership" element={<Membership />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />

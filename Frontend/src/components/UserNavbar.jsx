@@ -9,7 +9,7 @@ import '../css/UserNavbar.css'
 const NAV_LINKS = [
   { label: 'Home',        path: '/user-home',   icon: <FiHome /> },
   { label: 'Design Lab',  path: '/design-lab',  icon: <RiScissorsFill /> },
-  { label: 'Marketplace', path: '/marketplace', icon: <FiGrid /> },
+  { label: 'Seller Place', path: '/marketplace', icon: <FiGrid /> },
   { label: 'Membership',  path: '/membership',  icon: <RiVipCrownFill /> },
 ]
 

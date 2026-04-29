@@ -8,7 +8,7 @@ import UserNavbar from './UserNavbar'
 import Footer from './Footer'
 import { FiSearch, FiHeart, FiStar, FiShoppingCart, FiTrendingUp, FiFilter } from 'react-icons/fi'
 import { RiVipCrownFill, RiVerifiedBadgeFill } from 'react-icons/ri'
-import '../css/Marketplace.css'
+import '../css/SellerPlace.css'
 
 function WavyGrid({ color = '#f97316', bgColor = '#050505' }) {
   const meshRef = useRef()
@@ -59,7 +59,7 @@ const LIVE_FEED = [
   'Zara just earned 80 Credits from "Street Ghost"',
 ]
 
-export default function Marketplace() {
+export default function SellerPlace() {
   const { user } = useAuth()
   const { theme } = useTheme()
   const navigate = useNavigate()
@@ -101,7 +101,7 @@ export default function Marketplace() {
         <motion.div className="mp-header" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <div>
             <p className="mp-eyebrow">🛍️ Community Designs</p>
-            <h1 className="mp-title">MARKETPLACE</h1>
+            <h1 className="mp-title">SELLER PLACE</h1>
             <p className="mp-sub">Buy designs from verified artists. Wear something unique.</p>
           </div>
           {user && (
