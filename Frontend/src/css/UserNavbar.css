@@ -129,8 +129,8 @@
 .unav-theme-btn:hover,
 .unav-theme-toggle:hover { transform: scale(1.1); }
 
-.unav[data-theme='dark'] .unav-theme-toggle { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.15); }
-.unav[data-theme='light'] .unav-theme-toggle { background: rgba(0,0,0,0.06); border-color: rgba(0,0,0,0.15); }
+.unav[data-theme='dark'] .unav-theme-toggle { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.15); color: #fff; }
+.unav[data-theme='light'] .unav-theme-toggle { background: rgba(0,0,0,0.06); border-color: rgba(0,0,0,0.15); color: #111; }
 
 /* Cart */
 .unav-cart {
