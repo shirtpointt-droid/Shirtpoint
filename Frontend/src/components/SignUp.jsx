@@ -22,7 +22,7 @@ function WavyGrid() {
   return (
     <mesh ref={meshRef} rotation={[-Math.PI / 3, 0, 0]} position={[0, 0, -2]}>
       <planeGeometry args={[100, 100, 100, 100]} />
-      <meshBasicMaterial color="black" wireframe transparent opacity={0.08} />
+      <meshBasicMaterial color="#f97316" wireframe transparent opacity={0.35} />
     </mesh>
   )
 }
@@ -114,7 +114,7 @@ function SignUp() {
         <button className="signup-back" onClick={() => navigate(-1)}>
           <FiArrowLeft /> Back
         </button>
-        <h1 className="signup-nav-logo">👕 T-SHIRT<span>.</span>POINT</h1>
+        <h1 className="signup-nav-logo">🎨 MEGA T SHIRT<span>.</span>DESIGNS</h1>
         <button className="signup-nav-login" onClick={() => navigate('/login')}>Login</button>
       </nav>
 
@@ -127,7 +127,7 @@ function SignUp() {
           >
             <div className="signup-success-icon">✅</div>
             <h2>Account Created!</h2>
-            <p>Welcome to T-Shirt Point. You can now login.</p>
+            <p>Welcome to Mega T Shirt Designs. You can now login.</p>
             <a href="/" className="signup-success-btn">Go to Home</a>
           </motion.div>
         ) : (
@@ -138,7 +138,7 @@ function SignUp() {
           >
             {/* Header */}
             <div className="signup-header">
-              <h1 className="signup-logo">👕 T-SHIRT<span>.</span>POINT</h1>
+              <h1 className="signup-logo">🎨 MEGA T SHIRT<span>.</span>DESIGNS</h1>
               <h2 className="signup-title">Create Account</h2>
               <p className="signup-sub">Join the creative lab today</p>
             </div>

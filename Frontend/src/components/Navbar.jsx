@@ -29,7 +29,7 @@ function Navbar() {
         <div className={`navbar-inner ${isScrolled ? 'navbar-inner-scrolled' : ''}`}>
 
           {/* Logo */}
-          <h1 className="navbar-logo">👕 T-SHIRT<span className="navbar-logo-dot">.</span>POINT</h1>
+          <h1 className="navbar-logo">MEGA T<span className="navbar-logo-dot">.</span>SHIRTS DESIGNS</h1>
 
           {/* Desktop Links */}
           <div className="navbar-links">

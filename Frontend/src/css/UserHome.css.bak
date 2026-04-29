@@ -3348,16 +3348,3 @@
 .uh-wrapper.light .promo-badge-label {
   color: #fff !important;
 }
-
-/* ── LIGHT MODE BOX BLUE BORDER ── */
-.uh-wrapper.light .ct-section-wrap {
-  border: 2px solid #3b82f6 !important;
-  border-radius: 2.5rem !important;
-}
-
-/* ── FORCE DARK BACKGROUND ── */
-.uh-wrapper { background: #050505 !important; }
-.uh-wrapper.light { background: #f8f8f6 !important; }
-
-/* ── FINAL DARK FORCE ── */
-body { background: #050505 !important; }

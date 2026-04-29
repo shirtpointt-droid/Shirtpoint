@@ -21,8 +21,8 @@ export default function Footer() {
         {/* Brand col */}
         <div className="footer-brand">
           <div className="footer-logo">
-            <span className="footer-logo-icon">👕</span>
-            <span>T-SHIRT<span className="footer-logo-dot">.</span>POINT</span>
+            <span className="footer-logo-icon">🎨</span>
+            <span>MEGA T SHIRT<span className="footer-logo-dot">.</span>DESIGNS</span>
           </div>
           <p className="footer-tagline">Wear Bold. Live Free.<br />Define Your Style.</p>
           <div className="footer-socials">
@@ -70,7 +70,7 @@ export default function Footer() {
 
       {/* Bottom bar */}
       <div className="footer-bottom">
-        <p className="footer-copy">© 2026 T-Shirt Point — All rights reserved</p>
+        <p className="footer-copy">© 2026 Mega T Shirt Designs — All rights reserved</p>
         <div className="footer-legal">
           <button>Privacy</button>
           <button>Terms</button>

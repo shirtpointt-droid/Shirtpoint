@@ -2,10 +2,10 @@ const express = require('express')
 const cors = require('cors')
 const dotenv = require('dotenv')
 const path = require('path')
-const multer = require('multer')
 const axios = require('axios')
 const FormData = require('form-data')
 const fs = require('fs')
+const upload = require('./middleware/upload')
 const connectDB = require('./config/db')
 const carouselRoutes = require('./routes/carouselRoutes')
 const splitRoutes = require('./routes/splitRoutes')
@@ -32,15 +32,12 @@ const sellerPlaceHeroRoutes = require('./routes/sellerPlaceHeroRoutes')
 dotenv.config()
 
 const app = express()
-app.use(cors())
+app.use(cors({
+  origin: process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : ['http://localhost:3000', 'http://localhost:3001'],
+  credentials: true
+}))
 app.use(express.json())
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')))
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, path.join(__dirname, '../uploads')),
-  filename: (req, file, cb) => cb(null, Date.now() + path.extname(file.originalname))
-})
-const upload = multer({ storage })
 
 // Normal image upload
 app.post('/api/upload', upload.single('image'), (req, res) => {

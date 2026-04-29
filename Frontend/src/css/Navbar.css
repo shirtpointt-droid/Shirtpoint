@@ -33,13 +33,13 @@
   font-size: 1rem;
   font-weight: 900;
   letter-spacing: -0.5px;
-  color: #111;
+  color: #fff;
   cursor: pointer;
   font-style: italic;
   transition: color 0.3s;
   white-space: nowrap;
 }
-.navbar-scrolled .navbar-logo { color: #fff; }
+.navbar-scrolled .navbar-logo { color: #f97316; }
 .navbar-logo-dot { color: #f97316; }
 
 /* Links */

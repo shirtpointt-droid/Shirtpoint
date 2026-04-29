@@ -16,10 +16,10 @@ const getProfile = async (req, res) => {
 // PUT /api/profile
 const updateProfile = async (req, res) => {
   try {
-    const { name, email, phone, city, photo } = req.body
+    const { name, phone, city, photo } = req.body
     const updated = await User.findByIdAndUpdate(
       req.userId,
-      { name, email, phone, city, photo },
+      { name, phone, city, photo },
       { new: true, runValidators: true }
     ).select(SAFE_FIELDS)
     if (!updated) return res.status(404).json({ message: 'User not found' })

@@ -2,8 +2,9 @@ import React, { useState, useRef, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { useTheme } from '../context/ThemeContext'
-import { FiShoppingCart, FiHome, FiGrid, FiLogOut, FiUser, FiMenu, FiX, FiSettings, FiSun, FiMoon } from 'react-icons/fi'
+import { FiShoppingCart, FiHome, FiGrid, FiLogOut, FiUser, FiMenu, FiX, FiSettings } from 'react-icons/fi'
 import { RiCopperCoinLine, RiVipCrownFill, RiScissorsFill } from 'react-icons/ri'
+import { BsSun, BsMoonStarsFill } from 'react-icons/bs'
 import '../css/UserNavbar.css'
 
 const NAV_LINKS = [
@@ -15,7 +16,7 @@ const NAV_LINKS = [
 
 export default function UserNavbar() {
   const { user, logout } = useAuth()
-  const { theme, toggle } = useTheme()
+  const { theme, toggleTheme } = useTheme()
   const navigate = useNavigate()
   const location = useLocation()
   const [dropdown, setDropdown] = useState(false)
@@ -46,7 +47,7 @@ export default function UserNavbar() {
 
           {/* Logo */}
           <div className="unav-logo" onClick={() => navigate('/user-home')}>
-            👕 <span>T-SHIRT</span><span className="unav-dot">.</span><span>POINT</span>
+            <h1 className="navbar-logo">MEGA T<span className="navbar-logo-dot">.</span>SHIRTS DESIGNS</h1>
           </div>
 
           {/* Desktop Links */}
@@ -65,8 +66,8 @@ export default function UserNavbar() {
           <div className="unav-actions">
 
             {/* Theme Toggle */}
-            <button className="unav-theme-btn" onClick={toggle} title={theme === 'dark' ? 'Light Mode' : 'Dark Mode'}>
-              {theme === 'dark' ? <FiSun /> : <FiMoon />}
+            <button className="unav-theme-toggle" onClick={toggleTheme} title={theme === 'dark' ? 'Light Mode' : 'Dark Mode'}>
+              {theme === 'dark' ? <BsSun /> : <BsMoonStarsFill />}
             </button>
 
             {/* Cart */}
@@ -83,7 +84,7 @@ export default function UserNavbar() {
               </div>
               <div className="unav-pill-info">
                 <span className="unav-pill-name">{user?.name || 'User'}</span>
-                <span className="unav-pill-credits"><RiCopperCoinLine /> {(user?.credits || 0).toLocaleString()}</span>
+                <span className="unav-pill-credits"><RiCopperCoinLine /> 100</span>
               </div>
 
               {dropdown && (
@@ -99,7 +100,7 @@ export default function UserNavbar() {
                   </div>
                   <div className="unav-dropdown-credits">
                     <RiCopperCoinLine className="unav-coin" />
-                    <span>{(user?.credits || 0).toLocaleString()} Credits</span>
+                    <span>100 Credits</span>
                   </div>
                   <div className="unav-dropdown-divider" />
                   <button className="unav-dropdown-item" onClick={() => { navigate('/profile'); setDropdown(false) }}>

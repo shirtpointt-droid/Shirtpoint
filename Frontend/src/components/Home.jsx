@@ -13,7 +13,7 @@ import ProductGrid from './ProductGrid'
 
 const BRAND_DEFAULT = [
   { tag: 'Getting Started', title: 'How Print-on-Demand Works', desc: 'Find out the basics of print-on-demand and start your brand without any inventory.', image: '' },
-  { tag: 'Products',        title: 'T-Shirt Point Products',    desc: 'Learn about our curated selection of customizable products for your brand.',         image: '' },
+  { tag: 'Products', title: 'Mega T Shirt Designs Products', desc: 'Learn about our curated selection of customizable products for your brand.', image: '' },
   { tag: 'Integrations',    title: 'Connect Your Store',        desc: 'Get your products in front of customers no matter where they shop.',                  image: '' },
   { tag: 'Pricing',         title: 'Calculate Your Profit',     desc: 'Find out how much profit you can make on every product you sell.',                    image: '' },
 ]
@@ -170,8 +170,8 @@ function Home() {
         <div className="home-center-text">
           <p className="home-center-eyebrow">Est. 2026 — Premium Streetwear</p>
           <h1 className="home-center-heading">
-            <span>T-SHIRT</span>
-            <span className="home-center-outline">POINT</span>
+            <span>MEGA T SHIRT</span>
+            <span className="home-center-outline">DESIGNS</span>
           </h1>
           <p className="home-center-tagline">Wear Bold. Live Free. Define Your Style.</p>
         </div>
@@ -186,7 +186,7 @@ function Home() {
             </Canvas>
           </div>
           {/* Brand Name removed */}
-          <h2 className="home-hero-title">Premium T-Shirts</h2>
+          <h2 className="home-hero-title">Premium T-Shirts Designs</h2>
           <p className="home-hero-sub">Wear the vibe. Own the style.</p>
           <a href="#" className="home-hero-btn">Shop Now</a>
         </div>
@@ -244,7 +244,7 @@ function Home() {
 
       {/* ===== MIDDLE HERO between videos ===== */}
       <section className="mid-hero">
-        <div className="mid-hero-side">Est. 2024 // T-Shirt Point Studio</div>
+        <div className="mid-hero-side">Est. 2024 // Mega T Shirt Designs Studio</div>
 
         <motion.div className="mid-hero-tag" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }}>
           Future of Apparel

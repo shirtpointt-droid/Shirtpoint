@@ -7,7 +7,7 @@
   font-family: 'Segoe UI', sans-serif;
   position: relative;
   padding: 4.5rem 1rem 1rem;
-  background: #fff;
+  background: #050505;
 }
 
 /* ===== NAVBAR ===== */
@@ -133,7 +133,7 @@
   position: fixed;
   inset: 0;
   z-index: 0;
-  background: #fff;
+  background: #050505;
 }
 
 /* ===== CARD ===== */

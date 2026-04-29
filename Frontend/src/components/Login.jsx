@@ -8,7 +8,7 @@ import { FcGoogle } from 'react-icons/fc'
 import { FiPhone } from 'react-icons/fi'
 import '../css/Login.css'
 
-function WavyGrid() {
+function WavyGrid({ color = '#f97316' }) {
   const meshRef = useRef()
   useFrame(({ clock }) => {
     const t = clock.getElapsedTime()
@@ -23,7 +23,7 @@ function WavyGrid() {
   return (
     <mesh ref={meshRef} rotation={[-Math.PI / 3, 0, 0]} position={[0, 0, -2]}>
       <planeGeometry args={[100, 100, 100, 100]} />
-      <meshBasicMaterial color="black" wireframe transparent opacity={0.08} />
+      <meshBasicMaterial color={color} wireframe={true} transparent opacity={0.35} />
     </mesh>
   )
 }
@@ -112,7 +112,7 @@ function Login() {
       {/* 3D Background */}
       <div className="login-bg">
         <Canvas camera={{ position: [0, 0, 10], fov: 75 }}>
-          <WavyGrid />
+          <WavyGrid color="#f97316" />
         </Canvas>
       </div>
 
@@ -121,7 +121,7 @@ function Login() {
         <button className="login-back" onClick={() => navigate(-1)}>
           <FiArrowLeft /> Back
         </button>
-        <h1 className="login-nav-logo">👕 T-SHIRT<span>.</span>POINT</h1>
+        <h1 className="login-nav-logo">🎨 MEGA T SHIRT<span>.</span>DESIGNS</h1>
         <button className="login-nav-signup" onClick={() => navigate('/signup')}>Sign Up</button>
       </nav>
 

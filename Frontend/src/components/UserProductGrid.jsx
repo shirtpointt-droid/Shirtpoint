@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
+import { useTheme } from '../context/ThemeContext'
 
-function TshirtPreview({ baseImage, logo }) {
+function TshirtPreview({ baseImage, logo, tshirtBg }) {
   return (
-    <div style={{ position: 'relative', width: '100%', aspectRatio: '1', borderRadius: '0.85rem', overflow: 'hidden', background: 'rgba(255,255,255,0.04)' }}>
+    <div style={{ position: 'relative', width: '100%', aspectRatio: '1', borderRadius: '0.85rem', overflow: 'hidden', background: tshirtBg }}>
       {baseImage && <img src={baseImage} alt="tshirt" style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }} />}
       {logo && (
         <img
@@ -31,6 +32,15 @@ const UserProductGrid = ({ navigate }) => {
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
   const [hoveredLogos, setHoveredLogos] = useState({})
+  const { theme } = useTheme()
+
+  const isLight = theme === 'light'
+  const cardBg = isLight ? 'rgba(0,0,0,0.04)' : 'rgba(255,255,255,0.04)'
+  const cardBorder = isLight ? '1px solid rgba(0,0,0,0.12)' : '1px solid rgba(255,255,255,0.08)'
+  const tshirtBg = isLight ? 'rgba(0,0,0,0.04)' : 'rgba(255,255,255,0.04)'
+  const nameColor = isLight ? '#111' : '#fff'
+  const logoBorder = isLight ? 'rgba(0,0,0,0.15)' : 'rgba(255,255,255,0.1)'
+  const logoBg = isLight ? 'rgba(0,0,0,0.04)' : 'rgba(255,255,255,0.04)'
 
   useEffect(() => {
     fetch('http://localhost:5000/api/user-products')
@@ -42,7 +52,7 @@ const UserProductGrid = ({ navigate }) => {
 
   if (loading) return (
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: '1rem' }}>
-      {[...Array(2)].map((_, i) => <div key={i} style={{ borderRadius: '1rem', background: 'rgba(255,255,255,0.05)', height: 160 }} />)}
+      {[...Array(2)].map((_, i) => <div key={i} style={{ borderRadius: '1rem', background: cardBg, height: 160 }} />)}
     </div>
   )
 
@@ -68,18 +78,18 @@ const UserProductGrid = ({ navigate }) => {
               gridTemplateColumns: '1fr 90px',
               gap: '0.75rem',
               alignItems: 'stretch',
-              background: 'rgba(255,255,255,0.04)',
-              border: '1px solid rgba(255,255,255,0.08)',
+              background: cardBg,
+              border: cardBorder,
               borderRadius: '1.25rem',
               padding: '0.85rem',
             }}
           >
             {/* LEFT — T-shirt + name + button */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-              <TshirtPreview baseImage={product.baseImage} logo={activeLogo} />
+              <TshirtPreview baseImage={product.baseImage} logo={activeLogo} tshirtBg={tshirtBg} />
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
                 <div style={{ width: 3, height: 14, background: '#f97316', borderRadius: 999, flexShrink: 0 }} />
-                <span style={{ fontSize: '0.7rem', fontWeight: 800, color: '#fff', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                <span style={{ fontSize: '0.7rem', fontWeight: 800, color: nameColor, textTransform: 'uppercase', letterSpacing: '1px' }}>
                   {product.name}
                 </span>
               </div>
@@ -102,8 +112,8 @@ const UserProductGrid = ({ navigate }) => {
                     width: '100%',
                     aspectRatio: '1',
                     borderRadius: '0.75rem',
-                    border: `2px solid ${hoveredLogos[product._id]?.image === logo.image ? '#f97316' : 'rgba(255,255,255,0.1)'}`,
-                    background: hoveredLogos[product._id]?.image === logo.image ? 'rgba(249,115,22,0.08)' : 'rgba(255,255,255,0.04)',
+                    border: `2px solid ${hoveredLogos[product._id]?.image === logo.image ? '#f97316' : logoBorder}`,
+                    background: hoveredLogos[product._id]?.image === logo.image ? 'rgba(249,115,22,0.08)' : logoBg,
                     cursor: 'pointer',
                     padding: '0.35rem',
                     transition: 'all 0.2s',
