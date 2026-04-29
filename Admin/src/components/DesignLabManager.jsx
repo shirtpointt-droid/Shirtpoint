@@ -15,6 +15,8 @@ const GRADIENT_PRESETS = [
   'linear-gradient(135deg, #64748b, #334155)',
 ]
 
+const DEFAULT_CATS = ['T-Shirts','Hoodies','Switers','Trousers','Caps','Hats','Snokes','Mobile Covers','Laptop Sleeves','Mouse Pads','Earbud Cases','Notebooks','Books & Covers','Pens','Mugs','Stickers','Tote Bags','Backpacks','Duffle Bags','Wallets','Cushions','Water Bottles','Wall Arts']
+
 export default function DesignLabManager() {
   const [cats, setCats] = useState([])
   const [form, setForm] = useState({ label: '', desc: '', count: '10+', img: '', gradient: DEFAULT_GRADIENT, order: 0 })
@@ -24,13 +26,13 @@ export default function DesignLabManager() {
   const [color2, setColor2] = useState('#ea580c')
 
   const [catProducts, setCatProducts] = useState([])
-  const [cpForm, setCpForm] = useState({ categoryLabel: '', name: '', image: '', order: 0 })
+  const [cpForm, setCpForm] = useState({ categoryLabel: '', name: '', image: '', modelUrl: '', color: '#f97316', order: 0 })
   const [editingCp, setEditingCp] = useState(null)
   const [cpUploading, setCpUploading] = useState(false)
   const [cpOriginalImg, setCpOriginalImg] = useState('')
-  const [cpImgFit, setCpImgFit] = useState('cover')
+  const [cpImgFit] = useState('cover')
+  const [selectedCatFilter, setSelectedCatFilter] = useState('')
 
-  // Crop states
   const [cropSrc, setCropSrc] = useState('')
   const [crop, setCrop] = useState({ x: 0, y: 0 })
   const [zoom, setZoom] = useState(1)
@@ -39,16 +41,16 @@ export default function DesignLabManager() {
   const [cropAspect, setCropAspect] = useState(1)
 
   const onCropComplete = useCallback((_, cap) => setCroppedAreaPixels(cap), [])
-  const [selectedCatFilter, setSelectedCatFilter] = useState('')
-
-  const DEFAULT_CATS = ['T-Shirts','Hoodies','Switers','Trousers','Caps','Hats','Snokes','Mobile Covers','Laptop Sleeves','Mouse Pads','Earbud Cases','Notebooks','Books & Covers','Pens','Mugs','Stickers','Tote Bags','Backpacks','Duffle Bags','Wallets','Cushions','Water Bottles','Wall Arts']
 
   const fetchCats = async () => {
     const res = await fetch('http://localhost:5000/api/design-lab-categories')
     setCats(await res.json())
   }
 
-  const fetchCp = async (cat) => setCatProducts(await fetch(`http://localhost:5000/api/category-products${cat ? `?category=${encodeURIComponent(cat)}` : ''}`).then(r => r.json()))
+  const fetchCp = async (cat) => {
+    const url = `http://localhost:5000/api/category-products${cat ? `?category=${encodeURIComponent(cat)}` : ''}`
+    setCatProducts(await fetch(url).then(r => r.json()))
+  }
 
   useEffect(() => { fetchCats(); fetchCp('') }, [])
 
@@ -67,15 +69,12 @@ export default function DesignLabManager() {
     const method = editing ? 'PUT' : 'POST'
     const url = editing ? `http://localhost:5000/api/design-lab-categories/${editing._id}` : 'http://localhost:5000/api/design-lab-categories'
     try {
-      const res = await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(form) })
-      const data = await res.json()
-      console.log('Saved:', data)
+      await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(form) })
       setForm({ label: '', desc: '', count: '10+', img: '', gradient: DEFAULT_GRADIENT, order: 0 })
       setColor1('#f97316'); setColor2('#ea580c')
       setEditing(null)
       fetchCats()
-    } catch(err) {
-      console.error('Save error:', err)
+    } catch {
       alert('Save nahi hua — backend check karo')
     }
   }
@@ -121,214 +120,239 @@ export default function DesignLabManager() {
     const method = editingCp ? 'PUT' : 'POST'
     const url = editingCp ? `http://localhost:5000/api/category-products/${editingCp._id}` : 'http://localhost:5000/api/category-products'
     await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(cpForm) })
-    setCpForm({ categoryLabel: '', name: '', image: '', order: 0 }); setEditingCp(null)
+    setCpForm({ categoryLabel: '', name: '', image: '', modelUrl: '', color: '#f97316', order: 0 }); setEditingCp(null)
     fetchCp(selectedCatFilter)
   }
-  const handleCpEdit = (p) => { setCpForm({ categoryLabel: p.categoryLabel, name: p.name, image: p.image, order: p.order }); setEditingCp(p) }
-  const handleCpDelete = async (id) => { await fetch(`http://localhost:5000/api/category-products/${id}`, { method: 'DELETE' }); fetchCp(selectedCatFilter) }
+
+  const handleCpEdit = (p) => {
+    setCpForm({ categoryLabel: p.categoryLabel, name: p.name, image: p.image, modelUrl: p.modelUrl || '', color: p.color || '#f97316', order: p.order })
+    setEditingCp(p)
+  }
+
+  const handleCpDelete = async (id) => {
+    await fetch(`http://localhost:5000/api/category-products/${id}`, { method: 'DELETE' })
+    fetchCp(selectedCatFilter)
+  }
+
+  const catLabels = cats.length > 0 ? cats.map(c => c.label) : DEFAULT_CATS
 
   return (
     <>
-    <div className="admin-page">
-      <div className="admin-carousel-section">
-        <h2 className="admin-carousel-title">🎨 Design Lab — Categories</h2>
-        <p className="admin-carousel-sub">Design Lab Step 1 ki categories yahan manage karo — add, edit, delete</p>
+      <div className="admin-page">
 
-        {/* Form */}
-        <div className="admin-product-form">
-          <h3>{editing ? 'Edit Category' : 'Add New Category'}</h3>
+        {/* ── CATEGORIES ── */}
+        <div className="admin-carousel-section">
+          <h2 className="admin-carousel-title">🎨 Design Lab — Categories</h2>
+          <p className="admin-carousel-sub">Design Lab Step 1 ki categories yahan manage karo</p>
 
-          <div className="admin-split-row">
+          <div className="admin-product-form">
+            <h3>{editing ? 'Edit Category' : 'Add New Category'}</h3>
+            <div className="admin-split-row">
+              <div className="admin-split-field">
+                <label>Category Name *</label>
+                <input value={form.label} onChange={e => setForm(p => ({ ...p, label: e.target.value }))} placeholder="T-Shirts, Mobile Covers..." />
+              </div>
+              <div className="admin-split-field">
+                <label>Count Badge</label>
+                <input value={form.count} onChange={e => setForm(p => ({ ...p, count: e.target.value }))} placeholder="50+" />
+              </div>
+            </div>
             <div className="admin-split-field">
-              <label>Category Name *</label>
-              <input value={form.label} onChange={e => setForm(p => ({ ...p, label: e.target.value }))} placeholder="T-Shirts, Mobile Covers..." />
+              <label>Description</label>
+              <input value={form.desc} onChange={e => setForm(p => ({ ...p, desc: e.target.value }))} placeholder="Classic, Oversized, V-Neck & more" />
             </div>
             <div className="admin-split-field">
-              <label>Count Badge</label>
-              <input value={form.count} onChange={e => setForm(p => ({ ...p, count: e.target.value }))} placeholder="50+" />
-            </div>
-          </div>
-
-          <div className="admin-split-field">
-            <label>Description</label>
-            <input value={form.desc} onChange={e => setForm(p => ({ ...p, desc: e.target.value }))} placeholder="Classic, Oversized, V-Neck & more" />
-          </div>
-
-          <div className="admin-split-field">
-            <label>Category Image</label>
-            <div className="admin-image-upload" onClick={() => document.getElementById('dlCatImg').click()}>
-              {form.img
-                ? <img src={form.img} alt="cat" className="admin-image-preview" style={{ objectFit: 'cover' }} />
-                : <div className="admin-image-placeholder"><span>🖼️</span><p>{uploading ? 'Uploading...' : 'Upload Image'}</p></div>
-              }
-              <input id="dlCatImg" type="file" accept="image/*" style={{ display: 'none' }} onChange={handleImgUpload} />
-            </div>
-          </div>
-
-          <div className="admin-split-field">
-            <label>Gradient Color</label>
-            <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', flexWrap: 'wrap' }}>
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
-                <label style={{ fontSize: 11, color: '#aaa' }}>Color 1</label>
-                <input type="color" value={color1} onChange={e => { setColor1(e.target.value); setForm(p => ({ ...p, gradient: `linear-gradient(135deg, ${e.target.value}, ${color2})` })) }}
-                  style={{ width: 52, height: 44, border: 'none', borderRadius: 8, cursor: 'pointer', background: 'none' }} />
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
-                <label style={{ fontSize: 11, color: '#aaa' }}>Color 2</label>
-                <input type="color" value={color2} onChange={e => { setColor2(e.target.value); setForm(p => ({ ...p, gradient: `linear-gradient(135deg, ${color1}, ${e.target.value})` })) }}
-                  style={{ width: 52, height: 44, border: 'none', borderRadius: 8, cursor: 'pointer', background: 'none' }} />
-              </div>
-              <div style={{ flex: 1, minWidth: 120 }}>
-                <label style={{ fontSize: 11, color: '#aaa', display: 'block', marginBottom: 4 }}>Preview</label>
-                <div style={{ height: 44, borderRadius: 8, background: form.gradient, border: '1px solid rgba(255,255,255,0.1)' }} />
-              </div>
-            </div>
-            <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap', marginTop: 8 }}>
-              {GRADIENT_PRESETS.map((g, i) => (
-                <button key={i} onClick={() => { setForm(p => ({ ...p, gradient: g })); const m = g.match(/#[0-9a-fA-F]{6}/g); if(m){ setColor1(m[0]); setColor2(m[1]||m[0]) } }}
-                  style={{ width: 28, height: 28, borderRadius: '50%', background: g, border: form.gradient === g ? '3px solid #fff' : '2px solid transparent', cursor: 'pointer', boxShadow: form.gradient === g ? '0 0 0 2px #f97316' : 'none' }} />
-              ))}
-            </div>
-          </div>
-
-          <div className="admin-product-actions">
-            {editing && <button className="admin-crop-cancel" onClick={() => { setEditing(null); setForm({ label: '', desc: '', count: '10+', img: '', gradient: DEFAULT_GRADIENT, order: 0 }) }}>Cancel</button>}
-            <button className="admin-carousel-btn" onClick={handleSave} disabled={uploading || !form.label}>
-              {editing ? 'Update Category' : 'Add Category'}
-            </button>
-          </div>
-        </div>
-
-        {/* List */}
-        <div className="admin-products-grid">
-          {cats.length === 0
-            ? <div className="admin-carousel-empty"><span>🎨</span><p>Koi category nahi — upar se add karo</p></div>
-            : cats.map((c) => (
-              <div key={c._id} className="admin-product-card">
-                <div className="admin-product-image-container" style={{ height: 100, overflow: 'hidden', borderRadius: '0.5rem', position: 'relative' }}>
-                  {c.img
-                    ? <img src={c.img} alt={c.label} className="admin-product-img" style={{ objectFit: 'cover', width: '100%', height: '100%' }} />
-                    : <div style={{ width: '100%', height: '100%', background: c.gradient, borderRadius: '0.5rem' }} />
-                  }
-                  <span style={{ position: 'absolute', top: 6, right: 6, fontSize: '0.6rem', fontWeight: 900, background: c.gradient, color: '#fff', padding: '2px 8px', borderRadius: 999 }}>{c.count}</span>
-                </div>
-                <div className="admin-product-info">
-                  <h4>{c.label}</h4>
-                  <p style={{ fontSize: 11, color: '#888', marginTop: 2 }}>{c.desc}</p>
-                  <div style={{ height: 4, borderRadius: 999, background: c.gradient, marginTop: 6 }} />
-                </div>
-                <div className="admin-product-actions">
-                  <button className="admin-product-edit" onClick={() => handleEdit(c)}>✏️ Edit</button>
-                  <button className="admin-carousel-delete" onClick={() => handleDelete(c._id)}>🗑 Delete</button>
-                </div>
-              </div>
-            ))
-          }
-        </div>
-      </div>
-
-      {/* CATEGORY PRODUCTS */}
-      <div className="admin-carousel-section">
-        <h2 className="admin-carousel-title">📦 Category Products — Step 2</h2>
-        <p className="admin-carousel-sub">Har category ke products yahan add karo — Design Lab Step 2 mein show honge</p>
-        <div className="admin-product-form">
-          <h3>{editingCp ? 'Edit Product' : 'Add New Product'}</h3>
-          <div className="admin-split-field">
-            <label>Category *</label>
-            <select value={cpForm.categoryLabel} onChange={e => setCpForm(p => ({ ...p, categoryLabel: e.target.value }))} style={{ width: '100%', padding: '0.6rem', borderRadius: 8, background: '#1a1a1a', color: '#fff', border: '1px solid rgba(255,255,255,0.1)' }}>
-              <option value="">-- Category Select Karo --</option>
-              {(cats.length > 0 ? cats.map(c => c.label) : DEFAULT_CATS).map((label, i) => <option key={i} value={label}>{label}</option>)}
-              <option value="__custom__">+ Custom (khud likho)</option>
-            </select>
-            {cpForm.categoryLabel === '__custom__' && (
-              <input style={{ marginTop: 8, width: '100%', padding: '0.6rem', borderRadius: 8, background: '#1a1a1a', color: '#fff', border: '1px solid rgba(255,255,255,0.1)' }}
-                placeholder="Category name likho..."
-                onChange={e => setCpForm(p => ({ ...p, categoryLabel: e.target.value === '' ? '__custom__' : e.target.value }))}
-              />
-            )}
-          </div>
-          <div className="admin-split-field">
-            <label>Product Name *</label>
-            <input value={cpForm.name} onChange={e => setCpForm(p => ({ ...p, name: e.target.value }))} placeholder="Classic T-Shirt, iPhone 16 Pro..." />
-          </div>
-          <div className="admin-split-field">
-            <label>Image <small style={{ color: '#888' }}>(optional)</small></label>
-            <div className="admin-image-upload" onClick={() => !cpUploading && document.getElementById('cpImgInput').click()}>
-              {cpForm.image
-                ? <img src={cpForm.image} alt="product" className="admin-image-preview" style={{ objectFit: cpImgFit }} />
-                : <div className="admin-image-placeholder"><span>📦</span><p>{cpUploading ? 'Uploading...' : 'Upload Image'}</p></div>
-              }
-              <input id="cpImgInput" type="file" accept="image/*" style={{ display: 'none' }} onChange={async (e) => {
-                const file = e.target.files[0]; if (!file) return
-                const reader = new FileReader()
-                reader.onload = () => { setCropSrc(reader.result); setCrop({ x:0, y:0 }); setZoom(1); setShowCrop(true) }
-                reader.readAsDataURL(file)
-              }} />
-            </div>
-            {cpForm.image && (
-              <div style={{ display: 'flex', gap: '0.4rem', marginTop: 6 }}>
-                <button onClick={() => { setCropSrc(cpForm.image); setCrop({x:0,y:0}); setZoom(1); setShowCrop(true) }} style={{ padding: '0.25rem 0.75rem', borderRadius: 999, border: '1px solid rgba(255,255,255,0.15)', background: '#111', color: '#fff', cursor: 'pointer', fontSize: '0.68rem', fontWeight: 700 }}>✂️ Re-Crop</button>
-              </div>
-            )}
-            {cpForm.image && (
-              <div className="admin-rmbg-actions">
-                <button className="admin-rmbg-btn" onClick={async () => {
-                  if (!window.confirm('Note: White ya light color items ka background remove karte waqt item bhi affect ho sakta hai. Continue?')) return
-                  setCpUploading(true)
-                  try {
-                    const blob = await removeBg(cpForm.image)
-                    const fd = new FormData(); fd.append('image', blob, 'clean.png')
-                    const res = await fetch('http://localhost:5000/api/upload', { method: 'POST', body: fd })
-                    const data = await res.json()
-                    setCpForm(p => ({ ...p, image: data.url }))
-                  } catch { alert('Background remove nahi hua') }
-                  setCpUploading(false)
-                }} disabled={cpUploading}>✂️ {cpUploading ? 'Removing...' : 'Remove Background'}</button>
-                {cpOriginalImg && cpForm.image !== cpOriginalImg && (
-                  <button className="admin-rmbg-cancel" onClick={() => setCpForm(p => ({ ...p, image: cpOriginalImg }))}>↩️ Cancel</button>
-                )}
-              </div>
-            )}
-          </div>
-          <div className="admin-product-actions">
-            {editingCp && <button className="admin-crop-cancel" onClick={() => { setEditingCp(null); setCpForm({ categoryLabel: '', name: '', image: '', order: 0 }) }}>Cancel</button>}
-            <button className="admin-carousel-btn" onClick={handleCpSave} disabled={cpUploading || !cpForm.categoryLabel || !cpForm.name}>{editingCp ? 'Update Product' : 'Add Product'}</button>
-          </div>
-        </div>
-
-        {/* Filter by category */}
-        <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '1rem' }}>
-          <button onClick={() => { setSelectedCatFilter(''); fetchCp('') }} style={{ padding: '0.35rem 0.85rem', borderRadius: 999, border: '1px solid rgba(255,255,255,0.15)', background: selectedCatFilter === '' ? '#f97316' : '#111', color: '#fff', cursor: 'pointer', fontSize: '0.72rem', fontWeight: 700 }}>All</button>
-          {(cats.length > 0 ? cats.map(c => c.label) : DEFAULT_CATS).map((label, i) => (
-            <button key={i} onClick={() => { setSelectedCatFilter(label); fetchCp(label) }} style={{ padding: '0.35rem 0.85rem', borderRadius: 999, border: '1px solid rgba(255,255,255,0.15)', background: selectedCatFilter === label ? '#f97316' : '#111', color: '#fff', cursor: 'pointer', fontSize: '0.72rem', fontWeight: 700 }}>{label}</button>
-          ))}
-        </div>
-
-        <div className="admin-carousel-grid">
-          {catProducts.length === 0
-            ? <div className="admin-carousel-empty"><span>📦</span><p>Koi product nahi — upar se add karo</p></div>
-            : catProducts.map((p, i) => (
-              <div key={p._id} className="admin-carousel-card">
-                <div className="admin-carousel-badge">#{i + 1}</div>
-                {p.image
-                  ? <img src={p.image} alt={p.name} className="admin-carousel-img" />
-                  : <div className="admin-carousel-img" style={{ background: 'rgba(249,115,22,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem' }}>📦</div>
+              <label>Category Image</label>
+              <div className="admin-image-upload" onClick={() => document.getElementById('dlCatImg').click()}>
+                {form.img
+                  ? <img src={form.img} alt="cat" className="admin-image-preview" style={{ objectFit: 'cover' }} />
+                  : <div className="admin-image-placeholder"><span>🖼️</span><p>{uploading ? 'Uploading...' : 'Upload Image'}</p></div>
                 }
-                <div className="admin-carousel-footer">
-                  <div>
-                    <span className="admin-carousel-url">{p.name}</span>
-                    <span style={{ display: 'block', fontSize: 10, color: '#f97316', marginTop: 2 }}>{p.categoryLabel}</span>
-                  </div>
-                  <div style={{ display: 'flex', gap: 6 }}>
-                    <button className="admin-product-edit" onClick={() => handleCpEdit(p)}>✏️</button>
-                    <button className="admin-carousel-delete" onClick={() => handleCpDelete(p._id)}>🗑</button>
-                  </div>
+                <input id="dlCatImg" type="file" accept="image/*" style={{ display: 'none' }} onChange={handleImgUpload} />
+              </div>
+            </div>
+            <div className="admin-split-field">
+              <label>Gradient Color</label>
+              <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', flexWrap: 'wrap' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
+                  <label style={{ fontSize: 11, color: '#aaa' }}>Color 1</label>
+                  <input type="color" value={color1} onChange={e => { setColor1(e.target.value); setForm(p => ({ ...p, gradient: `linear-gradient(135deg, ${e.target.value}, ${color2})` })) }}
+                    style={{ width: 52, height: 44, border: 'none', borderRadius: 8, cursor: 'pointer', background: 'none' }} />
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
+                  <label style={{ fontSize: 11, color: '#aaa' }}>Color 2</label>
+                  <input type="color" value={color2} onChange={e => { setColor2(e.target.value); setForm(p => ({ ...p, gradient: `linear-gradient(135deg, ${color1}, ${e.target.value})` })) }}
+                    style={{ width: 52, height: 44, border: 'none', borderRadius: 8, cursor: 'pointer', background: 'none' }} />
+                </div>
+                <div style={{ flex: 1, minWidth: 120 }}>
+                  <label style={{ fontSize: 11, color: '#aaa', display: 'block', marginBottom: 4 }}>Preview</label>
+                  <div style={{ height: 44, borderRadius: 8, background: form.gradient, border: '1px solid rgba(255,255,255,0.1)' }} />
                 </div>
               </div>
-            ))
-          }
+              <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap', marginTop: 8 }}>
+                {GRADIENT_PRESETS.map((g, i) => (
+                  <button key={i} onClick={() => { setForm(p => ({ ...p, gradient: g })); const m = g.match(/#[0-9a-fA-F]{6}/g); if (m) { setColor1(m[0]); setColor2(m[1] || m[0]) } }}
+                    style={{ width: 28, height: 28, borderRadius: '50%', background: g, border: form.gradient === g ? '3px solid #fff' : '2px solid transparent', cursor: 'pointer', boxShadow: form.gradient === g ? '0 0 0 2px #f97316' : 'none' }} />
+                ))}
+              </div>
+            </div>
+            <div className="admin-product-actions">
+              {editing && <button className="admin-crop-cancel" onClick={() => { setEditing(null); setForm({ label: '', desc: '', count: '10+', img: '', gradient: DEFAULT_GRADIENT, order: 0 }) }}>Cancel</button>}
+              <button className="admin-carousel-btn" onClick={handleSave} disabled={uploading || !form.label}>
+                {editing ? 'Update Category' : 'Add Category'}
+              </button>
+            </div>
+          </div>
+
+          <div className="admin-products-grid">
+            {cats.length === 0
+              ? <div className="admin-carousel-empty"><span>🎨</span><p>Koi category nahi — upar se add karo</p></div>
+              : cats.map(c => (
+                <div key={c._id} className="admin-product-card">
+                  <div className="admin-product-image-container" style={{ height: 100, overflow: 'hidden', borderRadius: '0.5rem', position: 'relative' }}>
+                    {c.img
+                      ? <img src={c.img} alt={c.label} className="admin-product-img" style={{ objectFit: 'cover', width: '100%', height: '100%' }} />
+                      : <div style={{ width: '100%', height: '100%', background: c.gradient, borderRadius: '0.5rem' }} />
+                    }
+                    <span style={{ position: 'absolute', top: 6, right: 6, fontSize: '0.6rem', fontWeight: 900, background: c.gradient, color: '#fff', padding: '2px 8px', borderRadius: 999 }}>{c.count}</span>
+                  </div>
+                  <div className="admin-product-info">
+                    <h4>{c.label}</h4>
+                    <p style={{ fontSize: 11, color: '#888', marginTop: 2 }}>{c.desc}</p>
+                    <div style={{ height: 4, borderRadius: 999, background: c.gradient, marginTop: 6 }} />
+                  </div>
+                  <div className="admin-product-actions">
+                    <button className="admin-product-edit" onClick={() => handleEdit(c)}>✏️ Edit</button>
+                    <button className="admin-carousel-delete" onClick={() => handleDelete(c._id)}>🗑 Delete</button>
+                  </div>
+                </div>
+              ))
+            }
+          </div>
         </div>
-      </div>
+
+        {/* ── CATEGORY PRODUCTS ── */}
+        <div className="admin-carousel-section">
+          <h2 className="admin-carousel-title">📦 Category Products — Step 2</h2>
+          <p className="admin-carousel-sub">Har category ke products yahan add karo — Design Lab Step 2 mein show honge</p>
+
+          {/* Single Add */}
+          <div className="admin-product-form">
+            <h3>{editingCp ? 'Edit Product' : 'Add New Product'}</h3>
+            <div className="admin-split-field">
+              <label>Category *</label>
+              <select value={cpForm.categoryLabel} onChange={e => setCpForm(p => ({ ...p, categoryLabel: e.target.value }))} style={{ width: '100%', padding: '0.6rem', borderRadius: 8, background: '#1a1a1a', color: '#fff', border: '1px solid rgba(255,255,255,0.1)' }}>
+                <option value="">-- Category Select Karo --</option>
+                {catLabels.map((label, i) => <option key={i} value={label}>{label}</option>)}
+                <option value="__custom__">+ Custom (khud likho)</option>
+              </select>
+              {cpForm.categoryLabel === '__custom__' && (
+                <input style={{ marginTop: 8, width: '100%', padding: '0.6rem', borderRadius: 8, background: '#1a1a1a', color: '#fff', border: '1px solid rgba(255,255,255,0.1)' }}
+                  placeholder="Category name likho..."
+                  onChange={e => setCpForm(p => ({ ...p, categoryLabel: e.target.value === '' ? '__custom__' : e.target.value }))}
+                />
+              )}
+            </div>
+            <div className="admin-split-field">
+              <label>Product Name *</label>
+              <input value={cpForm.name} onChange={e => setCpForm(p => ({ ...p, name: e.target.value }))} placeholder="Classic T-Shirt, iPhone 16 Pro..." />
+            </div>
+            <div className="admin-split-field">
+              <label>3D Model URL <small style={{ color: '#888' }}>(optional — .glb file link from Sketchfab/Poly.pizza)</small></label>
+              <input value={cpForm.modelUrl} onChange={e => setCpForm(p => ({ ...p, modelUrl: e.target.value }))} placeholder="https://example.com/models/tshirt.glb" />
+            </div>
+            <div className="admin-split-field">
+              <label>T-Shirt Color <small style={{ color: '#888' }}>(3D model ka default color)</small></label>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                <input type="color" value={cpForm.color} onChange={e => setCpForm(p => ({ ...p, color: e.target.value }))}
+                  style={{ width: 48, height: 40, border: 'none', borderRadius: 8, cursor: 'pointer', background: 'none' }} />
+                <span style={{ color: '#aaa', fontSize: '0.8rem', fontFamily: 'monospace' }}>{cpForm.color}</span>
+                <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap' }}>
+                  {['#f97316','#111111','#ffffff','#3b82f6','#ef4444','#8b5cf6','#10b981','#ec4899'].map(c => (
+                    <button key={c} onClick={() => setCpForm(p => ({ ...p, color: c }))}
+                      style={{ width: 24, height: 24, borderRadius: '50%', background: c, border: cpForm.color === c ? '3px solid #fff' : '2px solid transparent', cursor: 'pointer', boxShadow: cpForm.color === c ? '0 0 0 2px #f97316' : 'none' }} />
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div className="admin-split-field">
+              <label>Image <small style={{ color: '#888' }}>(optional)</small></label>
+              <div className="admin-image-upload" onClick={() => !cpUploading && document.getElementById('cpImgInput').click()}>
+                {cpForm.image
+                  ? <img src={cpForm.image} alt="product" className="admin-image-preview" style={{ objectFit: cpImgFit }} />
+                  : <div className="admin-image-placeholder"><span>📦</span><p>{cpUploading ? 'Uploading...' : 'Upload Image'}</p></div>
+                }
+                <input id="cpImgInput" type="file" accept="image/*" style={{ display: 'none' }} onChange={async (e) => {
+                  const file = e.target.files[0]; if (!file) return
+                  const reader = new FileReader()
+                  reader.onload = () => { setCropSrc(reader.result); setCrop({ x: 0, y: 0 }); setZoom(1); setShowCrop(true) }
+                  reader.readAsDataURL(file)
+                }} />
+              </div>
+              {cpForm.image && (
+                <div style={{ display: 'flex', gap: '0.4rem', marginTop: 6 }}>
+                  <button onClick={() => { setCropSrc(cpForm.image); setCrop({ x: 0, y: 0 }); setZoom(1); setShowCrop(true) }} style={{ padding: '0.25rem 0.75rem', borderRadius: 999, border: '1px solid rgba(255,255,255,0.15)', background: '#111', color: '#fff', cursor: 'pointer', fontSize: '0.68rem', fontWeight: 700 }}>✂️ Re-Crop</button>
+                </div>
+              )}
+              {cpForm.image && (
+                <div className="admin-rmbg-actions">
+                  <button className="admin-rmbg-btn" onClick={async () => {
+                    if (!window.confirm('Continue?')) return
+                    setCpUploading(true)
+                    try {
+                      const blob = await removeBg(cpForm.image)
+                      const fd = new FormData(); fd.append('image', blob, 'clean.png')
+                      const res = await fetch('http://localhost:5000/api/upload', { method: 'POST', body: fd })
+                      const data = await res.json()
+                      setCpForm(p => ({ ...p, image: data.url }))
+                    } catch { alert('Background remove nahi hua') }
+                    setCpUploading(false)
+                  }} disabled={cpUploading}>✂️ {cpUploading ? 'Removing...' : 'Remove Background'}</button>
+                  {cpOriginalImg && cpForm.image !== cpOriginalImg && (
+                    <button className="admin-rmbg-cancel" onClick={() => setCpForm(p => ({ ...p, image: cpOriginalImg }))}>↩️ Cancel</button>
+                  )}
+                </div>
+              )}
+            </div>
+            <div className="admin-product-actions">
+              {editingCp && <button className="admin-crop-cancel" onClick={() => { setEditingCp(null); setCpForm({ categoryLabel: '', name: '', image: '', modelUrl: '', color: '#f97316', order: 0 }) }}>Cancel</button>}
+              <button className="admin-carousel-btn" onClick={handleCpSave} disabled={cpUploading || !cpForm.categoryLabel || !cpForm.name}>{editingCp ? 'Update Product' : 'Add Product'}</button>
+            </div>
+          </div>
+
+          {/* Filter */}
+          <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', margin: '1.5rem 0 1rem' }}>
+            <button onClick={() => { setSelectedCatFilter(''); fetchCp('') }} style={{ padding: '0.35rem 0.85rem', borderRadius: 999, border: '1px solid rgba(255,255,255,0.15)', background: selectedCatFilter === '' ? '#f97316' : '#111', color: '#fff', cursor: 'pointer', fontSize: '0.72rem', fontWeight: 700 }}>All</button>
+            {catLabels.map((label, i) => (
+              <button key={i} onClick={() => { setSelectedCatFilter(label); fetchCp(label) }} style={{ padding: '0.35rem 0.85rem', borderRadius: 999, border: '1px solid rgba(255,255,255,0.15)', background: selectedCatFilter === label ? '#f97316' : '#111', color: '#fff', cursor: 'pointer', fontSize: '0.72rem', fontWeight: 700 }}>{label}</button>
+            ))}
+          </div>
+
+          <div className="admin-carousel-grid">
+            {catProducts.length === 0
+              ? <div className="admin-carousel-empty"><span>📦</span><p>Koi product nahi — upar se add karo</p></div>
+              : catProducts.map((p, i) => (
+                <div key={p._id} className="admin-carousel-card">
+                  <div className="admin-carousel-badge">#{i + 1}</div>
+                  {p.image
+                    ? <img src={p.image} alt={p.name} className="admin-carousel-img" />
+                    : <div className="admin-carousel-img" style={{ background: 'rgba(249,115,22,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem' }}>📦</div>
+                  }
+                  <div className="admin-carousel-footer">
+                    <div>
+                      <span className="admin-carousel-url">{p.name}</span>
+                      <span style={{ display: 'block', fontSize: 10, color: '#f97316', marginTop: 2 }}>{p.categoryLabel}</span>
+                    </div>
+                    <div style={{ display: 'flex', gap: 6 }}>
+                      <button className="admin-product-edit" onClick={() => handleCpEdit(p)}>✏️</button>
+                      <button className="admin-carousel-delete" onClick={() => handleCpDelete(p._id)}>🗑</button>
+                    </div>
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+        </div>
 
       </div>
 
@@ -339,22 +363,12 @@ export default function DesignLabManager() {
             <Cropper image={cropSrc} crop={crop} zoom={zoom} aspect={cropAspect} onCropChange={setCrop} onZoomChange={setZoom} onCropComplete={onCropComplete} />
           </div>
           <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
-            <span style={{ color: '#aaa', fontSize: 12 }}>Frame:</span>
-            {[
-              [1, 1, '1:1 Square'],
-              [4, 3, '4:3 Landscape'],
-              [3, 4, '3:4 Portrait'],
-              [16, 9, '16:9 Wide'],
-              [1920, 700, 'Slider (1920×700)'],
-              [800, 800, 'Product Card'],
-            ].map(([w, h, label]) => (
-              <button key={label} onClick={() => setCropAspect(w/h)} style={{ padding: '0.3rem 0.75rem', borderRadius: 999, border: '1px solid rgba(255,255,255,0.2)', background: Math.abs(cropAspect - w/h) < 0.01 ? '#f97316' : '#222', color: '#fff', cursor: 'pointer', fontSize: 11, fontWeight: 700 }}>{label}</button>
+            {[[1,1,'1:1'],[4,3,'4:3'],[3,4,'3:4'],[16,9,'16:9']].map(([w, h, label]) => (
+              <button key={label} onClick={() => setCropAspect(w / h)} style={{ padding: '0.3rem 0.75rem', borderRadius: 999, border: '1px solid rgba(255,255,255,0.2)', background: Math.abs(cropAspect - w / h) < 0.01 ? '#f97316' : '#222', color: '#fff', cursor: 'pointer', fontSize: 11, fontWeight: 700 }}>{label}</button>
             ))}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <button onClick={() => setZoom(z => Math.max(1, +(z - 0.1).toFixed(1)))} style={{ width: 28, height: 28, borderRadius: '50%', border: '1px solid rgba(255,255,255,0.2)', background: '#222', color: '#fff', cursor: 'pointer', fontSize: 16, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>−</button>
-              <span style={{ color: '#aaa', fontSize: 12, minWidth: 50, textAlign: 'center' }}>Zoom: {zoom.toFixed(1)}x</span>
-              <button onClick={() => setZoom(z => Math.min(3, +(z + 0.1).toFixed(1)))} style={{ width: 28, height: 28, borderRadius: '50%', border: '1px solid rgba(255,255,255,0.2)', background: '#222', color: '#fff', cursor: 'pointer', fontSize: 16, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>+</button>
-            </div>
+            <button onClick={() => setZoom(z => Math.max(1, +(z - 0.1).toFixed(1)))} style={{ width: 28, height: 28, borderRadius: '50%', border: '1px solid rgba(255,255,255,0.2)', background: '#222', color: '#fff', cursor: 'pointer' }}>−</button>
+            <span style={{ color: '#aaa', fontSize: 12 }}>{zoom.toFixed(1)}x</span>
+            <button onClick={() => setZoom(z => Math.min(3, +(z + 0.1).toFixed(1)))} style={{ width: 28, height: 28, borderRadius: '50%', border: '1px solid rgba(255,255,255,0.2)', background: '#222', color: '#fff', cursor: 'pointer' }}>+</button>
           </div>
           <div style={{ display: 'flex', gap: '0.75rem' }}>
             <button onClick={() => setShowCrop(false)} style={{ padding: '0.6rem 1.5rem', borderRadius: 999, border: '1px solid rgba(255,255,255,0.2)', background: '#222', color: '#fff', cursor: 'pointer', fontWeight: 700 }}>Cancel</button>

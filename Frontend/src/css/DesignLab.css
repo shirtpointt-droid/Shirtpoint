@@ -1681,7 +1681,28 @@
 @media (max-width: 900px) { .dl-step1-grid { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 600px) { .dl-step1-grid { grid-template-columns: repeat(2, 1fr); } }
 
-/* ── CATEGORY PRODUCTS GRID ── */
+/* ── SKELETON LOADER ── */
+.dl-product-skeleton {
+  border-radius: 1rem;
+  aspect-ratio: 1;
+  background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.05) 75%);
+  background-size: 200% 100%;
+  animation: skeletonShimmer 1.4s infinite;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+.dl-wrapper.dl-light .dl-product-skeleton {
+  background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%);
+  background-size: 200% 100%;
+  border-color: rgba(0,0,0,0.06);
+}
+
+@keyframes skeletonShimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+
 .dl-products-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
