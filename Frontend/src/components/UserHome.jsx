@@ -192,11 +192,11 @@ export default function UserHome() {
               <span className="uh-eyebrow">Fresh Arrivals</span>
               <h2 className="uh-heading">NEW DROPS <span className="uh-heading-outline">2026</span></h2>
             </div>
-            <button className="uh-view-all" onClick={() => navigate('/marketplace')}>View Marketplace →</button>
+            <button className="uh-view-all" onClick={() => navigate('/marketplace')}>View Seller Place →</button>
           </div>
           <div className="nd-grid">
             {activeBoxes.map((box, bi) => (
-              <div key={bi} className="nd-card" style={{ '--ec': box.color, '--eg': box.glow }} onClick={() => navigate('/design-lab')}>
+              <div key={bi} className="nd-card" style={{ '--ec': box.color, '--eg': box.glow }} onClick={() => navigate('/marketplace')}>
                 <div className="nd-frame nd-frame-top">
                   <img src={box.top.img} alt={box.top.title} className="nd-frame-img" />
                   <div className="nd-frame-overlay" />
