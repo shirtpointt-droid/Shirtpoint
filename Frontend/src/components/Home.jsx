@@ -397,12 +397,12 @@ function Home() {
                   style={{ fontSize: 'clamp(1.8rem, 4vw, 3rem)', color: '#fff', letterSpacing: '-1px' }}
                 >
                   Sign Up & Get
-                  <span style={{ color: '#f97316' }}> 1,000 </span>
+                  <span style={{ color: '#f97316' }}> 100 </span>
                   Free Credits
                 </h2>
 
                 <p className="text-gray-400 text-sm max-w-md leading-relaxed">
-                  Create your free account today and start designing with 1,000 credits — no card required.
+                  Create your free account today and start designing with 100 credits — no card required.
                 </p>
               </div>
 
@@ -412,7 +412,7 @@ function Home() {
                   className="text-center px-6 py-3 rounded-2xl"
                   style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }}
                 >
-                  <p className="text-5xl font-black text-white">1,000</p>
+                  <p className="text-5xl font-black text-white">100</p>
                   <p className="text-orange-400 text-xs font-bold uppercase tracking-widest mt-1">Credits Free</p>
                 </div>
 

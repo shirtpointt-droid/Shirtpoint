@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema({
   phone:    { type: String, default: '' },
   city:     { type: String, default: '' },
   photo:    { type: String, default: '' },
-  credits:  { type: Number, default: 1250 },
+  credits:  { type: Number, default: 100 },
   isPro:    { type: Boolean, default: false },
   activeOrders:  { type: Number, default: 0 },
   savedDesigns:  { type: Number, default: 0 },

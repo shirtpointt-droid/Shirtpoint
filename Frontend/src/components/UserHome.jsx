@@ -295,14 +295,14 @@ export default function UserHome() {
           <div className="promo-content">
             <div className="promo-left">
               <span className="promo-tag">🎁 Welcome Gift</span>
-              <h2 className="promo-heading">{user?.name ? `Hey ${user.name.split(' ')[0]},` : 'Welcome!'}<br />You Got <span className="promo-heading-accent">1,000 Free</span> Credits!</h2>
-              <p className="promo-desc">Start designing your custom T-shirt right now — 1,000 credits are already in your account, on us.</p>
+              <h2 className="promo-heading">{user?.name ? `Hey ${user.name.split(' ')[0]},` : 'Welcome!'}<br />You Got <span className="promo-heading-accent">100 Free</span> Credits!</h2>
+              <p className="promo-desc">Start designing your custom T-shirt right now — 100 credits are already in your account, on us.</p>
               <button className="promo-cta" onClick={() => navigate('/design-lab')}>Start Designing →</button>
             </div>
             <div className="promo-right">
               <div className="promo-badge-wrap">
                 <div className="promo-badge">
-                  <span className="promo-badge-num">1,000</span>
+                  <span className="promo-badge-num">100</span>
                   <span className="promo-badge-label">CREDITS</span>
                 </div>
                 <div className="promo-stats">
