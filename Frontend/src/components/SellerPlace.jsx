@@ -133,11 +133,6 @@ export default function SellerPlace() {
           <div className="sp-loading">
             {[...Array(6)].map((_, i) => <div key={i} className="sp-skeleton" />)}
           </div>
-        ) : filtered.length === 0 ? (
-          <div className="sp-empty">
-            <span>🎨</span>
-            <p>{designs.length === 0 ? 'Admin se designs approve karwao — yahan show honge' : 'Koi design nahi mila'}</p>
-          </div>
         ) : (
           <div className="sp-grid">
             {filtered.map((d, i) => (
