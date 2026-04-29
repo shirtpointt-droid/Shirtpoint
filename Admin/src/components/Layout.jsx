@@ -20,6 +20,9 @@ function Layout() {
           <NavLink to="/design-lab" className={({ isActive }) => isActive ? 'sidebar-link active' : 'sidebar-link'}>
             <span className="sidebar-icon">🎨</span> Design Lab
           </NavLink>
+          <NavLink to="/seller-place" className={({ isActive }) => isActive ? 'sidebar-link active' : 'sidebar-link'}>
+            <span className="sidebar-icon">🛍️</span> Seller Place
+          </NavLink>
         </nav>
       </aside>
       <main className="main-content">

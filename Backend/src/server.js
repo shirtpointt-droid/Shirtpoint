@@ -26,6 +26,8 @@ const designLabCategoryRoutes = require('./routes/designLabCategoryRoutes')
 const tshirtTypeRoutes = require('./routes/tshirtTypeRoutes')
 const categoryProductRoutes = require('./routes/categoryProductRoutes')
 const newDropRoutes = require('./routes/newDropRoutes')
+const sellerDesignRoutes = require('./routes/sellerDesignRoutes')
+const sellerPlaceHeroRoutes = require('./routes/sellerPlaceHeroRoutes')
 
 dotenv.config()
 
@@ -97,6 +99,8 @@ app.use('/api/design-lab-categories', designLabCategoryRoutes)
 app.use('/api/tshirt-types', tshirtTypeRoutes)
 app.use('/api/category-products', categoryProductRoutes)
 app.use('/api/new-drop', newDropRoutes)
+app.use('/api/seller-designs', sellerDesignRoutes)
+app.use('/api/seller-place-hero', sellerPlaceHeroRoutes)
 
 app.get('/', (req, res) => res.send('T-Shirt Point API Running'))
 

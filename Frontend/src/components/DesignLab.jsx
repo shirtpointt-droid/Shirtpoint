@@ -76,14 +76,16 @@ export default function DesignLab() {
             </button>
             <div className="dl-step1-steps">
               {[
-                {n:1, label:'All Categories'},
-                {n:2, label:'Category'},
-                {n:3, label:'Color Design'},
-                {n:4, label:'Icons Design'},
-                {n:5, label:'Final Look'},
-                {n:6, label:'Order'},
-              ].map(({n, label}) => (
-                <div key={n} className={`dl-step1-pill ${n === 1 ? 'active' : ''}`}>
+                {n:1, label:'All Categories', path:'/design-lab'},
+                {n:2, label:'Category', path:null},
+                {n:3, label:'Color Design', path:null},
+                {n:4, label:'Icons Design', path:null},
+                {n:5, label:'Final Look', path:null},
+                {n:6, label:'Order', path:null},
+              ].map(({n, label, path}) => (
+                <div key={n} className={`dl-step1-pill ${n === 1 ? 'active' : ''}`}
+                  style={{ cursor: path ? 'pointer' : 'default' }}
+                  onClick={() => path && navigate(path)}>
                   <span className="dl-step1-pill-label">{label}</span>
                 </div>
               ))}

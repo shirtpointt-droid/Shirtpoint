@@ -4,6 +4,7 @@ import Dashboard from './components/Dashboard'
 import AdminHome from './components/AdminHome'
 import UserHomeManager from './components/UserHomeManager'
 import DesignLabManager from './components/DesignLabManager'
+import SellerDesignManager from './components/SellerDesignManager'
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="home" element={<AdminHome />} />
           <Route path="user-home" element={<UserHomeManager />} />
           <Route path="design-lab" element={<DesignLabManager />} />
+          <Route path="seller-place" element={<SellerDesignManager />} />
         </Route>
       </Routes>
     </BrowserRouter>
